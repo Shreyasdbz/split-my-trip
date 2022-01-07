@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @format */
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./styles/main.css";
+import { ThemeContextProvider } from "./context/ThemeContext";
+
+import Landing from "./views/Landing";
+import Trip from "./views/Trip";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeContextProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/trip:tripID" element={<Trip />} />
+          </Routes>
+        </Router>
+      </ThemeContextProvider>
     </div>
   );
 }
