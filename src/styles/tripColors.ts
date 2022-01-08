@@ -1,5 +1,7 @@
 /** @format */
 
+export type TripColorType = typeof tripColors[0];
+
 export const tripColors = [
   {
     id: 1,

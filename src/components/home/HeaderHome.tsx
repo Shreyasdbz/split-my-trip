@@ -1,5 +1,6 @@
 /** @format */
 import { useContext } from "react";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
@@ -14,6 +15,9 @@ const HeaderHome = () => {
       }}
     >
       <span>Split My Trip</span>
+      <button className="btn">
+        <IoPersonCircleOutline className="icon" />
+      </button>
     </div>
   );
 };

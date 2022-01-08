@@ -26,7 +26,7 @@
 
 .header-signOn {
   width: 90%;
-  margin-top: 1rem;
+  margin: 1rem 0rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -71,16 +71,16 @@
 
 .header-home {
   width: 95%;
-  margin-top: 1rem;
+  margin: 1rem 0rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   gap: 0.25rem;
   font-size: 3rem;
   font-weight: 700;
@@ -90,5 +90,105 @@
 
 .header-home span {
   padding: 1.5rem 0rem;
+  margin-left: 0.5rem;
+}
+
+.header-home .btn {
+  border: none;
+  outline: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: none;
+  margin-right: 0.5rem;
+  border-radius: 3rem;
+  cursor: pointer;
+}
+
+.header-home .btn .icon {
+  color: white;
+  font-size: 2.5rem;
+  border-radius: 3rem;
+  -webkit-box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.125);
+          box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, 0.125);
+}
+
+.header-home .btn:hover {
+  opacity: 0.9;
+}
+
+@media (min-width: 600px) {
+  .header-home span {
+    margin-left: 1.5rem;
+  }
+  .header-home .btn {
+    margin-right: 1.5rem;
+  }
+}
+
+.trips-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 95%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.trips-list .trip-listing-box {
+  background-color: coral;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-radius: 0.5rem;
+  height: 10rem;
+  text-decoration: none;
+}
+
+.trips-list .trip-listing-box span {
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+}
+
+.trips-list .trip-listing-box .icon {
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  font-size: 2.5rem;
+  padding: 0.75rem;
+  color: white;
+}
+
+.trips-list .trip-listing-box:hover {
+  opacity: 0.9;
 }
 /*# sourceMappingURL=main.css.map */
