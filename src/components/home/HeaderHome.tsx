@@ -1,21 +1,16 @@
 /** @format */
-
 import { useContext } from "react";
 
 import { ThemeContext } from "../../context/ThemeContext";
-import { getWindowDimensions } from "../../helpers/dimensions";
 
-const Header = () => {
+const HeaderHome = () => {
   const theme = useContext(ThemeContext).theme;
-  const windowDimensions = getWindowDimensions();
-
   return (
     <div
-      className={`header ${
-        windowDimensions.width > 600 ? "header-large" : "header-small"
-      }`}
+      className="header-home"
       style={{
         backgroundColor: `${theme.primary}`,
+        boxShadow: `0px 0px 15px 5px ${theme.primary}30`,
       }}
     >
       <span>Split My Trip</span>
@@ -23,4 +18,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderHome;

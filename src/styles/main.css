@@ -24,10 +24,54 @@
   width: 100%;
 }
 
-.header {
+.header-signOn {
+  width: 90%;
   margin-top: 1rem;
-  width: 95%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.25rem;
+  height: 40vh;
+  font-size: 4rem;
+  font-weight: 800;
   color: white;
+  border-radius: 0.5rem;
+}
+
+.header-signOn span {
+  margin-left: 1rem;
+}
+
+@media (min-width: 600px) {
+  .header-signOn {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    gap: 1rem;
+    font-size: 5rem;
+  }
+  .header-signOn span {
+    margin-left: 0;
+  }
+}
+
+.header-home {
+  width: 95%;
+  margin-top: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -37,16 +81,14 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  font-weight: 600;
+  gap: 0.25rem;
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
   border-radius: 0.5rem;
 }
 
-.header-large {
-  font-size: 2rem;
-}
-
-.header-small {
-  padding: 2rem 0rem;
-  font-size: 2rem;
+.header-home span {
+  padding: 1.5rem 0rem;
 }
 /*# sourceMappingURL=main.css.map */

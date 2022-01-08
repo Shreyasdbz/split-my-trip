@@ -4,7 +4,11 @@ import { signInWithPopup } from "@firebase/auth";
 
 const SignInButton = () => {
   function signIn() {
-    signInWithPopup(firebase_auth, firebase_google_provider);
+    signInWithPopup(firebase_auth, firebase_google_provider).catch(
+      (errorMessage) => {
+        alert(errorMessage);
+      }
+    );
   }
 
   return (
