@@ -1,22 +1,17 @@
 /** @format */
 
-import { firebase_auth } from "../config/firebase";
-
-import HeaderHome from "../components/home/HeaderHome";
+import Header from "../components/home/Header";
 import TripsList from "../components/home/TripsList";
+import AddTripButton from "../components/home/AddTripButton";
 
 const Home = () => {
   return (
-    <div className="page">
-      <HeaderHome />
-      <TripsList />
-      <button
-        onClick={() => {
-          firebase_auth.signOut();
-        }}
-      >
-        Sign Out
-      </button>
+    <div className="page home-page">
+      <Header />
+      <div className="page-container">
+        <TripsList />
+      </div>
+      <AddTripButton />
     </div>
   );
 };

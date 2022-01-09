@@ -6,11 +6,8 @@ export const styles = {
   light: {
     background: "#FFFFFF",
     text: "#000000",
-    greyBackground: "#E2E2E2",
+    greyBackground: "#F2F2F2",
     greyText: "#555555",
-    primary: "#045de9",
-    secondary: "#09c6f9",
-    accent: "#E42F81",
     danger: "#DD1515",
     warning: "#DE7316",
     success: "#07AE52",
@@ -20,11 +17,17 @@ export const styles = {
     text: "#FFFFFF",
     greyBackground: "#C2C2C2",
     greyText: "#555555",
-    primary: "#045de9",
-    secondary: "#09c6f9",
-    accent: "#E42F81",
     danger: "#DD1515",
     warning: "#DE7316",
     success: "#07AE52",
   },
 };
+
+// Colors:
+// background
+// text
+// greyBackground
+// greyText
+// danger
+// warning
+// success

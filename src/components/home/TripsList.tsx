@@ -1,19 +1,82 @@
 /** @format */
 
-import { sampleTripData } from "../../context/dummyTripData";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-import TripListingBox from "./TripListingBox";
-import NewTripButton from "./NewTripButton";
+import { ThemeContext } from "../../context/ThemeContext";
+import { getTripColorById } from "../../helpers/colors";
+
+type TripType = {
+  name: string;
+  colorId: number;
+};
+
+export const testTrips: TripType[] = [
+  {
+    name: "Havana",
+    colorId: 1,
+  },
+  {
+    name: "Camping",
+    colorId: 2,
+  },
+  {
+    name: "Eagles Game",
+    colorId: 3,
+  },
+  // {
+  //   name: "Cookout",
+  //   colorId: 4,
+  // },
+  // {
+  //   name: "Europe",
+  //   colorId: 5,
+  // },
+  // {
+  //   name: "Dan's Birthday or something like that eyyyy",
+  //   colorId: 6,
+  // },
+  // {
+  //   name: "Colorado",
+  //   colorId: 7,
+  // },
+  // {
+  //   name: "Southern Road Trip",
+  //   colorId: 8,
+  // },
+];
 
 const TripsList = () => {
+  const theme = useContext(ThemeContext).theme;
+
   return (
-    <div className="trips-list">
-      {sampleTripData.map((trip) => {
-        return <TripListingBox key={trip.id} trip={trip} />;
-      })}
-      <NewTripButton />
+    <div className="trips-list-view">
+      <div className="title">
+        <span>My Trips</span>
+      </div>
+      <div className="trips-list">
+        {testTrips.map((trip) => {
+          return (
+            <Link
+              to={`/trip${trip.name}`}
+              key={trip.name}
+              className="trip-box"
+              style={{
+                boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+                backgroundColor: `${
+                  getTripColorById(trip.colorId).backgroundColor
+                }`,
+                backgroundImage: `${
+                  getTripColorById(trip.colorId).backgroundImage
+                }`,
+              }}
+            >
+              <span>{trip.name}</span>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 };
-
 export default TripsList;
