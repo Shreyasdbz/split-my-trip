@@ -5,27 +5,42 @@ export type TripColorType = typeof tripColors[0];
 export const tripColors = [
   {
     id: 1,
-    backgroundColor: "#861657",
-    backgroundImage: "linear-gradient(326deg, #861657 0%, #ffa69e 74%)",
+    backgroundColor: "#f53844",
+    backgroundImage: "linear-gradient(to right, #f53844, #ff009d",
   },
   {
     id: 2,
-    backgroundColor: "#a4508b",
-    backgroundImage: "linear-gradient(326deg, #a4508b 0%, #5f0a87 74%)",
+    backgroundColor: "#fc5296",
+    backgroundImage: "linear-gradient(to right,#fc5296,#f67062 50%)",
   },
   {
     id: 3,
-    backgroundColor: "#6b0f1a",
-    backgroundImage: "linear-gradient(315deg, #6b0f1a 0%, #b91372 74%)",
+    backgroundColor: "#ff512f",
+    backgroundImage: "linear-gradient(to right, #ff512f, #f09819)",
   },
   {
     id: 4,
-    backgroundColor: "#d4418e",
-    backgroundImage: "linear-gradient(315deg, #d4418e 0%, #0652c5 74%)",
+    backgroundColor: "#fbb034",
+    backgroundImage: "linear-gradient(to right, #fbb034 10%, #ffdd00 100%)",
   },
   {
     id: 5,
-    backgroundColor: "#fc5296",
-    backgroundImage: "linear-gradient(315deg, #fc5296 0%, #f67062 74%)",
+    backgroundColor: "#0bab64",
+    backgroundImage: "linear-gradient(to right, #0bab64 10%, #3bb78f 100%)",
+  },
+  {
+    id: 6,
+    backgroundColor: "#028090",
+    backgroundImage: "linear-gradient(to right, #028090 10%, #00bfb2 100%)",
+  },
+  {
+    id: 7,
+    backgroundColor: "#0083b0",
+    backgroundImage: "linear-gradient(to right, #0083b0, #00b4db)",
+  },
+  {
+    id: 8,
+    backgroundColor: "#4a00e0",
+    backgroundImage: "linear-gradient(to right, #4a00e0, #8e2de2)",
   },
 ];

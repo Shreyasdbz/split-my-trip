@@ -24,26 +24,26 @@ export const testTrips: TripType[] = [
     name: "Eagles Game",
     colorId: 3,
   },
-  // {
-  //   name: "Cookout",
-  //   colorId: 4,
-  // },
-  // {
-  //   name: "Europe",
-  //   colorId: 5,
-  // },
-  // {
-  //   name: "Dan's Birthday or something like that eyyyy",
-  //   colorId: 6,
-  // },
-  // {
-  //   name: "Colorado",
-  //   colorId: 7,
-  // },
-  // {
-  //   name: "Southern Road Trip",
-  //   colorId: 8,
-  // },
+  {
+    name: "Cookout",
+    colorId: 4,
+  },
+  {
+    name: "Europe",
+    colorId: 5,
+  },
+  {
+    name: "Dan's Birthday or something like that eyyyy and some really long text",
+    colorId: 6,
+  },
+  {
+    name: "Colorado",
+    colorId: 7,
+  },
+  {
+    name: "Southern Road Trip",
+    colorId: 8,
+  },
 ];
 
 const TripsList = () => {
@@ -62,7 +62,7 @@ const TripsList = () => {
               key={trip.name}
               className="trip-box"
               style={{
-                boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+                boxShadow: `0px 2px 15px 5px ${theme.text}25`,
                 backgroundColor: `${
                   getTripColorById(trip.colorId).backgroundColor
                 }`,

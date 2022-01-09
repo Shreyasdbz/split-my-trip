@@ -7,6 +7,8 @@ import { getAuth, signInWithPopup } from "@firebase/auth";
 import { firebase_auth, firebase_google_provider } from "../config/firebase";
 import { ThemeContext } from "../context/ThemeContext";
 
+import InfoTab from "../components/common/InfoTab";
+
 const SignOn = () => {
   function signIn() {
     signInWithPopup(firebase_auth, firebase_google_provider).catch((errMsg) =>
@@ -65,20 +67,7 @@ const SignOn = () => {
         </div>
         <span className="text">Log in with Google</span>
       </button>
-      <div className="info">
-        <a
-          href="https://github.com/Shreyasdbz/split-my-trip"
-          target={"_blank"}
-          rel="noreferrer"
-          className="link"
-          style={{
-            backgroundColor: `${theme.greyBackground}`,
-            color: `${theme.greyText}`,
-          }}
-        >
-          Info
-        </a>
-      </div>
+      <InfoTab />
     </div>
   );
 };
