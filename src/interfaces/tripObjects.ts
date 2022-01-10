@@ -8,7 +8,7 @@ export type PersonType = {
 };
 
 export type ActivityParticipant = {
-  participant: PersonType;
+  participantId: string;
   participating: boolean;
 };
 
@@ -16,7 +16,7 @@ export type ActivityType = {
   id: string;
   title: string;
   cost: number;
-  payer: PersonType;
+  payerId: string;
   participantList: ActivityParticipant[];
 };
 

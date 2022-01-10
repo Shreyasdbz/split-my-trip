@@ -4,15 +4,18 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { TripsContext } from "../../context/TripsContext";
 import { getTripColorById } from "../../helpers/colors";
 import { getTrips } from "../../helpers/user";
 
 const TripsList = () => {
   const theme = useContext(ThemeContext).theme;
+  const trips = useContext(TripsContext).tripsList;
+  const loadTrips = useContext(TripsContext).loadTrips;
 
   useEffect(() => {
-    getTrips();
-  }, []);
+    loadTrips();
+  }, [loadTrips]);
 
   return (
     <div className="trips-list-view">
@@ -20,11 +23,11 @@ const TripsList = () => {
         <span>My Trips</span>
       </div>
       <div className="trips-list">
-        {/* {testTrips.map((trip) => {
+        {trips.map((trip) => {
           return (
             <Link
-              to={`/trip${trip.name}`}
-              key={trip.name}
+              to={`/trip${trip.title}`}
+              key={trip.id}
               className="trip-box"
               style={{
                 boxShadow: `0px 2px 15px 5px ${theme.text}25`,
@@ -36,13 +39,10 @@ const TripsList = () => {
                 }`,
               }}
             >
-              <span>{trip.name}</span>
+              <span>{trip.title}</span>
             </Link>
           );
-        })} */}
-        <ul>
-          <li>hi1</li>
-        </ul>
+        })}
       </div>
     </div>
   );

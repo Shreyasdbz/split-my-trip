@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
+import { TripType } from "../interfaces/tripObjects";
 import { NewTripTypes } from "../interfaces/homeView";
 import { initialUserPrep } from "../helpers/user";
 
@@ -14,6 +15,7 @@ import Modal from "../components/common/Modal";
 import NewTripModal from "../components/home/NewTripModal";
 
 const Home = () => {
+  const [tripsList, setTripsList] = useState<TripType[]>([]);
   const [newTripModalActive, setNewTripModalActive] = useState(false);
 
   const newTrip = async (payload: NewTripTypes) => {
@@ -31,7 +33,7 @@ const Home = () => {
 
   useEffect(() => {
     initialUserPrep();
-  });
+  }, []);
 
   return (
     <div className="page home-page">
