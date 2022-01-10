@@ -5,7 +5,7 @@
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-family: muli, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -49,6 +49,65 @@
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.blur-layer {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  z-index: 2;
+}
+
+.corner-action-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: none;
+  outline: none;
+  border-radius: 1rem;
+  position: fixed;
+  bottom: 2rem;
+  right: 1rem;
+}
+
+.corner-action-btn span {
+  font-weight: 600;
+  padding: 0rem 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.corner-action-btn .icon-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.5rem 0rem;
+}
+
+.corner-action-btn .icon-wrapper .icon {
+  font-size: 2rem;
+}
+
+.corner-action-btn:hover {
+  opacity: 0.85;
 }
 
 .link {
@@ -60,6 +119,104 @@
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
   font-weight: 600;
+}
+
+.modal {
+  width: 100vw;
+  overflow-x: hidden;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 50vh;
+  z-index: 3;
+}
+
+.modal .title span {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal .caption {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.modal .input-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 85%;
+  gap: 0.125rem;
+}
+
+.modal .input-box .input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0.25rem 0rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.25rem;
+}
+
+.modal .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 85%;
+}
+
+.modal .actions .divider {
+  height: 2rem;
+  width: 0.25rem;
+  border-radius: 2rem;
+}
+
+.modal .actions button {
+  border: none;
+  outline: none;
+  padding: 0.25rem 1rem;
+  border-radius: 2rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+}
+
+.modal .actions button:hover {
+  opacity: 0.85;
+}
+
+.modal .actions .btn-confirm {
+  padding: 0.35rem 1.5rem;
 }
 
 .sign-on-page .images {
@@ -307,7 +464,8 @@
   color: white;
 }
 
-.home-page .add-trip-btn {
+.home-page .new-trip-modal {
+  margin-top: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -321,21 +479,18 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border: none;
-  outline: none;
-  border-radius: 1rem;
-  position: fixed;
-  bottom: 2rem;
-  right: 1rem;
+  width: 80%;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+  gap: 1rem;
 }
 
-.home-page .add-trip-btn span {
-  font-weight: 600;
-  padding: 0rem 0.5rem;
-  padding-top: 0.5rem;
+.home-page .new-trip-modal .color-picker-box {
+  width: 85%;
 }
 
-.home-page .add-trip-btn .icon-wrapper {
+.home-page .new-trip-modal .color-picker-box .color-swatch-list {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -345,14 +500,17 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 0.5rem 0rem;
+  overflow-x: scroll;
+  padding: 1rem 0rem;
+  gap: 2rem;
 }
 
-.home-page .add-trip-btn .icon-wrapper .icon {
-  font-size: 2rem;
-}
-
-.home-page .add-trip-btn:hover {
-  opacity: 0.85;
+.home-page .new-trip-modal .color-picker-box .color-swatch-list .swatch {
+  border: none;
+  outline: none;
+  min-height: 3rem;
+  min-width: 3rem;
+  border-radius: 2rem;
+  margin-bottom: 0.75rem;
 }
 /*# sourceMappingURL=main.css.map */

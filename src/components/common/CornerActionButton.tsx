@@ -1,30 +1,41 @@
 /** @format */
 
 import { useContext } from "react";
-import { IoAddCircle } from "react-icons/io5";
+import { IconType } from "react-icons/lib";
 
 import { ThemeContext } from "../../context/ThemeContext";
 
-const AddTripButton = () => {
+type CornerActionButtonProps = {
+  text: string;
+  Icon: IconType;
+  clickAction: () => void;
+};
+
+const CornerActionButton = ({
+  text,
+  Icon,
+  clickAction,
+}: CornerActionButtonProps) => {
   const theme = useContext(ThemeContext).theme;
 
   return (
     <button
-      className="add-trip-btn"
+      className="corner-action-btn"
       style={{
         backgroundColor: `${theme.background}`,
         boxShadow: `0px 2px 15px 5px ${theme.text}15`,
       }}
+      onClick={clickAction}
     >
       <span
         style={{
           color: `${theme.greyText}`,
         }}
       >
-        Add Trip
+        {text}
       </span>
       <div className="icon-wrapper">
-        <IoAddCircle
+        <Icon
           className="icon"
           style={{
             color: `${theme.text}`,
@@ -35,4 +46,4 @@ const AddTripButton = () => {
   );
 };
 
-export default AddTripButton;
+export default CornerActionButton;

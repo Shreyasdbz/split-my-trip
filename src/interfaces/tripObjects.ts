@@ -1,5 +1,7 @@
 /** @format */
 
+import { Timestamp } from "@firebase/firestore-types";
+
 export type PersonType = {
   id: string;
   name: string;
@@ -21,7 +23,7 @@ export type ActivityType = {
 export type TripType = {
   id: string;
   title: string;
-  createdAt: number;
+  createdAt: Timestamp;
   colorId: number;
   peopleList: PersonType[];
   activityList: ActivityType[];
