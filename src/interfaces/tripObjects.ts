@@ -1,7 +1,5 @@
 /** @format */
 
-import { Timestamp } from "@firebase/firestore-types";
-
 export type PersonType = {
   id: string;
   name: string;

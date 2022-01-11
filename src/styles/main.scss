@@ -144,17 +144,24 @@
     }
   }
 
+  .person-modal {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    border-radius: 2rem;
+    padding: 1rem 0rem;
+    gap: 1.5rem;
+  }
+
   .title {
     span {
       font-size: 1.5rem;
       font-weight: 600;
     }
-  }
-
-  .caption {
-    align-self: flex-start;
-    font-weight: 700;
-    font-size: 0.75rem;
   }
 
   .input-box {
@@ -164,6 +171,12 @@
     flex-direction: column;
     width: 80%;
     gap: 0.125rem;
+
+    .caption {
+      align-self: flex-start;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
 
     .input {
       width: 100%;
@@ -498,6 +511,7 @@
         padding: 0.5rem 1rem;
         border-radius: 0.75rem;
         margin: 1rem 0rem;
+        margin-bottom: 2rem;
 
         span {
           font-size: 1.125rem;

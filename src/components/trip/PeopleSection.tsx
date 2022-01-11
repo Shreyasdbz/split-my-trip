@@ -6,8 +6,13 @@ import { useParams } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TripsContext } from "../../context/TripsContext";
 import { getTripColorById } from "../../helpers/colors";
+import { AddPersonTypes } from "../../interfaces/tripView";
 
-const PeopleSection = () => {
+type PeopleSectionProps = {
+  addHandler: (payload: AddPersonTypes) => void;
+};
+
+const PeopleSection = ({ addHandler }: PeopleSectionProps) => {
   const theme = useContext(ThemeContext).theme;
   let tripId = useParams().tripID;
   const getTripByIdFunction = useContext(TripsContext).getTripById;
@@ -22,6 +27,9 @@ const PeopleSection = () => {
           style={{
             backgroundColor: `${theme.greyBackground}`,
             color: `${theme.greyText}`,
+          }}
+          onClick={() => {
+            addHandler({ action: "OPEN" });
           }}
         >
           +ADD

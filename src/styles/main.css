@@ -189,16 +189,31 @@
   margin-bottom: 0.75rem;
 }
 
+.modal .person-modal {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+  gap: 1.5rem;
+}
+
 .modal .title span {
   font-size: 1.5rem;
   font-weight: 600;
-}
-
-.modal .caption {
-  -ms-flex-item-align: start;
-      align-self: flex-start;
-  font-weight: 700;
-  font-size: 0.75rem;
 }
 
 .modal .input-box {
@@ -217,6 +232,13 @@
           flex-direction: column;
   width: 80%;
   gap: 0.125rem;
+}
+
+.modal .input-box .caption {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-weight: 700;
+  font-size: 0.75rem;
 }
 
 .modal .input-box .input {
@@ -658,6 +680,7 @@
   padding: 0.5rem 1rem;
   border-radius: 0.75rem;
   margin: 1rem 0rem;
+  margin-bottom: 2rem;
 }
 
 .trip-page .people-section .people-list .person span {
