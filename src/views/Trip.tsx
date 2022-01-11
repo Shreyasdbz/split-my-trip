@@ -4,12 +4,13 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { TripsContext } from "../context/TripsContext";
-import { HandleEditTripTypes } from "../interfaces/tripView";
+import { EditTripTypes } from "../interfaces/tripView";
 
 import Header from "../components/trip/Header";
 import EditTripButton from "../components/trip/EditTripButton";
 import PeopleSection from "../components/trip/PeopleSection";
-// import { getTripColorById } from "../helpers/colors";
+import Modal from "../components/common/Modal";
+import EditTripModal from "../components/trip/EditTripModal";
 
 const Trip = () => {
   let tripId = useParams().tripID;
@@ -18,8 +19,9 @@ const Trip = () => {
 
   const [editTripModalActive, setEditTripModalActive] = useState(false);
 
-  function handleEditTrip(payload: HandleEditTripTypes) {
+  function handleEditTrip(payload: EditTripTypes) {
     if (payload.action === "OPEN") {
+      setEditTripModalActive(true);
       //
     } else if (payload.action === "CLOSE") {
       setEditTripModalActive(false);
@@ -33,9 +35,12 @@ const Trip = () => {
   return (
     <div className="page trip-page">
       <Header title={trip.title} colorId={trip.colorId} />
+      <Modal activeOn={editTripModalActive}>
+        <EditTripModal handler={handleEditTrip} />
+      </Modal>
       {editTripModalActive && <div className="blur-layer" />}
       <div className="page-container">
-        <EditTripButton />
+        <EditTripButton handler={handleEditTrip} />
         <PeopleSection />
       </div>
     </div>

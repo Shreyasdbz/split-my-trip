@@ -2,8 +2,13 @@
 import { useContext } from "react";
 
 import { ThemeContext } from "../../context/ThemeContext";
+import { EditTripTypes } from "../../interfaces/tripView";
 
-const EditTripButton = () => {
+type EditTripButtonProps = {
+  handler: (payload: EditTripTypes) => void;
+};
+
+const EditTripButton = ({ handler }: EditTripButtonProps) => {
   const theme = useContext(ThemeContext).theme;
   return (
     <button
@@ -11,6 +16,9 @@ const EditTripButton = () => {
       style={{
         backgroundColor: `${theme.background}`,
         border: `2px solid ${theme.text}`,
+      }}
+      onClick={() => {
+        handler({ action: "OPEN" });
       }}
     >
       Edit Trip

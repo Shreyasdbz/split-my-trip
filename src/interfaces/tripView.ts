@@ -1,16 +1,14 @@
 /** @format */
 
-type HandleEditTripBasicType = {
+type EditTripBasicType = {
   action: "OPEN" | "CLOSE";
 };
 
-type HandleEditTripCONFIRMType = {
+type EditTripConfirmType = {
   action: "CONFIRM";
   title: string;
   colorId: number;
   deleteTrip: boolean;
 };
 
-export type HandleEditTripTypes =
-  | HandleEditTripBasicType
-  | HandleEditTripCONFIRMType;
+export type EditTripTypes = EditTripBasicType | EditTripConfirmType;

@@ -116,8 +116,8 @@
   padding: 0.025rem 2rem;
   font-size: 0.85rem;
   text-decoration: none;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
   font-weight: 600;
 }
 
@@ -136,6 +136,57 @@
           justify-content: center;
   min-height: 50vh;
   z-index: 3;
+}
+
+.modal .trip-modal {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+  gap: 1.5rem;
+}
+
+.modal .trip-modal .color-picker-box {
+  width: 85%;
+}
+
+.modal .trip-modal .color-picker-box .color-swatch-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  overflow-x: scroll;
+  padding: 1rem 0rem;
+  gap: 2rem;
+}
+
+.modal .trip-modal .color-picker-box .color-swatch-list .swatch {
+  border: none;
+  outline: none;
+  min-height: 3rem;
+  min-width: 3rem;
+  border-radius: 2rem;
+  margin-bottom: 0.75rem;
 }
 
 .modal .title span {
@@ -216,7 +267,18 @@
 }
 
 .modal .actions .btn-confirm {
-  padding: 0.35rem 1.5rem;
+  padding: 0.5rem 1.5rem;
+}
+
+.modal .triple-actions {
+  gap: 0rem;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.modal .triple-actions .btn-delete .link {
+  text-decoration: none;
 }
 
 .sign-on-page .images {
@@ -462,56 +524,6 @@
   font-size: 2rem;
   font-weight: 800;
   color: white;
-}
-
-.home-page .new-trip-modal {
-  margin-top: 3rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 80%;
-  border-radius: 2rem;
-  padding: 1rem 0rem;
-  gap: 1.5rem;
-}
-
-.home-page .new-trip-modal .color-picker-box {
-  width: 85%;
-}
-
-.home-page .new-trip-modal .color-picker-box .color-swatch-list {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  overflow-x: scroll;
-  padding: 1rem 0rem;
-  gap: 2rem;
-}
-
-.home-page .new-trip-modal .color-picker-box .color-swatch-list .swatch {
-  border: none;
-  outline: none;
-  min-height: 3rem;
-  min-width: 3rem;
-  border-radius: 2rem;
-  margin-bottom: 0.75rem;
 }
 
 .trip-page .header {

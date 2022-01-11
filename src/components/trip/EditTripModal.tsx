@@ -1,19 +1,26 @@
 /** @format */
-import { useState, useContext } from "react";
+
+import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { tripColors } from "../../styles/tripColors";
-import { NewTripTypes } from "../../interfaces/homeView";
+import { EditTripTypes } from "../../interfaces/tripView";
 import { ThemeContext } from "../../context/ThemeContext";
-import { getRandomTripName } from "../../helpers/trips";
+import { TripsContext } from "../../context/TripsContext";
 
-type NewTripModalProps = {
-  handler: (payload: NewTripTypes) => void;
+type EditTripModalProps = {
+  handler: (payload: EditTripTypes) => void;
 };
 
-const NewTripModal = ({ handler }: NewTripModalProps) => {
+const EditTripModal = ({ handler }: EditTripModalProps) => {
   const theme = useContext(ThemeContext).theme;
-  const [title, setTitle] = useState<string>(getRandomTripName());
-  const [colorId, setColorId] = useState<number>(1);
+  let tripId = useParams().tripID;
+  const getTripByIdFunction = useContext(TripsContext).getTripById;
+  const trip = getTripByIdFunction(tripId);
+
+  const [title, setTitle] = useState<string>(trip.title);
+  const [colorId, setColorId] = useState<number>(trip.colorId);
 
   let selectedSwatchOutline = `5px solid ${theme.greyText}50`;
 
@@ -26,7 +33,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a new trip</span>
+        <span>Edit Trip</span>
       </div>
       <div className="input-box">
         <span
@@ -82,7 +89,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
           })}
         </div>
       </div>
-      <div className="actions">
+      <div className="actions triple-actions">
         <button
           onClick={() => {
             handler({ action: "CLOSE" });
@@ -95,12 +102,31 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
         >
           Cancel
         </button>
-        <div
-          className="divider"
+
+        <button
+          className="btn-delete"
           style={{
-            backgroundColor: `${theme.greyBackground}`,
+            backgroundColor: `${theme.background}`,
           }}
-        />
+          onClick={() => {
+            handler({
+              action: "CONFIRM",
+              title: title,
+              colorId: colorId,
+              deleteTrip: true,
+            });
+          }}
+        >
+          <Link
+            to={`/`}
+            className="link"
+            style={{
+              color: `${theme.danger}`,
+            }}
+          >
+            Delete
+          </Link>
+        </button>
         <button
           className="btn-confirm"
           style={{
@@ -112,14 +138,15 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
               action: "CONFIRM",
               title: title,
               colorId: colorId,
+              deleteTrip: false,
             });
           }}
         >
-          Add
+          Save
         </button>
       </div>
     </div>
   );
 };
 
-export default NewTripModal;
+export default EditTripModal;

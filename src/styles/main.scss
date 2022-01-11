@@ -89,12 +89,11 @@
 .info-link {
   position: fixed;
   bottom: 0rem;
-
   padding: 0.025rem 2rem;
   font-size: 0.85rem;
   text-decoration: none;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
   font-weight: 600;
 }
 
@@ -107,6 +106,43 @@
   justify-content: center;
   min-height: 50vh;
   z-index: 3;
+
+  .trip-modal {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+    border-radius: 2rem;
+    padding: 1rem 0rem;
+    gap: 1.5rem;
+
+    .color-picker-box {
+      width: 85%;
+
+      .color-swatch-list {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-x: scroll;
+        padding: 1rem 0rem;
+        gap: 2rem;
+        // padding: 2rem 5rem;
+
+        .swatch {
+          border: none;
+          outline: none;
+          min-height: 3rem;
+          min-width: 3rem;
+          border-radius: 2rem;
+          margin-bottom: 0.75rem;
+        }
+      }
+    }
+  }
 
   .title {
     span {
@@ -168,7 +204,18 @@
     }
 
     .btn-confirm {
-      padding: 0.35rem 1.5rem;
+      padding: 0.5rem 1.5rem;
+    }
+  }
+
+  .triple-actions {
+    gap: 0rem;
+    justify-content: center;
+
+    .btn-delete {
+      .link {
+        text-decoration: none;
+      }
     }
   }
 }
@@ -348,42 +395,6 @@
           font-size: 2rem;
           font-weight: 800;
           color: white;
-        }
-      }
-    }
-  }
-
-  .new-trip-modal {
-    margin-top: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 80%;
-    border-radius: 2rem;
-    padding: 1rem 0rem;
-    gap: 1.5rem;
-
-    .color-picker-box {
-      width: 85%;
-
-      .color-swatch-list {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        overflow-x: scroll;
-        padding: 1rem 0rem;
-        gap: 2rem;
-        // padding: 2rem 5rem;
-
-        .swatch {
-          border: none;
-          outline: none;
-          min-height: 3rem;
-          min-width: 3rem;
-          border-radius: 2rem;
-          margin-bottom: 0.75rem;
         }
       }
     }
