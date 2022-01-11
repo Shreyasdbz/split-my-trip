@@ -6,16 +6,15 @@ import { Link } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TripsContext } from "../../context/TripsContext";
 import { getTripColorById } from "../../helpers/colors";
-import { getTrips } from "../../helpers/user";
 
 const TripsList = () => {
   const theme = useContext(ThemeContext).theme;
   const trips = useContext(TripsContext).tripsList;
-  const loadTrips = useContext(TripsContext).loadTrips;
+  const refreshTripsFunction = useContext(TripsContext).refreshTrips;
 
   useEffect(() => {
-    loadTrips();
-  }, [loadTrips]);
+    refreshTripsFunction();
+  }, [refreshTripsFunction]);
 
   return (
     <div className="trips-list-view">
@@ -26,7 +25,7 @@ const TripsList = () => {
         {trips.map((trip) => {
           return (
             <Link
-              to={`/trip${trip.title}`}
+              to={`/trip${trip.id}`}
               key={trip.id}
               className="trip-box"
               style={{

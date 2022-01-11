@@ -1,6 +1,6 @@
 /** @format */
 
-type NewTripBaicType = {
+type NewTripBasicType = {
   action: "OPEN" | "CLOSE";
 };
 
@@ -10,4 +10,4 @@ type NewTripAddType = {
   colorId: number;
 };
 
-export type NewTripTypes = NewTripBaicType | NewTripAddType;
+export type NewTripTypes = NewTripBasicType | NewTripAddType;

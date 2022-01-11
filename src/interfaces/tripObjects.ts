@@ -23,7 +23,6 @@ export type ActivityType = {
 export type TripType = {
   id: string;
   title: string;
-  createdAt: Timestamp;
   colorId: number;
   peopleList: PersonType[];
   activityList: ActivityType[];

@@ -2,18 +2,25 @@
 
 import { useContext } from "react";
 import { IoLogoGoogle } from "react-icons/io5";
-import { getAuth, signInWithPopup } from "@firebase/auth";
+import { signInWithPopup } from "@firebase/auth";
 
 import { firebase_auth, firebase_google_provider } from "../config/firebase";
 import { ThemeContext } from "../context/ThemeContext";
+import { TripsContext } from "../context/TripsContext";
 
 import InfoTab from "../components/common/InfoTab";
 
 const SignOn = () => {
+  const initiateTripsFunction = useContext(TripsContext).initiateTrips;
+
   function signIn() {
-    signInWithPopup(firebase_auth, firebase_google_provider).catch((errMsg) =>
-      alert(errMsg)
-    );
+    signInWithPopup(firebase_auth, firebase_google_provider)
+      .then(() => {
+        initiateTripsFunction();
+      })
+      .catch((errMsg) => {
+        console.log("[SignOn.tsx] -- signInWithPopup ERROR: ", errMsg);
+      });
   }
 
   const theme = useContext(ThemeContext).theme;

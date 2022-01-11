@@ -12,7 +12,7 @@ const InfoTab = () => {
       href="https://github.com/Shreyasdbz/split-my-trip"
       target={"_blank"}
       rel="noreferrer"
-      className="link"
+      className="info-link"
       style={{
         backgroundColor: `${theme.greyBackground}`,
         color: `${theme.greyText}`,

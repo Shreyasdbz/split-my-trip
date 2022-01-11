@@ -13,7 +13,7 @@ const Header = () => {
     <div
       className="header"
       style={{
-        boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+        boxShadow: `0px 2px 15px 5px ${theme.text}25`,
       }}
     >
       <span
@@ -27,7 +27,9 @@ const Header = () => {
       <button
         className="icon-btn"
         onClick={() => {
-          firebase_auth.signOut();
+          firebase_auth.signOut().catch((errMsg) => {
+            alert(errMsg);
+          });
         }}
       >
         <IoPersonCircleOutline className="icon" />

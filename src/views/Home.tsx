@@ -1,11 +1,10 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
-import { TripType } from "../interfaces/tripObjects";
 import { NewTripTypes } from "../interfaces/homeView";
-import { initialUserPrep } from "../helpers/user";
+import { TripsContext } from "../context/TripsContext";
 
 import Header from "../components/home/Header";
 import TripsList from "../components/home/TripsList";
@@ -15,30 +14,27 @@ import Modal from "../components/common/Modal";
 import NewTripModal from "../components/home/NewTripModal";
 
 const Home = () => {
-  const [tripsList, setTripsList] = useState<TripType[]>([]);
-  const [newTripModalActive, setNewTripModalActive] = useState(false);
+  const [addTripModalActive, setaddTripModalActive] = useState(false);
+  const addTripFunction = useContext(TripsContext).addTrip;
 
   const newTrip = async (payload: NewTripTypes) => {
     if (payload.action === "OPEN") {
       // Open the modal
-      setNewTripModalActive(true);
+      setaddTripModalActive(true);
     } else if (payload.action === "CLOSE") {
       // Close the modal
-      setNewTripModalActive(false);
+      setaddTripModalActive(false);
     } else if (payload.action === "CONFIRM") {
       // Pack and send the object to firestore
-      setNewTripModalActive(false);
+      setaddTripModalActive(false);
+      addTripFunction(payload.title, payload.colorId);
     }
   };
 
-  useEffect(() => {
-    initialUserPrep();
-  }, []);
-
   return (
     <div className="page home-page">
-      {newTripModalActive && <div className="blur-layer" />}
-      <Modal activeOn={newTripModalActive}>
+      {addTripModalActive && <div className="blur-layer" />}
+      <Modal activeOn={addTripModalActive}>
         <NewTripModal handler={newTrip} />
       </Modal>
       <Header />

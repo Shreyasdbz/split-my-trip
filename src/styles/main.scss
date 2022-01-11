@@ -86,15 +86,15 @@
   }
 }
 
-.link {
+.info-link {
   position: fixed;
   bottom: 0rem;
 
-  padding: 0.125rem 2rem;
+  padding: 0.025rem 2rem;
   font-size: 0.85rem;
   text-decoration: none;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   font-weight: 600;
 }
 
@@ -126,7 +126,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 85%;
+    width: 80%;
     gap: 0.125rem;
 
     .input {
@@ -137,7 +137,7 @@
       font-size: 1.25rem;
       font-weight: 600;
       border-radius: 0.75rem;
-      padding: 0.5rem 0.25rem;
+      padding: 0.5rem 0.5rem;
     }
   }
 
@@ -362,7 +362,7 @@
     width: 80%;
     border-radius: 2rem;
     padding: 1rem 0rem;
-    gap: 1rem;
+    gap: 1.5rem;
 
     .color-picker-box {
       width: 85%;
@@ -371,7 +371,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         overflow-x: scroll;
         padding: 1rem 0rem;
         gap: 2rem;
@@ -393,3 +393,107 @@
 // ********************************
 // TRIP
 // ********************************
+.trip-page {
+  .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    padding: 1.5rem 0rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+
+    .title {
+      font-size: 2rem;
+      font-family: bely-display, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      margin-right: 1rem;
+    }
+
+    .icon-btn {
+      outline: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2rem;
+      margin-left: 1rem;
+      text-decoration: none;
+
+      .icon {
+        font-size: 2rem;
+        border-radius: 2rem;
+      }
+    }
+  }
+
+  .edit-trip-btn {
+    margin-top: 2rem;
+    border-radius: 1rem;
+    padding: 0.25rem 2rem;
+  }
+
+  .trip-view-section {
+    .section-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-size: 1.75rem;
+        font-weight: 700;
+        width: 100%;
+      }
+
+      .add-btn {
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        font-weight: 800;
+        border-radius: 0.75rem;
+        padding: 0.125rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .people-section {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 95%;
+
+    .people-list {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.5rem;
+      overflow-x: scroll;
+      padding-left: 2rem;
+
+      .person {
+        border: none;
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.75rem;
+        margin: 1rem 0rem;
+
+        span {
+          font-size: 1.125rem;
+          font-weight: 600;
+          color: white;
+        }
+      }
+    }
+  }
+}

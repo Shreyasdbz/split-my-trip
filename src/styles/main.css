@@ -110,14 +110,14 @@
   opacity: 0.85;
 }
 
-.link {
+.info-link {
   position: fixed;
   bottom: 0rem;
-  padding: 0.125rem 2rem;
+  padding: 0.025rem 2rem;
   font-size: 0.85rem;
   text-decoration: none;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   font-weight: 600;
 }
 
@@ -164,7 +164,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 85%;
+  width: 80%;
   gap: 0.125rem;
 }
 
@@ -176,7 +176,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   border-radius: 0.75rem;
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .modal .actions {
@@ -482,7 +482,7 @@
   width: 80%;
   border-radius: 2rem;
   padding: 1rem 0rem;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .home-page .new-trip-modal .color-picker-box {
@@ -497,9 +497,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   overflow-x: scroll;
   padding: 1rem 0rem;
   gap: 2rem;
@@ -512,5 +512,145 @@
   min-width: 3rem;
   border-radius: 2rem;
   margin-bottom: 0.75rem;
+}
+
+.trip-page .header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 3rem;
+  padding: 1.5rem 0rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.trip-page .header .title {
+  font-size: 2rem;
+  font-family: bely-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-right: 1rem;
+}
+
+.trip-page .header .icon-btn {
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 2rem;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.trip-page .header .icon-btn .icon {
+  font-size: 2rem;
+  border-radius: 2rem;
+}
+
+.trip-page .edit-trip-btn {
+  margin-top: 2rem;
+  border-radius: 1rem;
+  padding: 0.25rem 2rem;
+}
+
+.trip-page .trip-view-section .section-header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.trip-page .trip-view-section .section-header span {
+  font-size: 1.75rem;
+  font-weight: 700;
+  width: 100%;
+}
+
+.trip-page .trip-view-section .section-header .add-btn {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.trip-page .people-section {
+  margin-top: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 95%;
+}
+
+.trip-page .people-section .people-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  gap: 1.5rem;
+  overflow-x: scroll;
+  padding-left: 2rem;
+}
+
+.trip-page .people-section .people-list .person {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  margin: 1rem 0rem;
+}
+
+.trip-page .people-section .people-list .person span {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
 }
 /*# sourceMappingURL=main.css.map */

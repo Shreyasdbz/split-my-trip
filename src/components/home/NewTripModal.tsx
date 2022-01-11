@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { tripColors } from "../../styles/tripColors";
 import { NewTripTypes } from "../../interfaces/homeView";
 import { ThemeContext } from "../../context/ThemeContext";
+import { getRandomTripName } from "../../helpers/trips";
 
 type NewTripModalProps = {
   handler: (payload: NewTripTypes) => void;
@@ -11,7 +12,7 @@ type NewTripModalProps = {
 
 const NewTripModal = ({ handler }: NewTripModalProps) => {
   const theme = useContext(ThemeContext).theme;
-  const [title, setTitle] = useState<string>("Camping");
+  const [title, setTitle] = useState<string>(getRandomTripName());
   const [colorId, setColorId] = useState<number>(1);
 
   let selectedSwatchOutline = `5px solid ${theme.greyText}50`;
@@ -65,7 +66,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
                 style={{
                   backgroundColor: `${col.backgroundColor}`,
                   backgroundImage: `${col.backgroundImage}`,
-                  marginLeft: `${col === tripColors[0] ? "25rem" : "0rem"}`,
+                  marginLeft: `${col === tripColors[0] ? "2rem" : "0rem"}`,
                   marginRight: `${
                     col === tripColors[tripColors.length - 1] ? "2rem" : "0rem"
                   }`,

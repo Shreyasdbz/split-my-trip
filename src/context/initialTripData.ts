@@ -1,13 +1,10 @@
 /** @format */
 
-import { Timestamp } from "@firebase/firestore";
-
 import { TripType } from "../interfaces/tripObjects";
 
 let sampleTrip1: TripType = {
   id: "sampleTripId001",
   title: "Camping",
-  createdAt: new Timestamp(100, 200),
   colorId: 5,
   peopleList: [
     {
@@ -63,8 +60,7 @@ let sampleTrip1: TripType = {
 let sampleTrip2: TripType = {
   id: "sampleTripId002",
   title: "Colorado",
-  createdAt: new Timestamp(100, 200),
-  colorId: 8,
+  colorId: 1,
   peopleList: [
     {
       id: "trip1Person1",
@@ -138,8 +134,7 @@ let sampleTrip2: TripType = {
 let sampleTrip3: TripType = {
   id: "sampleTripId003",
   title: "Office Party",
-  createdAt: new Timestamp(100, 200),
-  colorId: 4,
+  colorId: 8,
   peopleList: [
     {
       id: "trip1Person1",
