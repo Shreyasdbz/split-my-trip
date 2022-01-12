@@ -5,15 +5,23 @@ import { useContext, useState } from "react";
 import { AddActivityTypes } from "../../interfaces/tripView";
 import { ThemeContext } from "../../context/ThemeContext";
 import { getRandomActivityName } from "../../helpers/trips";
+import { PersonType } from "../../interfaces/tripObjects";
+
+import DropDownSelector from "../misc/DropDownSelector";
+import ParticipantToggles from "./ParticipantToggles";
 
 type AddActivityModalProps = {
   handler: (payload: AddActivityTypes) => void;
+  peopleList: PersonType[];
 };
 
-const AddActivityModal = ({ handler }: AddActivityModalProps) => {
+const AddActivityModal = ({ handler, peopleList }: AddActivityModalProps) => {
   const theme = useContext(ThemeContext).theme;
   const [title, setTitle] = useState(getRandomActivityName());
   const [cost, setCost] = useState<number>(Math.floor(Math.random() * 1000));
+  const [payerIdSelection, setPayerIdSelection] = useState(
+    peopleList[Math.floor(Math.random() * peopleList.length)].id
+  );
 
   return (
     <div
@@ -76,16 +84,22 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
           >
             PAYER
           </span>
-          <input
-            type="number"
-            value={cost}
-            onChange={(e) => setCost(parseFloat(e.target.value))}
-            className="input"
-            style={{
-              backgroundColor: `${theme.greyBackground}`,
-              border: `2px solid ${theme.text}5`,
-            }}
+          <DropDownSelector
+            selectedValue={payerIdSelection}
+            onSelect={setPayerIdSelection}
+            selectionList={peopleList}
           />
+        </div>
+        <div className="input-box">
+          <span
+            className="caption"
+            style={{
+              color: `${theme.greyText}`,
+            }}
+          >
+            PARTICIPANTS
+          </span>
+          <ParticipantToggles />
         </div>
       </div>
       <div className="actions">

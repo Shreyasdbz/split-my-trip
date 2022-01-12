@@ -46,6 +46,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100vw;
+  max-width: 900px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -142,6 +143,7 @@
 }
 
 .modal .trip-modal {
+  max-width: 400px;
   margin-top: 3rem;
   margin-bottom: 3rem;
   display: -webkit-box;
@@ -193,6 +195,7 @@
 }
 
 .modal .person-modal {
+  max-width: 400px;
   margin-top: 5rem;
   margin-bottom: 3rem;
   display: -webkit-box;
@@ -215,6 +218,7 @@
 }
 
 .modal .activity-modal {
+  max-width: 400px;
   margin-top: 3rem;
   margin-bottom: 10rem;
   overflow-y: scroll;
@@ -296,6 +300,72 @@
   padding: 0.5rem 0.5rem;
 }
 
+.modal .drop-down-selector {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 0.75rem;
+  padding: 0rem 0.5rem;
+}
+
+.modal .drop-down-selector .selection-btn {
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-radius: 0.75rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.modal .drop-down-selector .selection-btn span {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 0.5rem 0.5rem;
+}
+
+.modal .drop-down-selector .selection-btn .icon {
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 0.5rem 0.5rem;
+}
+
+.modal .drop-down-selector .selection-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.modal .drop-down-selector .selection-list .selection-option {
+  border: none;
+  outline: none;
+  font-size: 1.125rem;
+  padding-left: 0.5rem;
+}
+
+.modal .drop-down-selector:hover .icon {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
 .modal .actions {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -345,6 +415,12 @@
 
 .modal .triple-actions .btn-delete .link {
   text-decoration: none;
+}
+
+.sign-on-page .page-container {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .sign-on-page .images {
@@ -461,6 +537,18 @@
 
 .sign-on-page .sign-on-btn:hover {
   opacity: 0.9;
+}
+
+@media (min-width: 600px) {
+  .sign-on-page .images {
+    gap: 5rem;
+    -webkit-transform: scale(1.25);
+            transform: scale(1.25);
+  }
+  .sign-on-page .images .imgRight {
+    -webkit-transform: rotate(15deg) translateX(-5rem) translateY(15rem) scale(1.35);
+            transform: rotate(15deg) translateX(-5rem) translateY(15rem) scale(1.35);
+  }
 }
 
 .home-page .header {

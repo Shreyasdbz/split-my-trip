@@ -119,7 +119,10 @@ const Trip = () => {
 
       {/* Add Activity Modal */}
       <Modal activeOn={addActivityModalActive}>
-        <AddActivityModal handler={handleAddActivity} />
+        <AddActivityModal
+          handler={handleAddActivity}
+          peopleList={trip.peopleList}
+        />
       </Modal>
 
       {(editTripModalActive ||

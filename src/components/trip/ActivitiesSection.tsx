@@ -49,7 +49,7 @@ const ActivitiesSection = ({ addHandler }: PeopleSectionProps) => {
                 backgroundImage: `${
                   getTripColorById(trip.colorId).backgroundImage
                 }`,
-                boxShadow: `0px 2px 15px 5px ${theme.text}25`,
+                boxShadow: `0px 2px 15px 5px ${theme.text}15`,
               }}
             >
               <div className="top-section">

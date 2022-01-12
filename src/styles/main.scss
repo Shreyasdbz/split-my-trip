@@ -37,6 +37,7 @@
   justify-content: flex-start;
   flex-direction: column;
   width: 100vw;
+  max-width: 900px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -111,6 +112,7 @@
   z-index: 3;
 
   .trip-modal {
+    max-width: 400px;
     margin-top: 3rem;
     margin-bottom: 3rem;
     display: flex;
@@ -148,6 +150,7 @@
   }
 
   .person-modal {
+    max-width: 400px;
     margin-top: 5rem;
     margin-bottom: 3rem;
     display: flex;
@@ -161,6 +164,7 @@
   }
 
   .activity-modal {
+    max-width: 400px;
     margin-top: 3rem;
     margin-bottom: 10rem;
     overflow-y: scroll;
@@ -216,6 +220,58 @@
     }
   }
 
+  .drop-down-selector {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 0.75rem;
+    padding: 0rem 0.5rem;
+
+    .selection-btn {
+      height: 100%;
+      width: 100%;
+      border: none;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 0.5rem 0.5rem;
+      }
+
+      .icon {
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 0.5rem 0.5rem;
+      }
+    }
+
+    .selection-list {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+
+      .selection-option {
+        border: none;
+        outline: none;
+        font-size: 1.125rem;
+        padding-left: 0.5rem;
+      }
+    }
+
+    &:hover {
+      .icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
   .actions {
     display: flex;
     align-items: center;
@@ -263,6 +319,10 @@
 // SIGN ON
 // ********************************
 .sign-on-page {
+  .page-container {
+    justify-content: space-between;
+  }
+
   .images {
     width: 100%;
     display: flex;
@@ -344,6 +404,17 @@
     }
     &:hover {
       opacity: 0.9;
+    }
+  }
+
+  @media (min-width: 600px) {
+    .images {
+      gap: 5rem;
+      transform: scale(1.25);
+
+      .imgRight {
+        transform: rotate(15deg) translateX(-5rem) translateY(15rem) scale(1.35);
+      }
     }
   }
 }
