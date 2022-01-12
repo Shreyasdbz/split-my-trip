@@ -8,6 +8,7 @@ import {
   EditTripTypes,
   AddPersonTypes,
   EditPersonTypes,
+  AddActivityTypes,
 } from "../interfaces/tripView";
 import { TripType, PersonType } from "../interfaces/tripObjects";
 
@@ -18,12 +19,15 @@ import Modal from "../components/common/Modal";
 import EditTripModal from "../components/trip/EditTripModal";
 import AddPersonModal from "../components/trip/AddPersonModal";
 import EditPersonModal from "../components/trip/EditPersonModal";
+import AddActivityModal from "../components/trip/AddActivityModal";
+import ActivitiesSection from "../components/trip/ActivitiesSection";
 
 const Trip = () => {
   const getTripByIdFunction = useContext(TripsContext).getTripById;
   const updateTripFunction = useContext(TripsContext).updateTrip;
   const addPersonFunction = useContext(TripsContext).addPerson;
   const updatePersonFunction = useContext(TripsContext).updatePerson;
+  const addActivityFunction = useContext(TripsContext).addActivity;
 
   let tripId = useParams().tripID;
   const trip = getTripByIdFunction(tripId);
@@ -31,6 +35,8 @@ const Trip = () => {
   const [editTripModalActive, setEditTripModalActive] = useState(false);
   const [addPersonModalActive, setAddPersonModalActive] = useState(false);
   const [editPersonModalActive, setEditPersonModalActive] = useState(false);
+  const [addActivityModalActive, setAddActivityModalActive] = useState(false);
+
   const [editPerson, setEditPerson] = useState<PersonType>({} as PersonType);
 
   function handleEditTrip(payload: EditTripTypes) {
@@ -74,9 +80,16 @@ const Trip = () => {
     }
   }
 
-  // function handleNewActivity() {
-  //   //
-  // }
+  function handleAddActivity(payload: AddActivityTypes) {
+    if (payload.action === "OPEN") {
+      setAddActivityModalActive(true);
+    } else if (payload.action === "CLOSE") {
+      setAddActivityModalActive(false);
+    } else if (payload.action === "CONFIRM") {
+      addActivityFunction(trip.id, payload.activity);
+      setAddActivityModalActive(false);
+    }
+  }
   // function handleEditActivity() {
   //   //
   // }
@@ -88,27 +101,39 @@ const Trip = () => {
   return (
     <div className="page trip-page">
       <Header title={trip.title} colorId={trip.colorId} />
+
       {/* Edit Trip Modal */}
       <Modal activeOn={editTripModalActive}>
         <EditTripModal handler={handleEditTrip} />
       </Modal>
+
       {/* New Person Modal */}
       <Modal activeOn={addPersonModalActive}>
         <AddPersonModal handler={handleAddPerson} />
       </Modal>
+
       {/* Edit Person Modal */}
       <Modal activeOn={editPersonModalActive}>
         <EditPersonModal person={editPerson} handler={handleEditPerson} />
       </Modal>
+
+      {/* Add Activity Modal */}
+      <Modal activeOn={addActivityModalActive}>
+        <AddActivityModal handler={handleAddActivity} />
+      </Modal>
+
       {(editTripModalActive ||
         addPersonModalActive ||
-        editPersonModalActive) && <div className="blur-layer" />}
+        editPersonModalActive ||
+        addActivityModalActive) && <div className="blur-layer" />}
+
       <div className="page-container">
         <EditTripButton handler={handleEditTrip} />
         <PeopleSection
           addHandler={handleAddPerson}
           editHandler={handleEditPerson}
         />
+        <ActivitiesSection addHandler={handleAddActivity} />
       </div>
     </div>
   );

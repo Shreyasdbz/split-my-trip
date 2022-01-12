@@ -462,6 +462,13 @@
   }
 
   .trip-view-section {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 95%;
+
     .section-header {
       width: 100%;
       display: flex;
@@ -489,13 +496,6 @@
   }
 
   .people-section {
-    margin-top: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 95%;
-
     .people-list {
       width: 100%;
       display: flex;
@@ -517,6 +517,107 @@
           font-size: 1.125rem;
           font-weight: 600;
           color: white;
+        }
+      }
+    }
+  }
+
+  .activities-section {
+    margin-bottom: 5rem;
+    .activities-list {
+      margin-top: 1rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .activity {
+        width: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1rem;
+        border: none;
+        outline: none;
+        border-radius: 1.75rem;
+
+        .top-section {
+          margin-top: 1rem;
+          width: 90%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .title {
+            span {
+              color: white;
+              font-size: 1.25rem;
+              font-weight: 800;
+            }
+          }
+          .cost {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            span {
+              background-color: white;
+              font-size: 1.25rem;
+              font-weight: 600;
+              border-radius: 2rem;
+              padding: 0.25rem 1rem;
+            }
+          }
+        }
+
+        .divider {
+          width: 90%;
+          height: 0.125rem;
+          border-radius: 2rem;
+        }
+
+        .bottom-section {
+          margin-bottom: 1rem;
+          width: 90%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+
+          .paid-by {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.5rem;
+
+            .label {
+              font-size: 1.125rem;
+              font-weight: 800;
+              color: black;
+            }
+            .payer {
+              font-size: 1.125rem;
+              font-weight: 600;
+              color: white;
+            }
+          }
+
+          .participant-list {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+
+            .participant {
+              font-size: 1.125rem;
+              font-weight: 600;
+              color: white;
+            }
+          }
         }
       }
     }

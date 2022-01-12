@@ -4,7 +4,7 @@ import React, { useState, createContext } from "react";
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
-import { PersonType, TripType } from "../interfaces/tripObjects";
+import { PersonType, ActivityType, TripType } from "../interfaces/tripObjects";
 import { firebase_auth, firebase_firestore } from "../config/firebase";
 import { initialTripData } from "./initialTripData";
 import { encodeTrips, decodeTrips } from "../helpers/trips";
@@ -22,6 +22,7 @@ type TripsContextType = {
   updateTrip: (trip: TripType, toDelete: boolean) => void;
   addPerson: (tripId: string, name: string) => void;
   updatePerson: (tripId: string, person: PersonType, toDelete: boolean) => void;
+  addActivity: (tripId: string, activity: ActivityType) => void;
 };
 
 export const TripsContext = createContext({} as TripsContextType);
@@ -54,19 +55,6 @@ export const TripsContextProvider = ({
             tripData: dataToSend,
           }
         );
-      } else {
-        // New User Sign On (ONE TIME)
-        let dataToSend = encodeTrips(tripsList);
-        if (altTripData) {
-          dataToSend = encodeTrips(altTripData);
-        }
-        console.log("Sending data [New User Sign On]: ", dataToSend);
-        await setDoc(
-          doc(firebase_firestore, "users", firebase_auth.currentUser.uid),
-          {
-            tripData: dataToSend,
-          }
-        );
       }
     }
   };
@@ -81,17 +69,37 @@ export const TripsContextProvider = ({
         );
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          // User Exists
           let tripData = decodeTrips(docSnap.data().tripData);
           setTripsList(tripData);
           console.log("Receiving data: ", tripData);
+        } else {
+          console.log("[_get_data_firestore] doc snap !exists");
         }
       }
     }, 1500);
   };
 
   const initiateTrips = async () => {
-    _send_data_to_firestore(initialTripData);
+    // New User Sign On (ONE TIME)
+    if (firebase_auth.currentUser) {
+      const docRef = doc(
+        firebase_firestore,
+        "users",
+        firebase_auth.currentUser.uid
+      );
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        let dataToSend = encodeTrips(initialTripData);
+        console.log("Sending data [New User Sign On]: ", dataToSend);
+        await setDoc(
+          doc(firebase_firestore, "users", firebase_auth.currentUser.uid),
+          {
+            tripData: dataToSend,
+          },
+          { merge: true }
+        );
+      }
+    }
   };
 
   const refreshTrips = async () => {
@@ -125,6 +133,7 @@ export const TripsContextProvider = ({
   const updateTrip = async (trip: TripType, toDelete: boolean) => {
     if (toDelete === true) {
       // Delete
+      // TODO: Implement Activity Deletion
       let tempTripsList: TripType[] = [];
       for (let t of tripsList) {
         if (t.id !== trip.id) tempTripsList.push(t);
@@ -200,6 +209,24 @@ export const TripsContextProvider = ({
     }
   };
 
+  const addActivity = async (tripId: string, activity: ActivityType) => {
+    let tempTripsList = tripsList;
+    for (let t of tempTripsList) {
+      if (t.id === tripId) {
+        let newActivity: ActivityType = {
+          id: uuidv4(),
+          title: activity.title,
+          cost: activity.cost,
+          payerId: activity.payerId,
+          participantList: [],
+        };
+        t.activityList.push(newActivity);
+      }
+    }
+    setTripsList(tempTripsList);
+    _send_data_to_firestore(tempTripsList);
+  };
+
   return (
     <TripsContext.Provider
       value={{
@@ -211,6 +238,7 @@ export const TripsContextProvider = ({
         updateTrip,
         addPerson,
         updatePerson,
+        addActivity,
       }}
     >
       {children}

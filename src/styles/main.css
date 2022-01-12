@@ -603,6 +603,24 @@
   padding: 0.25rem 2rem;
 }
 
+.trip-page .trip-view-section {
+  margin-top: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 95%;
+}
+
 .trip-page .trip-view-section .section-header {
   width: 100%;
   display: -webkit-box;
@@ -640,24 +658,6 @@
           justify-content: center;
 }
 
-.trip-page .people-section {
-  margin-top: 1.5rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 95%;
-}
-
 .trip-page .people-section .people-list {
   width: 100%;
   display: -webkit-box;
@@ -684,6 +684,163 @@
 }
 
 .trip-page .people-section .people-list .person span {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.trip-page .activities-section {
+  margin-bottom: 5rem;
+}
+
+.trip-page .activities-section .activities-list {
+  margin-top: 1rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1.5rem;
+}
+
+.trip-page .activities-section .activities-list .activity {
+  width: 95%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  border: none;
+  outline: none;
+  border-radius: 1.75rem;
+}
+
+.trip-page .activities-section .activities-list .activity .top-section {
+  margin-top: 1rem;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.trip-page .activities-section .activities-list .activity .top-section .title span {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.trip-page .activities-section .activities-list .activity .top-section .cost {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.trip-page .activities-section .activities-list .activity .top-section .cost span {
+  background-color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 2rem;
+  padding: 0.25rem 1rem;
+}
+
+.trip-page .activities-section .activities-list .activity .divider {
+  width: 90%;
+  height: 0.125rem;
+  border-radius: 2rem;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section {
+  margin-bottom: 1rem;
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section .paid-by {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section .paid-by .label {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: black;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section .paid-by .payer {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section .participant-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.trip-page .activities-section .activities-list .activity .bottom-section .participant-list .participant {
   font-size: 1.125rem;
   font-weight: 600;
   color: white;

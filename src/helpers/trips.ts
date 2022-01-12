@@ -1,6 +1,6 @@
 /** @format */
 
-import { TripType } from "../interfaces/tripObjects";
+import { PersonType, TripType } from "../interfaces/tripObjects";
 
 //
 // ** JSON Stringifies each trip and returns an array
@@ -222,7 +222,47 @@ export function getRandomActivityName() {
     "AirBnb",
     "Tents",
     "Decorations",
+    "Drinks",
+    "Golf",
+    "Tour Guides",
+    "Bus Ticket",
+    "Flights",
+    "Tickets",
+    "Boat",
+    "Gas",
+    "Breakfast",
+    "Materials",
+    "Apparel",
+    "Pizza",
+    "Appetizers",
+    "Burgers",
+    "Soup",
+    "Rice",
+    "Soup",
+    "Ramen",
+    "Soup",
+    "Pasta",
+    "Salad",
+    "Bubble Tea",
+    "Coffee",
   ];
   const randIndex = Math.floor(Math.random() * sampleActivityNames.length);
   return sampleActivityNames[randIndex];
+}
+
+//
+// ** Returns the name of a person given
+//      a peopleList
+//
+export function getPersonNameById(
+  id: string,
+  peopleList: PersonType[]
+): string {
+  let personName = "";
+  for (let p of peopleList) {
+    if (p.id === id) {
+      return p.name;
+    }
+  }
+  return personName;
 }

@@ -1,6 +1,6 @@
 /** @format */
 
-import { PersonType } from "./tripObjects";
+import { PersonType, ActivityType } from "./tripObjects";
 /** @format */
 
 type BasicModalType = {
@@ -46,3 +46,11 @@ export type EditPersonTypes =
   | EditPersonOpenType
   | EditPersonCloseType
   | EditPersonConfirmType;
+
+// ADD ACTIVITY MODAL
+//
+type AddActivityConfirmType = {
+  action: "CONFIRM";
+  activity: ActivityType;
+};
+export type AddActivityTypes = BasicModalType | AddActivityConfirmType;
