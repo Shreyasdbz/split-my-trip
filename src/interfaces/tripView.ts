@@ -1,5 +1,8 @@
 /** @format */
 
+import { PersonType } from "./tripObjects";
+/** @format */
+
 type BasicModalType = {
   action: "OPEN" | "CLOSE";
 };
@@ -11,7 +14,7 @@ type EditTripConfirmType = {
   action: "CONFIRM";
   title: string;
   colorId: number;
-  deleteTrip: boolean;
+  toDelete: boolean;
 };
 export type EditTripTypes = BasicModalType | EditTripConfirmType;
 
@@ -27,9 +30,19 @@ export type AddPersonTypes = BasicModalType | AddPersonConfirmType;
 //
 // EDIT PERSON MODAL
 //
+type EditPersonOpenType = {
+  action: "OPEN";
+  person: PersonType;
+};
+type EditPersonCloseType = {
+  action: "CLOSE";
+};
 type EditPersonConfirmType = {
   action: "CONFIRM";
-  id: string;
-  name: string;
+  person: PersonType;
+  toDelete: boolean;
 };
-export type EditPersonTypes = BasicModalType | EditPersonConfirmType;
+export type EditPersonTypes =
+  | EditPersonOpenType
+  | EditPersonCloseType
+  | EditPersonConfirmType;

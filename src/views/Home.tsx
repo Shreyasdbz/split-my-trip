@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
 import { NewTripTypes } from "../interfaces/homeView";
@@ -16,6 +16,7 @@ import NewTripModal from "../components/home/NewTripModal";
 const Home = () => {
   const [addTripModalActive, setaddTripModalActive] = useState(false);
   const addTripFunction = useContext(TripsContext).addTrip;
+  const refreshTripsFunction = useContext(TripsContext).refreshTrips;
 
   const newTrip = async (payload: NewTripTypes) => {
     if (payload.action === "OPEN") {
@@ -30,6 +31,11 @@ const Home = () => {
       addTripFunction(payload.title, payload.colorId);
     }
   };
+
+  useEffect(() => {
+    refreshTripsFunction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="page home-page">

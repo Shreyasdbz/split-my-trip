@@ -113,7 +113,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
               action: "CONFIRM",
               title: title,
               colorId: colorId,
-              deleteTrip: true,
+              toDelete: true,
             });
           }}
         >
@@ -138,7 +138,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
               action: "CONFIRM",
               title: title,
               colorId: colorId,
-              deleteTrip: false,
+              toDelete: false,
             });
           }}
         >

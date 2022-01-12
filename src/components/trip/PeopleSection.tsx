@@ -6,13 +6,14 @@ import { useParams } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TripsContext } from "../../context/TripsContext";
 import { getTripColorById } from "../../helpers/colors";
-import { AddPersonTypes } from "../../interfaces/tripView";
+import { AddPersonTypes, EditPersonTypes } from "../../interfaces/tripView";
 
 type PeopleSectionProps = {
   addHandler: (payload: AddPersonTypes) => void;
+  editHandler: (payload: EditPersonTypes) => void;
 };
 
-const PeopleSection = ({ addHandler }: PeopleSectionProps) => {
+const PeopleSection = ({ addHandler, editHandler }: PeopleSectionProps) => {
   const theme = useContext(ThemeContext).theme;
   let tripId = useParams().tripID;
   const getTripByIdFunction = useContext(TripsContext).getTripById;
@@ -54,6 +55,9 @@ const PeopleSection = ({ addHandler }: PeopleSectionProps) => {
                     ? "2rem"
                     : "0rem"
                 }`,
+              }}
+              onClick={() => {
+                editHandler({ action: "OPEN", person: person });
               }}
             >
               <span>{person.name}</span>

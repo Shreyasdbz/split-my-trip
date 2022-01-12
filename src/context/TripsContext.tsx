@@ -21,12 +21,7 @@ type TripsContextType = {
   addTrip: (title: string, colorId: number) => void;
   updateTrip: (trip: TripType, toDelete: boolean) => void;
   addPerson: (tripId: string, name: string) => void;
-  updatePerson: (
-    tripId: string,
-    personId: string,
-    name: string,
-    toDelete: boolean
-  ) => void;
+  updatePerson: (tripId: string, person: PersonType, toDelete: boolean) => void;
 };
 
 export const TripsContext = createContext({} as TripsContextType);
@@ -36,7 +31,10 @@ export const TripsContextProvider = ({
 }: TripsContextProviderProps) => {
   const [tripsList, setTripsList] = useState<TripType[]>([]);
 
-  const _send_trips_to_firestore = async (altTripData?: TripType[]) => {
+  // TODO:
+  // Enable caching
+
+  const _send_data_to_firestore = async (altTripData?: TripType[]) => {
     if (firebase_auth.currentUser) {
       const docRef = doc(
         firebase_firestore,
@@ -56,30 +54,48 @@ export const TripsContextProvider = ({
             tripData: dataToSend,
           }
         );
+      } else {
+        // New User Sign On (ONE TIME)
+        let dataToSend = encodeTrips(tripsList);
+        if (altTripData) {
+          dataToSend = encodeTrips(altTripData);
+        }
+        console.log("Sending data [New User Sign On]: ", dataToSend);
+        await setDoc(
+          doc(firebase_firestore, "users", firebase_auth.currentUser.uid),
+          {
+            tripData: dataToSend,
+          }
+        );
       }
     }
   };
 
-  const initiateTrips = async () => {
-    _send_trips_to_firestore(initialTripData);
-  };
-
-  const refreshTrips = async () => {
-    if (firebase_auth.currentUser) {
-      const docRef = doc(
-        firebase_firestore,
-        "users",
-        firebase_auth.currentUser.uid
-      );
-      setTimeout(async () => {
+  const _get_data_from_firestore = async () => {
+    setTimeout(async () => {
+      if (firebase_auth.currentUser) {
+        const docRef = doc(
+          firebase_firestore,
+          "users",
+          firebase_auth.currentUser.uid
+        );
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           // User Exists
           let tripData = decodeTrips(docSnap.data().tripData);
           setTripsList(tripData);
+          console.log("Receiving data: ", tripData);
         }
-      }, 2000);
-    }
+      }
+    }, 1500);
+  };
+
+  const initiateTrips = async () => {
+    _send_data_to_firestore(initialTripData);
+  };
+
+  const refreshTrips = async () => {
+    _get_data_from_firestore();
   };
 
   function getTripById(id: string | undefined): TripType {
@@ -103,7 +119,7 @@ export const TripsContextProvider = ({
     let tempTripsList = tripsList;
     tempTripsList.push(newTrip);
     setTripsList(tempTripsList);
-    _send_trips_to_firestore(tempTripsList);
+    _send_data_to_firestore(tempTripsList);
   };
 
   const updateTrip = async (trip: TripType, toDelete: boolean) => {
@@ -114,7 +130,7 @@ export const TripsContextProvider = ({
         if (t.id !== trip.id) tempTripsList.push(t);
       }
       setTripsList(tempTripsList);
-      _send_trips_to_firestore(tempTripsList);
+      _send_data_to_firestore(tempTripsList);
     } else {
       // Update
       let tempTripsList: TripType[] = tripsList;
@@ -127,7 +143,7 @@ export const TripsContextProvider = ({
         }
       }
       setTripsList(tempTripsList);
-      _send_trips_to_firestore(tempTripsList);
+      _send_data_to_firestore(tempTripsList);
     }
   };
 
@@ -143,13 +159,12 @@ export const TripsContextProvider = ({
       }
     }
     setTripsList(tempTripsList);
-    _send_trips_to_firestore(tempTripsList);
+    _send_data_to_firestore(tempTripsList);
   };
 
   const updatePerson = async (
     tripId: string,
-    personId: string,
-    name: string,
+    person: PersonType,
     toDelete: boolean
   ) => {
     if (toDelete === true) {
@@ -159,28 +174,29 @@ export const TripsContextProvider = ({
         if (t.id === tripId) {
           let tempPeopleList: PersonType[] = [];
           for (let p of t.peopleList) {
-            if (p.id !== personId) {
+            if (p.id !== person.id) {
               tempPeopleList.push(p);
             }
           }
+          t.peopleList = tempPeopleList;
         }
       }
       setTripsList(tempTripsList);
-      _send_trips_to_firestore(tempTripsList);
+      _send_data_to_firestore(tempTripsList);
     } else {
       // Update
       let tempTripsList = tripsList;
       for (let t of tempTripsList) {
         if (t.id === tripId) {
           for (let p of t.peopleList) {
-            if (p.id === personId) {
-              p.name = name;
+            if (p.id === person.id) {
+              p.name = person.name;
             }
           }
         }
       }
       setTripsList(tempTripsList);
-      _send_trips_to_firestore(tempTripsList);
+      _send_data_to_firestore(tempTripsList);
     }
   };
 

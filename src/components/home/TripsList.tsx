@@ -1,6 +1,6 @@
 /** @format */
 
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { ThemeContext } from "../../context/ThemeContext";
@@ -10,11 +10,6 @@ import { getTripColorById } from "../../helpers/colors";
 const TripsList = () => {
   const theme = useContext(ThemeContext).theme;
   const trips = useContext(TripsContext).tripsList;
-  const refreshTripsFunction = useContext(TripsContext).refreshTrips;
-
-  useEffect(() => {
-    refreshTripsFunction();
-  }, [refreshTripsFunction]);
 
   return (
     <div className="trips-list-view">

@@ -3,6 +3,28 @@
 import { TripType } from "../interfaces/tripObjects";
 
 //
+// ** JSON Stringifies each trip and returns an array
+//
+export function encodeTrips(tripsList: TripType[]): string[] {
+  let encodedTrips: string[] = [];
+  for (let t of tripsList) {
+    encodedTrips.push(JSON.stringify(t));
+  }
+  return encodedTrips;
+}
+
+//
+// ** JSON Parses each trip and returns an array
+//
+export const decodeTrips = (encodedTrips: string[]) => {
+  let decodedTrips: TripType[] = [];
+  for (let t of encodedTrips) {
+    decodedTrips.push(JSON.parse(t));
+  }
+  return decodedTrips;
+};
+
+//
 // ** Returns a random name that shows up as a default
 //      value when activating the new trip modal
 //
@@ -71,23 +93,136 @@ export function getRandomTripName() {
 }
 
 //
-// ** JSON Stringifies each trip and returns an array
+// ** Returns a random name that shows up as a default
+//      value when activating the new person modal
 //
-export function encodeTrips(tripsList: TripType[]): string[] {
-  let encodedTrips: string[] = [];
-  for (let t of tripsList) {
-    encodedTrips.push(JSON.stringify(t));
-  }
-  return encodedTrips;
+export function getRandomPersonName() {
+  //
+  let samplePersonNames = [
+    "Jasmine",
+    "Teagan",
+    "Zander",
+    "Salma",
+    "Rohan",
+    "Aurora",
+    "Shaun",
+    "Cameron",
+    "Sadie",
+    "Javier",
+    "Hamza",
+    "Drake",
+    "Stanley",
+    "Regan",
+    "Hallie",
+    "Kael",
+    "Kelsey",
+    "Jocelynn",
+    "Alvaro",
+    "Madisyn",
+    "Jaycee",
+    "Jeffrey",
+    "Teresa",
+    "Dorian",
+    "Natalee",
+    "Celia",
+    "Janiah",
+    "Mike",
+    "Lydia",
+    "Roger",
+    "Tristan",
+    "Julianna",
+    "Kelsie",
+    "Alexander",
+    "Leland",
+    "Marcus",
+    "Kamren",
+    "Bryan",
+    "Britney",
+    "Kasen",
+    "Yosef",
+    "Owen",
+    "Stephanie",
+    "Heidy",
+    "Dangelo",
+    "Justine",
+    "Darren",
+    "Myles",
+    "Skye",
+    "Yasmin",
+    "Jacqueline",
+    "Sharon",
+    "Lauren",
+    "Julio",
+    "Cristal",
+    "Guadalupe",
+    "Conor",
+    "Jimena",
+    "Hazel",
+    "Jonathon",
+    "Rose",
+    "Harley",
+    "Theodore",
+    "Landen",
+    "Kiera",
+    "Efrain",
+    "Evelyn",
+    "Dana",
+    "Mina",
+    "Maia",
+    "Harry",
+    "Meadow",
+    "Geovanni",
+    "Heidi",
+    "Brisa",
+    "Harley",
+    "Kaylee",
+    "Coleman",
+    "Anabel",
+    "Yair",
+    "Maggie",
+    "Diego",
+    "Myah",
+    "Terry",
+    "Zane",
+    "Iliana",
+    "Juliette",
+    "Laura",
+    "Briana",
+    "Emelia",
+    "Piper",
+    "Avah",
+    "Jasmin",
+    "Lana",
+    "Quinten",
+    "Arnav",
+    "Sonia",
+    "Aryan",
+    "Belinda",
+  ];
+  const randIndex = Math.floor(Math.random() * samplePersonNames.length);
+  return samplePersonNames[randIndex];
 }
 
 //
-// ** JSON Parses each trip and returns an array
+// ** Returns a random name that shows up as a default
+//      value when activating the new activity modal
 //
-export const decodeTrips = (encodedTrips: string[]) => {
-  let decodedTrips: TripType[] = [];
-  for (let t of encodedTrips) {
-    decodedTrips.push(JSON.parse(t));
-  }
-  return decodedTrips;
-};
+export function getRandomActivityName() {
+  //
+  let sampleActivityNames = [
+    "Lunch",
+    "Dinner",
+    "Brunch",
+    "Skiing",
+    "Boat Rentals",
+    "Kayak Rentals",
+    "Food",
+    "Cake",
+    "Hotel",
+    "AirBnb",
+    "Tents",
+    "Decorations",
+  ];
+  const randIndex = Math.floor(Math.random() * sampleActivityNames.length);
+  return sampleActivityNames[randIndex];
+}

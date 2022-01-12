@@ -2,17 +2,18 @@
 
 import { useContext, useState } from "react";
 
-import { AddPersonTypes } from "../../interfaces/tripView";
+import { EditPersonTypes } from "../../interfaces/tripView";
 import { ThemeContext } from "../../context/ThemeContext";
-import { getRandomPersonName } from "../../helpers/trips";
+import { PersonType } from "../../interfaces/tripObjects";
 
-type AddPersonModalProps = {
-  handler: (payload: AddPersonTypes) => void;
+type EditPersonProps = {
+  person: PersonType;
+  handler: (payload: EditPersonTypes) => void;
 };
 
-const AddPersonModal = ({ handler }: AddPersonModalProps) => {
+const EditPerson = ({ person, handler }: EditPersonProps) => {
   const theme = useContext(ThemeContext).theme;
-  const [name, setName] = useState(getRandomPersonName());
+  const [name, setName] = useState(person.name);
 
   return (
     <div
@@ -58,12 +59,22 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
         >
           Cancel
         </button>
-        <div
-          className="divider"
+        <button
+          className="btn-delete"
           style={{
-            backgroundColor: `${theme.greyBackground}`,
+            backgroundColor: `${theme.background}`,
+            color: `${theme.danger}`,
           }}
-        />
+          onClick={() => {
+            handler({
+              action: "CONFIRM",
+              person: { id: person.id, name: name },
+              toDelete: true,
+            });
+          }}
+        >
+          Delete
+        </button>
         <button
           className="btn-confirm"
           style={{
@@ -73,15 +84,16 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
           onClick={() => {
             handler({
               action: "CONFIRM",
-              name: name,
+              person: { id: person.id, name: name },
+              toDelete: false,
             });
           }}
         >
           Add
         </button>
-      </div>{" "}
+      </div>
     </div>
   );
 };
 
-export default AddPersonModal;
+export default EditPerson;
