@@ -70,7 +70,7 @@ export function getRandomTripName() {
     "Maldives",
     "Yellowstone National Park",
     "Yosemite National Park",
-    "SSequoia National Park",
+    "Sequoia National Park",
     "Joshua Tree National Park",
     "Grand Canyon",
     "Zion National Park",

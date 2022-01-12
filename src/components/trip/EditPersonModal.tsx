@@ -24,7 +24,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
       }}
     >
       <div className="title">
-        <span>Add a person</span>
+        <span>Edit a person</span>
       </div>
       <div className="input-box">
         <span

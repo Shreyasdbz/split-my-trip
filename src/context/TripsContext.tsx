@@ -76,7 +76,7 @@ export const TripsContextProvider = ({
           console.log("[_get_data_firestore] doc snap !exists");
         }
       }
-    }, 1500);
+    }, 1000);
   };
 
   const initiateTrips = async () => {

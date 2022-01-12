@@ -124,17 +124,20 @@
 .modal {
   width: 100vw;
   overflow-x: hidden;
+  overflow-y: scroll;
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  min-height: 50vh;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
   z-index: 3;
 }
 
@@ -211,9 +214,50 @@
   gap: 1.5rem;
 }
 
+.modal .activity-modal {
+  margin-top: 3rem;
+  margin-bottom: 10rem;
+  overflow-y: scroll;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+  gap: 1.5rem;
+}
+
 .modal .title span {
   font-size: 1.5rem;
   font-weight: 600;
+}
+
+.modal .input-form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5rem;
 }
 
 .modal .input-box {

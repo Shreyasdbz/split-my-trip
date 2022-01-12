@@ -23,7 +23,7 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a person</span>
+        <span>Add a new person</span>
       </div>
       <div className="input-box">
         <span
