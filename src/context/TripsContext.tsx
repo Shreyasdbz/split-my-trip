@@ -218,7 +218,7 @@ export const TripsContextProvider = ({
           title: activity.title,
           cost: activity.cost,
           payerId: activity.payerId,
-          participantList: [],
+          participantList: activity.participantList,
         };
         t.activityList.push(newActivity);
       }

@@ -86,6 +86,7 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setAddActivityModalActive(false);
     } else if (payload.action === "CONFIRM") {
+      // TODO: Change how participant list is packaged
       addActivityFunction(trip.id, payload.activity);
       setAddActivityModalActive(false);
     }
@@ -119,10 +120,7 @@ const Trip = () => {
 
       {/* Add Activity Modal */}
       <Modal activeOn={addActivityModalActive}>
-        <AddActivityModal
-          handler={handleAddActivity}
-          peopleList={trip.peopleList}
-        />
+        <AddActivityModal handler={handleAddActivity} />
       </Modal>
 
       {(editTripModalActive ||

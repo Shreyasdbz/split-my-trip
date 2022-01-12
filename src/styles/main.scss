@@ -176,6 +176,49 @@
     border-radius: 2rem;
     padding: 1rem 0rem;
     gap: 1.5rem;
+
+    .participant-toggles {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.125rem;
+
+      .participant-toggle-box {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 0.5rem;
+        border-radius: 0.75rem;
+
+        span {
+          font-size: 1.125rem;
+          margin-left: 0.75rem;
+        }
+
+        .toggle-box {
+          width: 3rem;
+          border-radius: 2rem;
+          border: none;
+          outline: none;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin-right: 0.5rem;
+
+          .toggle {
+            height: 1.5rem;
+            width: 1.5rem;
+            border-radius: 2rem;
+          }
+        }
+        .participating {
+          justify-content: flex-end;
+        }
+      }
+    }
   }
 
   .title {

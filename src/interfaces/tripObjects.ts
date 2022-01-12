@@ -5,7 +5,7 @@ export type PersonType = {
   name: string;
 };
 
-export type ActivityParticipant = {
+export type ActivityParticipantType = {
   participantId: string;
   participating: boolean;
 };
@@ -15,7 +15,7 @@ export type ActivityType = {
   title: string;
   cost: number;
   payerId: string;
-  participantList: ActivityParticipant[];
+  participantList: ActivityParticipantType[];
 };
 
 export type TripType = {

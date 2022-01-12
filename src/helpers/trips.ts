@@ -1,6 +1,10 @@
 /** @format */
 
-import { PersonType, TripType } from "../interfaces/tripObjects";
+import {
+  ActivityParticipantType,
+  PersonType,
+  TripType,
+} from "../interfaces/tripObjects";
 
 //
 // ** JSON Stringifies each trip and returns an array
@@ -265,4 +269,22 @@ export function getPersonNameById(
     }
   }
   return personName;
+}
+
+//
+// ** Builds a participantList based on the
+//      people list (Add Activity Only)
+//
+export function buildParticipantListInitial(
+  peopleList: PersonType[]
+): ActivityParticipantType[] {
+  let participantList: ActivityParticipantType[] = [];
+  for (let p of peopleList) {
+    let participant: ActivityParticipantType = {
+      participantId: p.id,
+      participating: true,
+    };
+    participantList.push(participant);
+  }
+  return participantList;
 }

@@ -1,27 +1,49 @@
 /** @format */
 
 import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
 
+import { ActivityType } from "../../interfaces/tripObjects";
 import { AddActivityTypes } from "../../interfaces/tripView";
+import { TripsContext } from "../../context/TripsContext";
 import { ThemeContext } from "../../context/ThemeContext";
-import { getRandomActivityName } from "../../helpers/trips";
-import { PersonType } from "../../interfaces/tripObjects";
+import {
+  buildParticipantListInitial,
+  getRandomActivityName,
+} from "../../helpers/trips";
 
 import DropDownSelector from "../misc/DropDownSelector";
 import ParticipantToggles from "./ParticipantToggles";
 
 type AddActivityModalProps = {
   handler: (payload: AddActivityTypes) => void;
-  peopleList: PersonType[];
 };
 
-const AddActivityModal = ({ handler, peopleList }: AddActivityModalProps) => {
+const AddActivityModal = ({ handler }: AddActivityModalProps) => {
+  const getTripByIdFunction = useContext(TripsContext).getTripById;
+  let tripId = useParams().tripID;
+  const trip = getTripByIdFunction(tripId);
+  const peopleList = trip.peopleList;
+
   const theme = useContext(ThemeContext).theme;
   const [title, setTitle] = useState(getRandomActivityName());
   const [cost, setCost] = useState<number>(Math.floor(Math.random() * 1000));
   const [payerIdSelection, setPayerIdSelection] = useState(
     peopleList[Math.floor(Math.random() * peopleList.length)].id
   );
+  const [participantList, setParticipantList] = useState(
+    buildParticipantListInitial(peopleList)
+  );
+
+  function handleToggle(personId: string) {
+    let tempParticipantList = participantList;
+    for (let p of tempParticipantList) {
+      if (p.participantId === personId) {
+        p.participating = !p.participating;
+      }
+    }
+    setParticipantList(tempParticipantList);
+  }
 
   return (
     <div
@@ -99,7 +121,12 @@ const AddActivityModal = ({ handler, peopleList }: AddActivityModalProps) => {
           >
             PARTICIPANTS
           </span>
-          <ParticipantToggles />
+          <ParticipantToggles
+            participantList={participantList}
+            peopleList={peopleList}
+            tripColorId={trip.colorId}
+            handleToggle={handleToggle}
+          />
         </div>
       </div>
       <div className="actions">
@@ -126,6 +153,16 @@ const AddActivityModal = ({ handler, peopleList }: AddActivityModalProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
+          }}
+          onClick={() => {
+            let newActivity: ActivityType = {
+              id: `sampleID${Math.floor(Math.random() * 99999999)}`,
+              title: title,
+              cost: cost,
+              payerId: payerIdSelection,
+              participantList: participantList,
+            };
+            handler({ action: "CONFIRM", activity: newActivity });
           }}
         >
           Add
