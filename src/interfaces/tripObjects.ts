@@ -15,7 +15,7 @@ export type ActivityType = {
   title: string;
   cost: number;
   payerId: string;
-  participantList: ActivityParticipantType[];
+  participantList: string[];
 };
 
 export type TripType = {

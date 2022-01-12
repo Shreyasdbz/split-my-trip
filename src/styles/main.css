@@ -473,14 +473,7 @@
   padding: 0.5rem 1.5rem;
 }
 
-.modal .triple-actions {
-  gap: 0rem;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.modal .triple-actions .btn-delete .link {
+.modal .actions .btn-delete .link {
   text-decoration: none;
 }
 

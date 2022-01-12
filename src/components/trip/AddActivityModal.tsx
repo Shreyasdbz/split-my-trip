@@ -9,6 +9,7 @@ import { TripsContext } from "../../context/TripsContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import {
   buildParticipantListInitial,
+  buildParticipantListMinimized,
   getRandomActivityName,
 } from "../../helpers/trips";
 
@@ -43,6 +44,17 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
       }
     }
     setParticipantList(tempParticipantList);
+  }
+
+  function handleConfirm() {
+    let newActivity: ActivityType = {
+      id: `sampleID${Math.floor(Math.random() * 99999999)}`,
+      title: title,
+      cost: cost,
+      payerId: payerIdSelection,
+      participantList: buildParticipantListMinimized(participantList),
+    };
+    handler({ action: "CONFIRM", activity: newActivity });
   }
 
   return (
@@ -154,16 +166,7 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
           }}
-          onClick={() => {
-            let newActivity: ActivityType = {
-              id: `sampleID${Math.floor(Math.random() * 99999999)}`,
-              title: title,
-              cost: cost,
-              payerId: payerIdSelection,
-              participantList: participantList,
-            };
-            handler({ action: "CONFIRM", activity: newActivity });
-          }}
+          onClick={handleConfirm}
         >
           Add
         </button>

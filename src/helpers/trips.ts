@@ -288,3 +288,13 @@ export function buildParticipantListInitial(
   }
   return participantList;
 }
+
+export function buildParticipantListMinimized(
+  participantList: ActivityParticipantType[]
+): string[] {
+  let participantListMinimized: string[] = [];
+  for (let p of participantList) {
+    if (p.participating) participantListMinimized.push(p.participantId);
+  }
+  return participantListMinimized;
+}

@@ -75,26 +75,11 @@ const ActivitiesSection = ({ addHandler }: PeopleSectionProps) => {
                 </div>
                 <div className="participant-list">
                   {activity.participantList.map((participant) => {
-                    if (participant.participating) {
-                      return (
-                        <div
-                          key={participant.participantId}
-                          className="participant"
-                        >
-                          {getPersonNameById(
-                            participant.participantId,
-                            trip.peopleList
-                          )}
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <span
-                          key={participant.participantId}
-                          className="no-participant"
-                        ></span>
-                      );
-                    }
+                    return (
+                      <div key={participant} className="participant">
+                        {getPersonNameById(participant, trip.peopleList)}
+                      </div>
+                    );
                   })}
                 </div>
               </div>
