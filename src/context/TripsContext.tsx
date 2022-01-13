@@ -53,7 +53,7 @@ export const TripsContextProvider = ({
         if (altTripData) {
           dataToSend = encodeTrips(altTripData);
         }
-        console.log("Sending data: ", dataToSend);
+        // console.log("Sending data: ", dataToSend);
         await setDoc(
           doc(firebase_firestore, "users", firebase_auth.currentUser.uid),
           {
@@ -76,7 +76,7 @@ export const TripsContextProvider = ({
         if (docSnap.exists()) {
           let tripData = decodeTrips(docSnap.data().tripData);
           setTripsList(tripData);
-          console.log("Receiving data: ", tripData);
+          // console.log("Receiving data: ", tripData);
         } else {
           console.log("[_get_data_firestore] doc snap !exists");
         }
