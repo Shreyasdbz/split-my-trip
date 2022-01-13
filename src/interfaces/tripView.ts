@@ -73,3 +73,20 @@ export type EditActivityTypes =
   | EditActivityOpenType
   | EditActivityCloseType
   | EditActivityConfirmType;
+
+// CALCULATE SPLIT MODAL-----------------------------
+export type SplitModalTypes = BasicModalType;
+
+export type SplitToPay = {
+  toId: string;
+  amount: number;
+};
+export type SplitReceiveFrom = {
+  fromId: string;
+  amount: number;
+};
+export type SplitType = {
+  personId: string;
+  toPayList: SplitToPay[];
+  receiveFromList: SplitReceiveFrom[];
+};

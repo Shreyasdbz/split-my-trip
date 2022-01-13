@@ -38,7 +38,6 @@ export const TripsContextProvider = ({
   const [tripsList, setTripsList] = useState<TripType[]>([]);
 
   // TODO:
-  // **** person onDelete / onSave => activity change
   //  *Enable caching
 
   const _send_data_to_firestore = async (altTripData?: TripType[]) => {

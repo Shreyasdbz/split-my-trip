@@ -2,6 +2,7 @@
 
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+import { IoPieChart } from "react-icons/io5";
 
 import { TripsContext } from "../context/TripsContext";
 import {
@@ -10,6 +11,7 @@ import {
   EditPersonTypes,
   AddActivityTypes,
   EditActivityTypes,
+  SplitModalTypes,
 } from "../interfaces/tripView";
 import { TripType, PersonType, ActivityType } from "../interfaces/tripObjects";
 
@@ -23,6 +25,7 @@ import EditPersonModal from "../components/trip/EditPersonModal";
 import AddActivityModal from "../components/trip/AddActivityModal";
 import ActivitiesSection from "../components/trip/ActivitiesSection";
 import EditActivityModal from "../components/trip/EditActivityModal";
+import CornerActionButton from "../components/common/CornerActionButton";
 
 const Trip = () => {
   const getTripByIdFunction = useContext(TripsContext).getTripById;
@@ -40,6 +43,7 @@ const Trip = () => {
   const [editPersonModalActive, setEditPersonModalActive] = useState(false);
   const [addActivityModalActive, setAddActivityModalActive] = useState(false);
   const [editActivityModalActive, setEditActivityModalActive] = useState(false);
+  const [splitModalActive, setSplitModalActive] = useState(false);
 
   const [editPerson, setEditPerson] = useState<PersonType>({} as PersonType);
   const [editActivity, setEditActivity] = useState<ActivityType>(
@@ -111,9 +115,13 @@ const Trip = () => {
     }
   }
 
-  // function handleSplit() {
-  //   //
-  // }
+  function handleSplit(payload: SplitModalTypes) {
+    if (payload.action === "OPEN") {
+      // setSplitModalActive(true);
+    } else if (payload.action === "CLOSE") {
+      setSplitModalActive(false);
+    }
+  }
 
   return (
     <div className="page trip-page">
@@ -151,7 +159,8 @@ const Trip = () => {
         addPersonModalActive ||
         editPersonModalActive ||
         addActivityModalActive ||
-        editActivityModalActive) && <div className="blur-layer" />}
+        editActivityModalActive ||
+        splitModalActive) && <div className="blur-layer" />}
 
       <div className="page-container">
         <EditTripButton handler={handleEditTrip} />
@@ -164,6 +173,13 @@ const Trip = () => {
           editHandler={handleEditActivity}
         />
       </div>
+      <CornerActionButton
+        text="Get Split"
+        Icon={IoPieChart}
+        clickAction={() => {
+          handleSplit({ action: "OPEN" });
+        }}
+      />
     </div>
   );
 };

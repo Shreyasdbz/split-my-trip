@@ -19,21 +19,20 @@ const TripsList = () => {
       <div className="trips-list">
         {trips.map((trip) => {
           return (
-            <Link
-              to={`/trip${trip.id}`}
-              key={trip.id}
-              className="trip-box"
-              style={{
-                boxShadow: `0px 2px 15px 5px ${theme.text}25`,
-                backgroundColor: `${
-                  getTripColorById(trip.colorId).backgroundColor
-                }`,
-                backgroundImage: `${
-                  getTripColorById(trip.colorId).backgroundImage
-                }`,
-              }}
-            >
-              <span>{trip.title}</span>
+            <Link to={`/trip${trip.id}`} key={trip.id} className="trip-box">
+              <button
+                style={{
+                  boxShadow: `0px 2px 15px 5px ${theme.text}25`,
+                  backgroundColor: `${
+                    getTripColorById(trip.colorId).backgroundColor
+                  }`,
+                  backgroundImage: `${
+                    getTripColorById(trip.colorId).backgroundImage
+                  }`,
+                }}
+              >
+                <span>{trip.title}</span>
+              </button>
             </Link>
           );
         })}

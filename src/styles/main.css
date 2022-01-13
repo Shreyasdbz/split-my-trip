@@ -11,6 +11,18 @@
   transition: 0.3s;
 }
 
+button {
+  cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  button:hover {
+    opacity: 0.9;
+    -webkit-transform: translateY(-0.125rem) scale(0.975);
+            transform: translateY(-0.125rem) scale(0.975);
+  }
+}
+
 .page {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -714,6 +726,11 @@
 
 .home-page .trips-list-view .trips-list .trip-box {
   width: 100%;
+  text-decoration: none;
+}
+
+.home-page .trips-list-view .trips-list .trip-box button {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -724,16 +741,23 @@
       -ms-flex-pack: start;
           justify-content: flex-start;
   min-height: 8rem;
+  border: none;
+  outline: none;
   border-radius: 0.75rem;
-  background-color: coral;
-  text-decoration: none;
 }
 
-.home-page .trips-list-view .trips-list .trip-box span {
+.home-page .trips-list-view .trips-list .trip-box button span {
   padding: 0.5rem 1rem;
   font-size: 2rem;
   font-weight: 800;
   color: white;
+}
+
+@media (min-width: 600px) {
+  .home-page .trips-list-view .trips-list .trip-box button:hover {
+    -webkit-transform: translateY(-0.125rem) scale(0.995);
+            transform: translateY(-0.125rem) scale(0.995);
+  }
 }
 
 .trip-page .header {
@@ -1032,5 +1056,12 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: white;
+}
+
+@media (min-width: 600px) {
+  .trip-page .activities-section .activities-list .activity:hover {
+    -webkit-transform: translateY(-0.125rem) scale(0.995);
+            transform: translateY(-0.125rem) scale(0.995);
+  }
 }
 /*# sourceMappingURL=main.css.map */
