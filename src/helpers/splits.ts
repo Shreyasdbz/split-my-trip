@@ -23,6 +23,8 @@ type PersonPosNegObject = {
 export const buildSplitsList = (trip: TripType): SplitType[] => {
   //
 
+  // [Step 0]: Initialize needed lists
+  //
   let splitsList: SplitType[] = [];
   let peopleBalanceList: PersonBalanceObject[] = [];
   let positiveList: PersonPosNegObject[] = [];
@@ -69,7 +71,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
     let person_posNeg: PersonPosNegObject = {
       id: b.id,
       name: b.name,
-      balance: 0,
+      balance: b.balance,
     };
     if (b.balance >= 0) positiveList.push(person_posNeg);
     else negativeList.push(person_posNeg);
@@ -98,7 +100,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
               type: "PAY",
               personId: p.id,
               name: p.name,
-              amount: Math.abs(oweAmount),
+              amount: Math.round(Math.abs(oweAmount) * 100) / 100,
             };
             s.transactions.push(split);
           }
@@ -108,7 +110,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
               type: "RECEIVE",
               personId: n.id,
               name: n.name,
-              amount: Math.abs(oweAmount),
+              amount: Math.round(Math.abs(oweAmount) * 100) / 100,
             };
             s.transactions.push(split);
           }
@@ -131,7 +133,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
               type: "PAY",
               personId: p.id,
               name: p.name,
-              amount: Math.abs(oweAmount),
+              amount: Math.round(Math.abs(oweAmount) * 100) / 100,
             };
             s.transactions.push(split);
           }
@@ -139,9 +141,9 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
             //   Receiving from someone
             let split: SplitTransactionType = {
               type: "RECEIVE",
-              personId: n.name,
+              personId: n.id,
               name: n.name,
-              amount: Math.abs(oweAmount),
+              amount: Math.round(Math.abs(oweAmount) * 100) / 100,
             };
             s.transactions.push(split);
           }
@@ -158,7 +160,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
                 type: "PAY",
                 personId: p.id,
                 name: p.name,
-                amount: Math.abs(p.balance),
+                amount: Math.round(Math.abs(p.balance) * 100) / 100,
               };
               s.transactions.push(split);
             }
@@ -168,7 +170,7 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
                 type: "RECEIVE",
                 personId: n.id,
                 name: n.name,
-                amount: Math.abs(p.balance),
+                amount: Math.round(Math.abs(n.balance) * 100) / 100,
               };
               s.transactions.push(split);
             }
@@ -192,9 +194,21 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
         s.endingBalance += t.amount;
       }
     }
+    s.endingBalance = Math.round(s.endingBalance * 100) / 100;
   }
 
   return splitsList;
 
   //
+};
+
+//
+// ** Calculates the total cost of the trip
+//      by adding up all the activities
+export const calculateTotalCost = (trip: TripType): number => {
+  let totalCost = 0;
+  for (let a of trip.activityList) {
+    totalCost += a.cost;
+  }
+  return totalCost;
 };

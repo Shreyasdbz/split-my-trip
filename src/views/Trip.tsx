@@ -15,7 +15,7 @@ import {
   SplitModalTypes,
 } from "../interfaces/tripView";
 import { TripsContext } from "../context/TripsContext";
-import { buildSplitsList } from "../helpers/splits";
+import { buildSplitsList, calculateTotalCost } from "../helpers/splits";
 
 import Header from "../components/trip/Header";
 import EditTripButton from "../components/trip/EditTripButton";
@@ -53,6 +53,7 @@ const Trip = () => {
     {} as ActivityType
   );
   const [splitsList, setSplitsList] = useState<SplitType[]>([]);
+  const [totalCost, setTotalCost] = useState<number>(0);
 
   function handleEditTrip(payload: EditTripTypes) {
     if (payload.action === "OPEN") {
@@ -123,6 +124,8 @@ const Trip = () => {
     if (payload.action === "OPEN") {
       let splitsListDerived = buildSplitsList(trip);
       setSplitsList(splitsListDerived);
+      let totalCostDerived = calculateTotalCost(trip);
+      setTotalCost(totalCostDerived);
       setTimeout(() => {
         setSplitsModalActive(true);
       }, 300);
@@ -166,7 +169,12 @@ const Trip = () => {
 
       {/* Splits Modal */}
       <Modal activeOn={splitsModalActive}>
-        <SplitsModal splitsList={splitsList} handler={handleSplits} />
+        <SplitsModal
+          tripColorId={trip.colorId}
+          splitsList={splitsList}
+          totalCost={totalCost}
+          handler={handleSplits}
+        />
       </Modal>
 
       {(editTripModalActive ||
