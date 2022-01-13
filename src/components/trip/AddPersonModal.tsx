@@ -80,7 +80,7 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
         >
           Add
         </button>
-      </div>{" "}
+      </div>
     </div>
   );
 };
