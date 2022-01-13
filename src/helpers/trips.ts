@@ -289,6 +289,40 @@ export function buildParticipantListInitial(
   return participantList;
 }
 
+//
+// ** Builds a merged participantList based on the
+//      people list & current participant list
+//
+export function buildParticipantListMerged(
+  peopleList: PersonType[],
+  currentParticipantList: string[]
+): ActivityParticipantType[] {
+  function findParticipationStatus(id: string) {
+    for (let c of currentParticipantList) {
+      if (c === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  let returnParticipantList: ActivityParticipantType[] = [];
+
+  for (let p of peopleList) {
+    let participant: ActivityParticipantType = {
+      participantId: p.id,
+      participating: findParticipationStatus(p.id),
+    };
+    returnParticipantList.push(participant);
+  }
+
+  return returnParticipantList;
+}
+
+//
+// ** Builds a minimized participantList containing
+//      only the ids of the participants
+//
 export function buildParticipantListMinimized(
   participantList: ActivityParticipantType[]
 ): string[] {

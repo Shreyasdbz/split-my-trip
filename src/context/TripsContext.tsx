@@ -23,6 +23,11 @@ type TripsContextType = {
   addPerson: (tripId: string, name: string) => void;
   updatePerson: (tripId: string, person: PersonType, toDelete: boolean) => void;
   addActivity: (tripId: string, activity: ActivityType) => void;
+  updateActivity: (
+    tripId: string,
+    activity: ActivityType,
+    toDelete: boolean
+  ) => void;
 };
 
 export const TripsContext = createContext({} as TripsContextType);
@@ -33,7 +38,8 @@ export const TripsContextProvider = ({
   const [tripsList, setTripsList] = useState<TripType[]>([]);
 
   // TODO:
-  // Enable caching
+  // **** person onDelete / onSave => activity change
+  //  *Enable caching
 
   const _send_data_to_firestore = async (altTripData?: TripType[]) => {
     if (firebase_auth.currentUser) {
@@ -78,6 +84,30 @@ export const TripsContextProvider = ({
       }
     }, 1000);
   };
+
+  function _on_person_delete(tripId: string, personId: string): TripType[] {
+    let tempTripsList: TripType[] = tripsList;
+    // Remove activities with payerID
+    for (let t of tempTripsList) {
+      if (t.id === tripId) {
+        let tempActivityList: ActivityType[] = [];
+        for (let a of t.activityList) {
+          if (a.payerId !== personId) {
+            let tempParticipantList: string[] = [];
+            for (let p of a.participantList) {
+              if (p !== personId) tempParticipantList.push(p);
+            }
+            a.participantList = tempParticipantList;
+
+            tempActivityList.push(a);
+          }
+        }
+        t.activityList = tempActivityList;
+      }
+    }
+
+    return tempTripsList;
+  }
 
   const initiateTrips = async () => {
     // New User Sign On (ONE TIME)
@@ -178,7 +208,7 @@ export const TripsContextProvider = ({
   ) => {
     if (toDelete === true) {
       // Delete
-      let tempTripsList: TripType[] = tripsList;
+      let tempTripsList: TripType[] = _on_person_delete(tripId, person.id);
       for (let t of tempTripsList) {
         if (t.id === tripId) {
           let tempPeopleList: PersonType[] = [];
@@ -227,6 +257,40 @@ export const TripsContextProvider = ({
     _send_data_to_firestore(tempTripsList);
   };
 
+  const updateActivity = async (
+    tripId: string,
+    activity: ActivityType,
+    toDelete: boolean
+  ) => {
+    let tempTripsList = tripsList;
+    for (let t of tempTripsList) {
+      if (t.id === tripId) {
+        // Delete
+        if (toDelete === true) {
+          let tempActivityList: ActivityType[] = [];
+          for (let a of t.activityList) {
+            if (a.id !== activity.id) tempActivityList.push(a);
+            else {
+            }
+          }
+          t.activityList = tempActivityList;
+        } else {
+          // Update
+          for (let a of t.activityList) {
+            if (a.id === activity.id) {
+              a.title = activity.title;
+              a.cost = activity.cost;
+              a.payerId = activity.payerId;
+              a.participantList = activity.participantList;
+            }
+          }
+        }
+      }
+    }
+    setTripsList(tempTripsList);
+    _send_data_to_firestore(tempTripsList);
+  };
+
   return (
     <TripsContext.Provider
       value={{
@@ -239,6 +303,7 @@ export const TripsContextProvider = ({
         addPerson,
         updatePerson,
         addActivity,
+        updateActivity,
       }}
     >
       {children}

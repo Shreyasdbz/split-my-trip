@@ -8,7 +8,7 @@ type BasicModalType = {
 };
 
 //
-// EDIT TRIP MODAL
+// EDIT TRIP MODAL -----------------------------
 //
 type EditTripConfirmType = {
   action: "CONFIRM";
@@ -19,7 +19,7 @@ type EditTripConfirmType = {
 export type EditTripTypes = BasicModalType | EditTripConfirmType;
 
 //
-// ADD PERSON MODAL
+// ADD PERSON MODAL-----------------------------
 //
 type AddPersonConfirmType = {
   action: "CONFIRM";
@@ -28,7 +28,7 @@ type AddPersonConfirmType = {
 export type AddPersonTypes = BasicModalType | AddPersonConfirmType;
 
 //
-// EDIT PERSON MODAL
+// EDIT PERSON MODAL-----------------------------
 //
 type EditPersonOpenType = {
   action: "OPEN";
@@ -47,10 +47,29 @@ export type EditPersonTypes =
   | EditPersonCloseType
   | EditPersonConfirmType;
 
-// ADD ACTIVITY MODAL
+// ADD ACTIVITY MODAL-----------------------------
 //
 type AddActivityConfirmType = {
   action: "CONFIRM";
   activity: ActivityType;
 };
 export type AddActivityTypes = BasicModalType | AddActivityConfirmType;
+
+// EDIT ACTIVITY MODAL-----------------------------
+//
+type EditActivityOpenType = {
+  action: "OPEN";
+  activity: ActivityType;
+};
+type EditActivityCloseType = {
+  action: "CLOSE";
+};
+type EditActivityConfirmType = {
+  action: "CONFIRM";
+  activity: ActivityType;
+  toDelete: boolean;
+};
+export type EditActivityTypes =
+  | EditActivityOpenType
+  | EditActivityCloseType
+  | EditActivityConfirmType;

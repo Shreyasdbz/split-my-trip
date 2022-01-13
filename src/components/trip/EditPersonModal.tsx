@@ -80,6 +80,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
+            outline: `2px solid ${theme.text}`,
           }}
           onClick={() => {
             handler({
@@ -89,7 +90,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
             });
           }}
         >
-          Add
+          Save
         </button>
       </div>
     </div>

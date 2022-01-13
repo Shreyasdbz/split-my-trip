@@ -9,8 +9,9 @@ import {
   AddPersonTypes,
   EditPersonTypes,
   AddActivityTypes,
+  EditActivityTypes,
 } from "../interfaces/tripView";
-import { TripType, PersonType } from "../interfaces/tripObjects";
+import { TripType, PersonType, ActivityType } from "../interfaces/tripObjects";
 
 import Header from "../components/trip/Header";
 import EditTripButton from "../components/trip/EditTripButton";
@@ -21,6 +22,7 @@ import AddPersonModal from "../components/trip/AddPersonModal";
 import EditPersonModal from "../components/trip/EditPersonModal";
 import AddActivityModal from "../components/trip/AddActivityModal";
 import ActivitiesSection from "../components/trip/ActivitiesSection";
+import EditActivityModal from "../components/trip/EditActivityModal";
 
 const Trip = () => {
   const getTripByIdFunction = useContext(TripsContext).getTripById;
@@ -28,6 +30,7 @@ const Trip = () => {
   const addPersonFunction = useContext(TripsContext).addPerson;
   const updatePersonFunction = useContext(TripsContext).updatePerson;
   const addActivityFunction = useContext(TripsContext).addActivity;
+  const updateActivityFunction = useContext(TripsContext).updateActivity;
 
   let tripId = useParams().tripID;
   const trip = getTripByIdFunction(tripId);
@@ -36,8 +39,12 @@ const Trip = () => {
   const [addPersonModalActive, setAddPersonModalActive] = useState(false);
   const [editPersonModalActive, setEditPersonModalActive] = useState(false);
   const [addActivityModalActive, setAddActivityModalActive] = useState(false);
+  const [editActivityModalActive, setEditActivityModalActive] = useState(false);
 
   const [editPerson, setEditPerson] = useState<PersonType>({} as PersonType);
+  const [editActivity, setEditActivity] = useState<ActivityType>(
+    {} as ActivityType
+  );
 
   function handleEditTrip(payload: EditTripTypes) {
     if (payload.action === "OPEN") {
@@ -91,9 +98,18 @@ const Trip = () => {
       setAddActivityModalActive(false);
     }
   }
-  // function handleEditActivity() {
-  //   //
-  // }
+  function handleEditActivity(payload: EditActivityTypes) {
+    if (payload.action === "OPEN") {
+      setEditActivity(payload.activity);
+      setEditActivityModalActive(true);
+    } else if (payload.action === "CLOSE") {
+      setEditActivityModalActive(false);
+    } else if (payload.action === "CONFIRM") {
+      setEditActivity({} as ActivityType);
+      updateActivityFunction(trip.id, payload.activity, payload.toDelete);
+      setEditActivityModalActive(false);
+    }
+  }
 
   // function handleSplit() {
   //   //
@@ -123,10 +139,19 @@ const Trip = () => {
         <AddActivityModal handler={handleAddActivity} />
       </Modal>
 
+      {/* Edit Activity Modal */}
+      <Modal activeOn={editActivityModalActive}>
+        <EditActivityModal
+          activity={editActivity}
+          handler={handleEditActivity}
+        />
+      </Modal>
+
       {(editTripModalActive ||
         addPersonModalActive ||
         editPersonModalActive ||
-        addActivityModalActive) && <div className="blur-layer" />}
+        addActivityModalActive ||
+        editActivityModalActive) && <div className="blur-layer" />}
 
       <div className="page-container">
         <EditTripButton handler={handleEditTrip} />
@@ -134,7 +159,10 @@ const Trip = () => {
           addHandler={handleAddPerson}
           editHandler={handleEditPerson}
         />
-        <ActivitiesSection addHandler={handleAddActivity} />
+        <ActivitiesSection
+          addHandler={handleAddActivity}
+          editHandler={handleEditActivity}
+        />
       </div>
     </div>
   );

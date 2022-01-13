@@ -3,17 +3,19 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import { AddActivityTypes, EditActivityTypes } from "../../interfaces/tripView";
+import { ActivityType } from "../../interfaces/tripObjects";
 import { ThemeContext } from "../../context/ThemeContext";
 import { TripsContext } from "../../context/TripsContext";
 import { getTripColorById } from "../../helpers/colors";
-import { AddActivityTypes } from "../../interfaces/tripView";
 import { getPersonNameById } from "../../helpers/trips";
 
 type PeopleSectionProps = {
   addHandler: (payload: AddActivityTypes) => void;
+  editHandler: (payload: EditActivityTypes) => void;
 };
 
-const ActivitiesSection = ({ addHandler }: PeopleSectionProps) => {
+const ActivitiesSection = ({ addHandler, editHandler }: PeopleSectionProps) => {
   const theme = useContext(ThemeContext).theme;
   let tripId = useParams().tripID;
   const getTripByIdFunction = useContext(TripsContext).getTripById;
@@ -50,6 +52,16 @@ const ActivitiesSection = ({ addHandler }: PeopleSectionProps) => {
                   getTripColorById(trip.colorId).backgroundImage
                 }`,
                 boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+              }}
+              onClick={() => {
+                let editActivity: ActivityType = {
+                  id: activity.id,
+                  title: activity.title,
+                  cost: activity.cost,
+                  payerId: activity.payerId,
+                  participantList: activity.participantList,
+                };
+                editHandler({ action: "OPEN", activity: editActivity });
               }}
             >
               <div className="top-section">

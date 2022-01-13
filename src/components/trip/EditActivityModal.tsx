@@ -4,36 +4,34 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { ActivityType } from "../../interfaces/tripObjects";
-import { AddActivityTypes } from "../../interfaces/tripView";
+import { EditActivityTypes } from "../../interfaces/tripView";
 import { TripsContext } from "../../context/TripsContext";
 import { ThemeContext } from "../../context/ThemeContext";
 import {
-  buildParticipantListInitial,
   buildParticipantListMinimized,
-  getRandomActivityName,
+  buildParticipantListMerged,
 } from "../../helpers/trips";
 
 import DropDownSelector from "../misc/DropDownSelector";
 import ParticipantToggles from "./ParticipantToggles";
 
-type AddActivityModalProps = {
-  handler: (payload: AddActivityTypes) => void;
+type EditActivityModalProps = {
+  activity: ActivityType;
+  handler: (payload: EditActivityTypes) => void;
 };
 
-const AddActivityModal = ({ handler }: AddActivityModalProps) => {
+const EditActivityModal = ({ activity, handler }: EditActivityModalProps) => {
   const getTripByIdFunction = useContext(TripsContext).getTripById;
   let tripId = useParams().tripID;
   const trip = getTripByIdFunction(tripId);
   const peopleList = trip.peopleList;
 
   const theme = useContext(ThemeContext).theme;
-  const [title, setTitle] = useState(getRandomActivityName());
-  const [cost, setCost] = useState<number>(Math.floor(Math.random() * 1000));
-  const [payerIdSelection, setPayerIdSelection] = useState(
-    peopleList[Math.floor(Math.random() * peopleList.length)].id
-  );
+  const [title, setTitle] = useState(activity.title);
+  const [cost, setCost] = useState<number>(activity.cost);
+  const [payerIdSelection, setPayerIdSelection] = useState(activity.payerId);
   const [participantList, setParticipantList] = useState(
-    buildParticipantListInitial(peopleList)
+    buildParticipantListMerged(peopleList, activity.participantList)
   );
 
   function handleToggle(personId: string) {
@@ -46,15 +44,26 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
     setParticipantList(tempParticipantList);
   }
 
-  function handleConfirm() {
+  function handleDelete() {
     let newActivity: ActivityType = {
-      id: `sampleID${Math.floor(Math.random() * 99999999)}`,
+      id: activity.id,
       title: title,
       cost: cost,
       payerId: payerIdSelection,
       participantList: buildParticipantListMinimized(participantList),
     };
-    handler({ action: "CONFIRM", activity: newActivity });
+    handler({ action: "CONFIRM", activity: newActivity, toDelete: true });
+  }
+
+  function handleSave() {
+    let newActivity: ActivityType = {
+      id: activity.id,
+      title: title,
+      cost: cost,
+      payerId: payerIdSelection,
+      participantList: buildParticipantListMinimized(participantList),
+    };
+    handler({ action: "CONFIRM", activity: newActivity, toDelete: false });
   }
 
   return (
@@ -66,7 +75,7 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a new Activity</span>
+        <span>Edit an Activity</span>
       </div>
       <div className="input-form">
         <div className="input-box">
@@ -154,12 +163,16 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
         >
           Cancel
         </button>
-        <div
-          className="divider"
+        <button
+          className="btn-delete"
           style={{
-            backgroundColor: `${theme.greyBackground}`,
+            color: `${theme.danger}`,
+            backgroundColor: `${theme.background}`,
           }}
-        />
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
         <button
           className="btn-confirm"
           style={{
@@ -167,13 +180,13 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
             color: `${theme.background}`,
             outline: `2px solid ${theme.text}`,
           }}
-          onClick={handleConfirm}
+          onClick={handleSave}
         >
-          Add
+          Save
         </button>
       </div>
     </div>
   );
 };
 
-export default AddActivityModal;
+export default EditActivityModal;

@@ -469,10 +469,6 @@
   opacity: 0.85;
 }
 
-.modal .actions .btn-confirm {
-  padding: 0.5rem 1.5rem;
-}
-
 .modal .actions .btn-delete .link {
   text-decoration: none;
 }
@@ -838,7 +834,7 @@
   font-size: 1rem;
   font-weight: 800;
   border-radius: 0.75rem;
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.75rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
