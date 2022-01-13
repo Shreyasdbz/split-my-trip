@@ -15,6 +15,7 @@ import {
   SplitModalTypes,
 } from "../interfaces/tripView";
 import { TripsContext } from "../context/TripsContext";
+import { ThemeContext } from "../context/ThemeContext";
 import { buildSplitsList, calculateTotalCost } from "../helpers/splits";
 
 import Header from "../components/trip/Header";
@@ -31,6 +32,7 @@ import CornerActionButton from "../components/common/CornerActionButton";
 import SplitsModal from "../components/trip/SplitsModal";
 
 const Trip = () => {
+  const theme = useContext(ThemeContext).theme;
   const getTripByIdFunction = useContext(TripsContext).getTripById;
   const updateTripFunction = useContext(TripsContext).updateTrip;
   const addPersonFunction = useContext(TripsContext).addPerson;
@@ -61,15 +63,23 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setEditTripModalActive(false);
     } else if (payload.action === "CONFIRM") {
-      let tripEdit: TripType = {
-        id: trip.id,
-        title: payload.title,
-        colorId: payload.colorId,
-        peopleList: trip.peopleList,
-        activityList: trip.activityList,
-      };
-      updateTripFunction(tripEdit, payload.toDelete);
-      setEditTripModalActive(false);
+      let errorMessage = "";
+      if (payload.title.length < 2) {
+        errorMessage = "Please enter a minimum of 2 characters";
+      }
+      if (errorMessage === "") {
+        let tripEdit: TripType = {
+          id: trip.id,
+          title: payload.title,
+          colorId: payload.colorId,
+          peopleList: trip.peopleList,
+          activityList: trip.activityList,
+        };
+        updateTripFunction(tripEdit, payload.toDelete);
+        setEditTripModalActive(false);
+      } else {
+        alert(errorMessage);
+      }
     }
   }
 
@@ -79,8 +89,16 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setAddPersonModalActive(false);
     } else if (payload.action === "CONFIRM") {
-      addPersonFunction(trip.id, payload.name);
-      setAddPersonModalActive(false);
+      let errorMessage = "";
+      if (payload.name.length < 2) {
+        errorMessage = "Please enter a minimum of 2 characters";
+      }
+      if (errorMessage === "") {
+        addPersonFunction(trip.id, payload.name);
+        setAddPersonModalActive(false);
+      } else {
+        alert(errorMessage);
+      }
     }
   }
   function handleEditPerson(payload: EditPersonTypes) {
@@ -90,9 +108,17 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setEditPersonModalActive(false);
     } else if (payload.action === "CONFIRM") {
-      updatePersonFunction(trip.id, payload.person, payload.toDelete);
-      setEditPerson({} as PersonType);
-      setEditPersonModalActive(false);
+      let errorMessage = "";
+      if (payload.person.name.length < 2) {
+        errorMessage = "Please enter a minimum of 2 characters";
+      }
+      if (errorMessage === "") {
+        updatePersonFunction(trip.id, payload.person, payload.toDelete);
+        setEditPerson({} as PersonType);
+        setEditPersonModalActive(false);
+      } else {
+        alert(errorMessage);
+      }
     }
   }
 
@@ -102,9 +128,22 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setAddActivityModalActive(false);
     } else if (payload.action === "CONFIRM") {
-      // TODO: Change how participant list is packaged
-      addActivityFunction(trip.id, payload.activity);
-      setAddActivityModalActive(false);
+      let errorMessage = "";
+      if (payload.activity.title.length < 2) {
+        errorMessage = "Title must be a minimum of 2 characters";
+      }
+      if (isNaN(payload.activity.cost)) {
+        errorMessage = "Invalid cost";
+      }
+      if (payload.activity.participantList.length < 1) {
+        errorMessage = "Must have at least 1 participant";
+      }
+      if (errorMessage === "") {
+        addActivityFunction(trip.id, payload.activity);
+        setAddActivityModalActive(false);
+      } else {
+        alert(errorMessage);
+      }
     }
   }
   function handleEditActivity(payload: EditActivityTypes) {
@@ -114,9 +153,23 @@ const Trip = () => {
     } else if (payload.action === "CLOSE") {
       setEditActivityModalActive(false);
     } else if (payload.action === "CONFIRM") {
-      setEditActivity({} as ActivityType);
-      updateActivityFunction(trip.id, payload.activity, payload.toDelete);
-      setEditActivityModalActive(false);
+      let errorMessage = "";
+      if (payload.activity.title.length < 2) {
+        errorMessage = "Title must be a minimum of 2 characters";
+      }
+      if (isNaN(payload.activity.cost)) {
+        errorMessage = "Invalid cost";
+      }
+      if (payload.activity.participantList.length < 1) {
+        errorMessage = "Must have at least 1 participant";
+      }
+      if (errorMessage === "") {
+        setEditActivity({} as ActivityType);
+        updateActivityFunction(trip.id, payload.activity, payload.toDelete);
+        setEditActivityModalActive(false);
+      } else {
+        alert(errorMessage);
+      }
     }
   }
 
@@ -190,10 +243,20 @@ const Trip = () => {
           addHandler={handleAddPerson}
           editHandler={handleEditPerson}
         />
-        <ActivitiesSection
-          addHandler={handleAddActivity}
-          editHandler={handleEditActivity}
-        />
+        {trip.peopleList.length > 0 ? (
+          <ActivitiesSection
+            addHandler={handleAddActivity}
+            editHandler={handleEditActivity}
+          />
+        ) : (
+          <div
+            className="trip-view-section get-started-section"
+            style={{ color: `${theme.greyText}` }}
+          >
+            <span>To get started,</span>
+            <span>tap the '+ADD' icon above</span>
+          </div>
+        )}
       </div>
       <CornerActionButton
         text="Get Split"

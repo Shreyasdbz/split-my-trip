@@ -5,6 +5,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 
 import { UserSettingsType } from "../../interfaces/homeView";
 import { ThemeContext } from "../../context/ThemeContext";
+import { firebase_auth } from "../../config/firebase";
 
 type HeaderProps = {
   handler: (payload: UserSettingsType) => void;
@@ -34,7 +35,22 @@ const Header = ({ handler }: HeaderProps) => {
           handler({ action: "OPEN" });
         }}
       >
-        <IoPersonCircleOutline className="icon" />
+        {firebase_auth.currentUser ? (
+          firebase_auth.currentUser.photoURL ? (
+            <img
+              src={firebase_auth.currentUser.photoURL}
+              alt="profilePhoto"
+              className="profile-photo"
+              style={{
+                boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+              }}
+            />
+          ) : (
+            <IoPersonCircleOutline className="icon" />
+          )
+        ) : (
+          <IoPersonCircleOutline className="icon" />
+        )}
       </button>
     </div>
   );

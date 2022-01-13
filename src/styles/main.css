@@ -11,6 +11,10 @@
   transition: 0.3s;
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 button {
   cursor: pointer;
 }
@@ -125,8 +129,10 @@ button {
 
 .info-link {
   position: fixed;
+  border: none;
+  outline: none;
   bottom: 0rem;
-  padding: 0.025rem 2rem;
+  padding: 0.25rem 2rem;
   font-size: 0.85rem;
   text-decoration: none;
   border-top-left-radius: 0.75rem;
@@ -152,6 +158,148 @@ button {
   overflow-x: hidden;
   overflow-y: scroll;
   z-index: 3;
+}
+
+.modal .info-modal {
+  max-width: 400px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80%;
+  border-radius: 2rem;
+  padding: 1rem 0rem;
+  gap: 1.5rem;
+}
+
+.modal .info-modal .title {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.modal .info-modal .information-box {
+  width: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal .info-modal .information-box .heading {
+  font-size: 1.125rem;
+}
+
+.modal .info-modal .information-box .sub-heading {
+  margin-top: 1rem;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.modal .info-modal .information-box .instruction-list {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal .info-modal .information-box .instruction-list .instruction {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  font-size: 1.125rem;
+}
+
+.modal .info-modal .information-box .instruction-list .instruction .number {
+  padding: 0.15rem 0.5rem;
+  border-radius: 2rem;
+}
+
+.modal .info-modal .information-box .instruction-list .instruction .text {
+  margin-left: 0.5rem;
+}
+
+.modal .info-modal .actions {
+  padding: 1rem 0rem;
+  gap: 1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal .info-modal .actions .git-link {
+  text-decoration: none;
+}
+
+.modal .info-modal .actions .btn-github {
+  border: none;
+  outline: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
 }
 
 .modal .user-settings-modal {
@@ -881,6 +1029,12 @@ button {
   margin-left: 1rem;
 }
 
+.home-page .header .profile-photo {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 2.5rem;
+}
+
 .home-page .header .icon-btn {
   outline: none;
   background: none;
@@ -902,6 +1056,25 @@ button {
 .home-page .header .icon-btn .icon {
   font-size: 2rem;
   border-radius: 2rem;
+}
+
+.home-page .no-trips {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 5rem;
+  gap: 0.5rem;
 }
 
 .home-page .trips-list-view {
@@ -1300,5 +1473,13 @@ button {
     -webkit-transform: translateY(-0.125rem) scale(0.995);
             transform: translateY(-0.125rem) scale(0.995);
   }
+}
+
+.trip-page .get-started-section {
+  gap: 1rem;
+}
+
+.trip-page .get-started-section span {
+  font-weight: 600;
 }
 /*# sourceMappingURL=main.css.map */

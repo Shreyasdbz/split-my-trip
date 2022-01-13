@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import { IoAddCircle } from "react-icons/io5";
 
 import { NewTripTypes, UserSettingsType } from "../interfaces/homeView";
+import { InfoModalTypes } from "../interfaces/commonView";
 import { TripsContext } from "../context/TripsContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { firebase_auth } from "../config/firebase";
@@ -15,6 +16,7 @@ import InfoTab from "../components/common/InfoTab";
 import Modal from "../components/common/Modal";
 import NewTripModal from "../components/home/NewTripModal";
 import UserSettingsModal from "../components/home/UserSettingsModal";
+import InfoModal from "../components/common/InfoModal";
 
 const Home = () => {
   const addTripFunction = useContext(TripsContext).addTrip;
@@ -23,6 +25,7 @@ const Home = () => {
 
   const [addTripModalActive, setaddTripModalActive] = useState(false);
   const [userSettingsModalActive, setUserSettingsModalActive] = useState(false);
+  const [infoModalActive, setInfoModalActive] = useState(false);
 
   const handleAddTrip = async (payload: NewTripTypes) => {
     if (payload.action === "OPEN") {
@@ -32,9 +35,18 @@ const Home = () => {
       // Close the modal
       setaddTripModalActive(false);
     } else if (payload.action === "CONFIRM") {
+      let errorMessage = "";
+      // Incorrect trip title
+      if (payload.title.length < 2) {
+        errorMessage = "Please enter a minimum of 2 characters";
+      }
       // Pack and send the object to firestore
-      setaddTripModalActive(false);
-      addTripFunction(payload.title, payload.colorId);
+      if (errorMessage === "") {
+        setaddTripModalActive(false);
+        addTripFunction(payload.title, payload.colorId);
+      } else {
+        alert(errorMessage);
+      }
     }
   };
 
@@ -54,6 +66,14 @@ const Home = () => {
     }
   }
 
+  function handleInfo(payload: InfoModalTypes) {
+    if (payload.action === "OPEN") {
+      setInfoModalActive(true);
+    } else if (payload.action === "CLOSE") {
+      setInfoModalActive(false);
+    }
+  }
+
   useEffect(() => {
     refreshTripsFunction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +81,7 @@ const Home = () => {
 
   return (
     <div className="page home-page">
-      {(addTripModalActive || userSettingsModalActive) && (
+      {(addTripModalActive || userSettingsModalActive || infoModalActive) && (
         <div className="blur-layer" />
       )}
 
@@ -75,13 +95,19 @@ const Home = () => {
         <UserSettingsModal handler={handleUserSettings} />
       </Modal>
 
+      {/* Info Modal */}
+      <Modal activeOn={infoModalActive}>
+        <InfoModal handler={handleInfo} />
+      </Modal>
+
       <Header handler={handleUserSettings} />
 
       <div className="page-container">
         <TripsList />
       </div>
 
-      <InfoTab />
+      <InfoTab handler={handleInfo} />
+
       <CornerActionButton
         text="Add Trip"
         Icon={IoAddCircle}

@@ -94,44 +94,55 @@ const SplitsModal = ({
                 )}
               </div>
               <div className="bottom-section">
-                {split.transactions.map((transaction) => {
-                  if (transaction.type === "PAY") {
-                    return (
-                      <div key={transaction.personId} className="transaction">
-                        <span className="label">Pay</span>
-                        <span
-                          className="name"
-                          style={{
-                            color: `${
-                              getTripColorById(tripColorId).backgroundColor
-                            }`,
-                          }}
-                        >
-                          {transaction.name}
-                        </span>
-                        <span className="amount">${transaction.amount}</span>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div key={transaction.personId} className="transaction">
-                        <span className="label">Receive</span>
-                        <span className="amount">${transaction.amount}</span>
-                        <span className="label">from</span>
-                        <span
-                          className="name"
-                          style={{
-                            color: `${
-                              getTripColorById(tripColorId).backgroundColor
-                            }`,
-                          }}
-                        >
-                          {transaction.name}
-                        </span>
-                      </div>
-                    );
-                  }
-                })}
+                {split.transactions.length > 0 ? (
+                  split.transactions.map((transaction) => {
+                    if (transaction.type === "PAY") {
+                      return (
+                        <div key={transaction.personId} className="transaction">
+                          <span className="label">Pay</span>
+                          <span
+                            className="name"
+                            style={{
+                              color: `${
+                                getTripColorById(tripColorId).backgroundColor
+                              }`,
+                            }}
+                          >
+                            {transaction.name}
+                          </span>
+                          <span className="amount">${transaction.amount}</span>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={transaction.personId} className="transaction">
+                          <span className="label">Receive</span>
+                          <span className="amount">${transaction.amount}</span>
+                          <span className="label">from</span>
+                          <span
+                            className="name"
+                            style={{
+                              color: `${
+                                getTripColorById(tripColorId).backgroundColor
+                              }`,
+                            }}
+                          >
+                            {transaction.name}
+                          </span>
+                        </div>
+                      );
+                    }
+                  })
+                ) : (
+                  <div
+                    className="no-trasnactions"
+                    style={{
+                      color: `${theme.greyText}`,
+                    }}
+                  >
+                    Nothing to do here :)
+                  </div>
+                )}
               </div>
             </div>
           );

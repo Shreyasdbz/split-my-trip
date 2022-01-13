@@ -1,17 +1,22 @@
 /** @format */
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IoLogoGoogle } from "react-icons/io5";
 import { signInWithPopup } from "@firebase/auth";
 
+import { InfoModalTypes } from "../interfaces/commonView";
 import { firebase_auth, firebase_google_provider } from "../config/firebase";
 import { ThemeContext } from "../context/ThemeContext";
 import { TripsContext } from "../context/TripsContext";
 
 import InfoTab from "../components/common/InfoTab";
+import Modal from "../components/common/Modal";
+import InfoModal from "../components/common/InfoModal";
 
 const SignOn = () => {
   const initiateTripsFunction = useContext(TripsContext).initiateTrips;
+
+  const [infoModalActive, setInfoModalActive] = useState(false);
 
   function signIn() {
     signInWithPopup(firebase_auth, firebase_google_provider)
@@ -23,10 +28,24 @@ const SignOn = () => {
       });
   }
 
+  function handleInfo(payload: InfoModalTypes) {
+    if (payload.action === "OPEN") {
+      setInfoModalActive(true);
+    } else if (payload.action === "CLOSE") {
+      setInfoModalActive(false);
+    }
+  }
+
   const theme = useContext(ThemeContext).theme;
 
   return (
     <div className="page sign-on-page">
+      {infoModalActive && <div className="blur-layer" />}
+
+      <Modal activeOn={infoModalActive}>
+        <InfoModal handler={handleInfo} />
+      </Modal>
+
       <div className="page-container">
         <div className="images">
           <img
@@ -76,7 +95,8 @@ const SignOn = () => {
           <span className="text">Log in with Google</span>
         </button>
       </div>
-      <InfoTab />
+
+      <InfoTab handler={handleInfo} />
     </div>
   );
 };
