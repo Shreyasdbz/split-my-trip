@@ -1,6 +1,6 @@
 /** @format */
 
-type NewTripBasicType = {
+type ModalBasicType = {
   action: "OPEN" | "CLOSE";
 };
 
@@ -10,4 +10,11 @@ type NewTripAddType = {
   colorId: number;
 };
 
-export type NewTripTypes = NewTripBasicType | NewTripAddType;
+export type NewTripTypes = ModalBasicType | NewTripAddType;
+
+type UserSettingsConfirmType = {
+  action: "CONFIRM";
+  type: "TOGGLE THEME" | "LOGOUT";
+};
+
+export type UserSettingsType = ModalBasicType | UserSettingsConfirmType;

@@ -21,13 +21,15 @@ const Header = ({ title, colorId }: HeaderProps) => {
         boxShadow: `0px 2px 15px 5px ${theme.text}25`,
       }}
     >
-      <Link to={"/"} className="icon-btn">
-        <IoChevronBackCircle
-          className="icon"
-          style={{
-            color: `${getTripColorById(colorId).backgroundColor}`,
-          }}
-        />
+      <Link to={"/"}>
+        <button className="icon-btn">
+          <IoChevronBackCircle
+            className="icon"
+            style={{
+              color: `${getTripColorById(colorId).backgroundColor}`,
+            }}
+          />
+        </button>
       </Link>
       <div className="title">{title}</div>
     </div>

@@ -3,10 +3,14 @@
 import { useContext } from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
 
-import { firebase_auth } from "../../config/firebase";
+import { UserSettingsType } from "../../interfaces/homeView";
 import { ThemeContext } from "../../context/ThemeContext";
 
-const Header = () => {
+type HeaderProps = {
+  handler: (payload: UserSettingsType) => void;
+};
+
+const Header = ({ handler }: HeaderProps) => {
   const theme = useContext(ThemeContext).theme;
 
   return (
@@ -27,9 +31,7 @@ const Header = () => {
       <button
         className="icon-btn"
         onClick={() => {
-          firebase_auth.signOut().catch((errMsg) => {
-            alert(errMsg);
-          });
+          handler({ action: "OPEN" });
         }}
       >
         <IoPersonCircleOutline className="icon" />
