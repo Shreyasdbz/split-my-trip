@@ -24,6 +24,6 @@ Split My Trip is currently hosted [HERE](www.google.com)
 
 And [React Icons](https://react-icons.github.io/react-icons/)
 
-[Mockup1](assets/mockup1.png?raw=true "Mockup1")
-[Mockup2](assets/mockup2.png?raw=true "Mockup2")
-[Mockup3](assets/mockup3.png?raw=true "Mockup3")
+![Mockup1](assets/mockup1.png?raw=true "Mockup1")
+![Mockup2](assets/mockup2.png?raw=true "Mockup2")
+![Mockup3](assets/mockup3.png?raw=true "Mockup3")
