@@ -26,7 +26,13 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a new trip</span>
+        <span
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
+          Add a new trip
+        </span>
       </div>
       <div className="input-box">
         <span
@@ -91,6 +97,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

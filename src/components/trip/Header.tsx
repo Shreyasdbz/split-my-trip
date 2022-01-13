@@ -18,7 +18,8 @@ const Header = ({ title, colorId }: HeaderProps) => {
     <div
       className="header"
       style={{
-        boxShadow: `0px 2px 15px 5px ${theme.text}25`,
+        boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+        backgroundColor: `${theme.background}`,
       }}
     >
       <Link to={"/"}>
@@ -31,7 +32,14 @@ const Header = ({ title, colorId }: HeaderProps) => {
           />
         </button>
       </Link>
-      <div className="title">{title}</div>
+      <div
+        className="title"
+        style={{
+          color: `${theme.text}`,
+        }}
+      >
+        {title}
+      </div>
     </div>
   );
 };

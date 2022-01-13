@@ -24,7 +24,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
       }}
     >
       <div className="title">
-        <span>Edit a person</span>
+        <span style={{ color: `${theme.text}` }}>Edit a person</span>
       </div>
       <div className="input-box">
         <span
@@ -55,6 +55,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

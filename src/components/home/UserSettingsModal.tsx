@@ -20,10 +20,21 @@ const UserSettingsModal = ({ handler }: UserSettingsModalProps) => {
       }}
     >
       <div className="title">
-        <span>Settings</span>
+        <span
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
+          Settings
+        </span>
       </div>
       {firebase_auth.currentUser && (
-        <div className="user-info">
+        <div
+          className="user-info"
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
           {firebase_auth.currentUser.photoURL && (
             <img
               src={firebase_auth.currentUser.photoURL}
@@ -73,6 +84,7 @@ const UserSettingsModal = ({ handler }: UserSettingsModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             outline: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
           onClick={() => {
             handler({ action: "CLOSE" });

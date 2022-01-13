@@ -23,7 +23,7 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a new person</span>
+        <span style={{ color: `${theme.text}` }}>Add a new person</span>
       </div>
       <div className="input-box">
         <span
@@ -54,6 +54,7 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

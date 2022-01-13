@@ -189,7 +189,12 @@ const Trip = () => {
   }
 
   return (
-    <div className="page trip-page">
+    <div
+      className="page trip-page"
+      style={{
+        backgroundColor: `${theme.background}`,
+      }}
+    >
       <Header title={trip.title} colorId={trip.colorId} />
 
       {/* Edit Trip Modal */}

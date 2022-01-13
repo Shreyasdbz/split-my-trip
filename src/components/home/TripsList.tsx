@@ -23,7 +23,13 @@ const TripsList = () => {
     return (
       <div className="trips-list-view">
         <div className="title">
-          <span>My Trips</span>
+          <span
+            style={{
+              color: `${theme.text}`,
+            }}
+          >
+            My Trips
+          </span>
         </div>
         <div className="trips-list">
           {trips.map((trip) => {

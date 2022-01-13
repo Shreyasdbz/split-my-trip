@@ -28,6 +28,7 @@ const SplitsModal = ({
       style={{
         backgroundColor: `${theme.background}`,
         boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+        color: `${theme.text}`,
       }}
     >
       <div className="title">
@@ -157,6 +158,7 @@ const SplitsModal = ({
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Close

@@ -22,7 +22,13 @@ const PeopleSection = ({ addHandler, editHandler }: PeopleSectionProps) => {
   return (
     <div className="trip-view-section people-section">
       <div className="section-header">
-        <span>People</span>
+        <span
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
+          People
+        </span>
         <button
           className="add-btn"
           style={{

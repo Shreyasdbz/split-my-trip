@@ -13,8 +13,8 @@ export const styles = {
     success: "#07AE52",
   },
   dark: {
-    background: "#000000",
-    text: "#FFFFFF",
+    background: "#333333",
+    text: "#DDDDDD",
     greyBackground: "#C2C2C2",
     greyText: "#555555",
     danger: "#DD1515",

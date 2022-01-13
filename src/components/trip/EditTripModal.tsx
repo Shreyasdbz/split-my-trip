@@ -33,7 +33,13 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
       }}
     >
       <div className="title">
-        <span>Edit Trip</span>
+        <span
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
+          Edit Trip
+        </span>
       </div>
       <div className="input-box">
         <span
@@ -98,6 +104,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

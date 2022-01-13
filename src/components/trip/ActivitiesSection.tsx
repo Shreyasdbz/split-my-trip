@@ -24,7 +24,13 @@ const ActivitiesSection = ({ addHandler, editHandler }: PeopleSectionProps) => {
   return (
     <div className="trip-view-section activities-section">
       <div className="section-header">
-        <span>Activities</span>
+        <span
+          style={{
+            color: `${theme.text}`,
+          }}
+        >
+          Activities
+        </span>
         <button
           className="add-btn"
           style={{

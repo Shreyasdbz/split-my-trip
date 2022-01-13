@@ -16,6 +16,7 @@ const EditTripButton = ({ handler }: EditTripButtonProps) => {
       style={{
         backgroundColor: `${theme.background}`,
         border: `2px solid ${theme.text}`,
+        color: `${theme.text}`,
       }}
       onClick={() => {
         handler({ action: "OPEN" });

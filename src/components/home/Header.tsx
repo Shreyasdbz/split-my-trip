@@ -5,7 +5,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 
 import { UserSettingsType } from "../../interfaces/homeView";
 import { ThemeContext } from "../../context/ThemeContext";
-import { firebase_auth } from "../../config/firebase";
+// import { firebase_auth } from "../../config/firebase";
 
 type HeaderProps = {
   handler: (payload: UserSettingsType) => void;
@@ -18,7 +18,8 @@ const Header = ({ handler }: HeaderProps) => {
     <div
       className="header"
       style={{
-        boxShadow: `0px 2px 15px 5px ${theme.text}25`,
+        boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+        backgroundColor: `${theme.background}`,
       }}
     >
       <span
@@ -30,6 +31,17 @@ const Header = ({ handler }: HeaderProps) => {
         Split My Trip
       </span>
       <button
+        className="icon-btn"
+        onClick={() => {
+          handler({ action: "OPEN" });
+        }}
+      >
+        <IoPersonCircleOutline
+          className="icon"
+          style={{ color: `${theme.text}` }}
+        />
+      </button>
+      {/* <button
         className="icon-btn"
         onClick={() => {
           handler({ action: "OPEN" });
@@ -51,7 +63,7 @@ const Header = ({ handler }: HeaderProps) => {
         ) : (
           <IoPersonCircleOutline className="icon" />
         )}
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -66,7 +66,7 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
       }}
     >
       <div className="title">
-        <span>Add a new Activity</span>
+        <span style={{ color: `${theme.text}` }}>Add a new Activity</span>
       </div>
       <div className="input-form">
         <div className="input-box">
@@ -150,6 +150,7 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

@@ -75,7 +75,7 @@ const EditActivityModal = ({ activity, handler }: EditActivityModalProps) => {
       }}
     >
       <div className="title">
-        <span>Edit an Activity</span>
+        <span style={{ color: `${theme.text}` }}>Edit an Activity</span>
       </div>
       <div className="input-form">
         <div className="input-box">
@@ -159,6 +159,7 @@ const EditActivityModal = ({ activity, handler }: EditActivityModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             border: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
         >
           Cancel

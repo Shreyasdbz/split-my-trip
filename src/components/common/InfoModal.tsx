@@ -17,6 +17,7 @@ const InfoModal = ({ handler }: InfoModalProps) => {
       style={{
         backgroundColor: `${theme.background}`,
         boxShadow: `0px 2px 15px 5px ${theme.text}15`,
+        color: `${theme.text}`,
       }}
     >
       <div className="title">
@@ -109,6 +110,7 @@ const InfoModal = ({ handler }: InfoModalProps) => {
           style={{
             backgroundColor: `${theme.background}`,
             outline: `2px solid ${theme.text}`,
+            color: `${theme.text}`,
           }}
           onClick={() => {
             handler({ action: "CLOSE" });

@@ -21,6 +21,7 @@ import InfoModal from "../components/common/InfoModal";
 const Home = () => {
   const addTripFunction = useContext(TripsContext).addTrip;
   const refreshTripsFunction = useContext(TripsContext).refreshTrips;
+  const theme = useContext(ThemeContext).theme;
   const toggleThemeFunction = useContext(ThemeContext).toggleTheme;
 
   const [addTripModalActive, setaddTripModalActive] = useState(false);
@@ -80,7 +81,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="page home-page">
+    <div
+      className="page home-page"
+      style={{ backgroundColor: `${theme.background}` }}
+    >
       {(addTripModalActive || userSettingsModalActive || infoModalActive) && (
         <div className="blur-layer" />
       )}

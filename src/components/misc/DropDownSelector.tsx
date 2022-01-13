@@ -46,8 +46,10 @@ const DropDownSelector = ({
           setSelectionMenuOpen(!selectionMenuOpen);
         }}
       >
-        <span>{showNameFromId(selectedValue)}</span>
-        <IoChevronForward className="icon" />
+        <span style={{ color: `${theme.text}` }}>
+          {showNameFromId(selectedValue)}
+        </span>
+        <IoChevronForward className="icon" style={{ color: `${theme.text}` }} />
       </button>
       {selectionMenuOpen && (
         <div className="selection-list">
@@ -58,7 +60,7 @@ const DropDownSelector = ({
                 className="selection-option"
                 style={{
                   backgroundColor: `${theme.background}`,
-                  color: `${theme.greyText}`,
+                  color: `${theme.text}`,
                 }}
                 onClick={() => {
                   onSelect(person.id);

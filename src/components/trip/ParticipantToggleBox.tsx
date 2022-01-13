@@ -35,7 +35,7 @@ const ParticipantToggleBox = ({
         border: `2px solid ${theme.greyBackground}`,
       }}
     >
-      <span>{participantName}</span>
+      <span style={{ color: `${theme.text}` }}>{participantName}</span>
       {participatingState ? (
         <button
           className={`toggle-box participating`}
@@ -69,7 +69,7 @@ const ParticipantToggleBox = ({
             style={{
               backgroundColor: `${theme.background}`,
               outline: `1px solid ${theme.greyText}50`,
-              border: `1px solid ${theme.background}`,
+              border: `1px solid ${theme.greyBackground}`,
             }}
           />
         </button>
