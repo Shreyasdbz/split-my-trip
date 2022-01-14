@@ -76,7 +76,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
                   marginRight: `${
                     col === tripColors[tripColors.length - 1] ? "2rem" : "0rem"
                   }`,
-                  outline: `${
+                  border: `${
                     col.id === colorId ? selectedSwatchOutline : "none"
                   }`,
                 }}
@@ -113,7 +113,6 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
           }}
           onClick={() => {
             handler({

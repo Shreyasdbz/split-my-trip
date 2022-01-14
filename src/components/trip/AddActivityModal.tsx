@@ -166,7 +166,6 @@ const AddActivityModal = ({ handler }: AddActivityModalProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
           }}
           onClick={handleConfirm}
         >

@@ -70,7 +70,6 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
           }}
           onClick={() => {
             handler({

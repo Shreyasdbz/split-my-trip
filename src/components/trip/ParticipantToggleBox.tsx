@@ -50,8 +50,6 @@ const ParticipantToggleBox = ({
             className="toggle"
             style={{
               backgroundColor: `${theme.background}`,
-              outline: `1px solid ${theme.greyText}50`,
-              border: `1px solid ${theme.background}`,
             }}
           />
         </button>
@@ -68,7 +66,6 @@ const ParticipantToggleBox = ({
             className="toggle"
             style={{
               backgroundColor: `${theme.background}`,
-              outline: `1px solid ${theme.greyText}50`,
               border: `1px solid ${theme.greyBackground}`,
             }}
           />

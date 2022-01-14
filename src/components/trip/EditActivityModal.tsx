@@ -179,7 +179,6 @@ const EditActivityModal = ({ activity, handler }: EditActivityModalProps) => {
           style={{
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
           }}
           onClick={handleSave}
         >

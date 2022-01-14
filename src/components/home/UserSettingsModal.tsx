@@ -60,7 +60,6 @@ const UserSettingsModal = ({ handler }: UserSettingsModalProps) => {
             backgroundColor: `${theme.text}`,
             color: `${theme.background}`,
             border: `1px solid ${theme.greyBackground}`,
-            outline: `2px solid ${theme.greyText}`,
           }}
           onClick={() => {
             handler({ action: "CONFIRM", type: "TOGGLE THEME" });
@@ -83,7 +82,7 @@ const UserSettingsModal = ({ handler }: UserSettingsModalProps) => {
           className="btn-cancel"
           style={{
             backgroundColor: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
+            border: `2px solid ${theme.text}`,
             color: `${theme.text}`,
           }}
           onClick={() => {

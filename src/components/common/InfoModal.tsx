@@ -97,7 +97,6 @@ const InfoModal = ({ handler }: InfoModalProps) => {
             className="btn-github"
             style={{
               backgroundColor: `${theme.greyBackground}`,
-              outline: `2px solid ${theme.greyText}25`,
               color: `2px solid ${theme.greyText}`,
             }}
           >
@@ -109,7 +108,6 @@ const InfoModal = ({ handler }: InfoModalProps) => {
           className="btn-cancel"
           style={{
             backgroundColor: `${theme.background}`,
-            outline: `2px solid ${theme.text}`,
             color: `${theme.text}`,
           }}
           onClick={() => {
