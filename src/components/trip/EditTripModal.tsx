@@ -57,7 +57,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
           className="input"
           style={{
             backgroundColor: `${theme.greyBackground}`,
-            border: `2px solid ${theme.text}`,
+            border: `2px solid ${theme.text}5`,
           }}
         />
       </div>

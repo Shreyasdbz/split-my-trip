@@ -15,7 +15,7 @@ const NewTripModal = ({ handler }: NewTripModalProps) => {
   const [title, setTitle] = useState<string>(getRandomTripName());
   const [colorId, setColorId] = useState<number>(1);
 
-  let selectedSwatchOutline = `5px solid ${theme.greyText}50`;
+  let selectedSwatchOutline = `5px solid ${theme.greyBackground}50`;
 
   return (
     <div
