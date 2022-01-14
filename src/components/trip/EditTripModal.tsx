@@ -22,7 +22,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
   const [title, setTitle] = useState<string>(trip.title);
   const [colorId, setColorId] = useState<number>(trip.colorId);
 
-  let selectedSwatchOutline = `5px solid ${theme.greyText}50`;
+  let selectedSwatchOutline = `5px solid ${theme.greyBackground}`;
 
   return (
     <div
@@ -57,7 +57,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
           className="input"
           style={{
             backgroundColor: `${theme.greyBackground}`,
-            border: `2px solid ${theme.text}5`,
+            border: `2px solid ${theme.text}`,
           }}
         />
       </div>
@@ -83,7 +83,7 @@ const EditTripModal = ({ handler }: EditTripModalProps) => {
                   marginRight: `${
                     col === tripColors[tripColors.length - 1] ? "2rem" : "0rem"
                   }`,
-                  outline: `${
+                  border: `${
                     col.id === colorId ? selectedSwatchOutline : "none"
                   }`,
                 }}
