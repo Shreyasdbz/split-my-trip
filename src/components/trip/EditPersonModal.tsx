@@ -1,6 +1,6 @@
 /** @format */
 
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 
 import { EditPersonTypes } from "../../interfaces/tripView";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -14,6 +14,12 @@ type EditPersonProps = {
 const EditPerson = ({ person, handler }: EditPersonProps) => {
   const theme = useContext(ThemeContext).theme;
   const [name, setName] = useState(person.name);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  });
 
   return (
     <div
@@ -38,6 +44,7 @@ const EditPerson = ({ person, handler }: EditPersonProps) => {
         <input
           type="text"
           value={name}
+          ref={inputRef}
           onChange={(e) => setName(e.target.value)}
           className="input"
           style={{

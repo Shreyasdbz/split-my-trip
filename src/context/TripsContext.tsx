@@ -129,6 +129,7 @@ export const TripsContextProvider = ({
         );
       }
     }
+    _get_data_from_firestore();
   };
 
   const refreshTrips = async () => {

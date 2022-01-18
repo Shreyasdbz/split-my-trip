@@ -1,10 +1,10 @@
 /** @format */
 
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 
 import { AddPersonTypes } from "../../interfaces/tripView";
 import { ThemeContext } from "../../context/ThemeContext";
-import { getRandomPersonName } from "../../helpers/trips";
+// import { getRandomPersonName } from "../../helpers/trips";
 
 type AddPersonModalProps = {
   handler: (payload: AddPersonTypes) => void;
@@ -12,7 +12,14 @@ type AddPersonModalProps = {
 
 const AddPersonModal = ({ handler }: AddPersonModalProps) => {
   const theme = useContext(ThemeContext).theme;
-  const [name, setName] = useState(getRandomPersonName());
+  // const [name, setName] = useState(getRandomPersonName());
+  const [name, setName] = useState("");
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <div
@@ -37,6 +44,7 @@ const AddPersonModal = ({ handler }: AddPersonModalProps) => {
         <input
           type="text"
           value={name}
+          ref={inputRef}
           onChange={(e) => setName(e.target.value)}
           className="input"
           style={{

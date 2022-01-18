@@ -249,6 +249,12 @@ export function getRandomActivityName() {
     "Salad",
     "Bubble Tea",
     "Coffee",
+    "Movie",
+    "Operah",
+    "Beach Entrace Fee",
+    "Bike Rental",
+    "Smoothies",
+    "Massage",
   ];
   const randIndex = Math.floor(Math.random() * sampleActivityNames.length);
   return sampleActivityNames[randIndex];
