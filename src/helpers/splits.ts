@@ -206,9 +206,10 @@ export const buildSplitsList = (trip: TripType): SplitType[] => {
 // ** Calculates the total cost of the trip
 //      by adding up all the activities
 export const calculateTotalCost = (trip: TripType): number => {
-  let totalCost = 0;
+  let totalCostRaw = 0;
   for (let a of trip.activityList) {
-    totalCost += a.cost;
+    totalCostRaw += a.cost;
   }
+  let totalCost = Math.round(totalCostRaw * 100) / 100;
   return totalCost;
 };
