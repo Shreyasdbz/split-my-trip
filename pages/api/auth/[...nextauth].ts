@@ -2,18 +2,21 @@
 
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import AppleProvider from 'next-auth/providers/apple';
+import GithubProvider from 'next-auth/providers/github';
 import { FirestoreAdapter } from '@next-auth/firebase-adapter';
 
 export const authOptions: NextAuthOptions = {
+  // pages: {
+  //   signIn: '/auth/signOn',
+  // },
   providers: [
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
       clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
     }),
-    AppleProvider({
-      clientId: process.env.AUTH_GOOGLE_CLIENT_ID,
-      clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET,
+    GithubProvider({
+      clientId: process.env.AUTH_GITHUB_CLIENT_ID,
+      clientSecret: process.env.AUTH_GITHUB_CLIENT_SECRET,
     }),
   ],
   adapter: FirestoreAdapter({

@@ -13,7 +13,7 @@ const ProtectedPage = ({ children }: IProtectedPage) => {
   });
 
   if (!session) {
-    nextRouter.push('/signOn');
+    typeof window !== 'undefined' && nextRouter.push('/signOn');
     return <></>;
   } else {
     return <>{children}</>;

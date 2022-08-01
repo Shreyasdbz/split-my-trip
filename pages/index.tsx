@@ -2,14 +2,11 @@
 
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 
 import { FirebaseLib } from '../lib';
 
-import SignOn from './signOn';
 import Home from './home';
-import Error from './error';
-import Loading from './loading';
 
 const Landing: NextPage = () => {
   const nextRouter = useRouter();
@@ -18,7 +15,18 @@ const Landing: NextPage = () => {
   if (session) {
     return <Home />;
   } else {
-    return <SignOn />;
+    return (
+      <div>
+        <h1>Welcome to Split My Trip!</h1>
+        <button
+          onClick={() => {
+            nextRouter.push('/api/auth/signin');
+          }}
+        >
+          Sign On
+        </button>
+      </div>
+    );
   }
 };
 
