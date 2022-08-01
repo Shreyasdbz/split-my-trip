@@ -1,33 +1,31 @@
 /** @format */
 
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useSession, signIn } from 'next-auth/react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { FirebaseLib } from '../lib';
+import { FirebaseConfig } from '../lib/firebase/config';
 
-import Home from './home';
+import Loading from './loading';
+import Error from './error';
 
 const Landing: NextPage = () => {
   const nextRouter = useRouter();
-  const { data: session, status } = useSession();
+  const [user, loading, error] = useAuthState(FirebaseConfig.auth);
 
-  if (session) {
-    return <Home />;
-  } else {
-    return (
-      <div>
-        <h1>Welcome to Split My Trip!</h1>
-        <button
-          onClick={() => {
-            nextRouter.push('/api/auth/signin');
-          }}
-        >
-          Sign On
-        </button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!user) {
+      nextRouter.push('/signin');
+    } else {
+      nextRouter.push('/home');
+    }
+  }, []);
+
+  if (loading) return <Loading />;
+  else if (error) return <Error error />;
+
+  return <></>;
 };
 
 export default Landing;

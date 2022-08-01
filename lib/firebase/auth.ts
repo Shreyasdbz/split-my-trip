@@ -7,27 +7,35 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { firebaseAuth } from './config';
+import { FirebaseConfig } from './config';
 
-export async function useGoogleSignIn() {
+/**
+ *
+ * @returns
+ */
+async function useGoogleSignIn() {
   try {
     let provider = new GoogleAuthProvider();
-    const res = await signInWithPopup(firebaseAuth, provider);
+    const res = await signInWithPopup(FirebaseConfig.auth, provider);
     return res.user;
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function useAnonymousSingIn() {
-  const res = await signInAnonymously(firebaseAuth);
-  return res.user;
-}
-
-export async function useSignOut() {
+/**
+ *
+ * @returns
+ */
+async function useSignOut() {
   try {
-    await signOut(firebaseAuth);
+    await signOut(FirebaseConfig.auth);
   } catch (error) {
     console.error(error);
   }
 }
+
+export const FirebaseAuth = {
+  useGoogleSignIn,
+  useSignOut,
+};

@@ -1,9 +1,13 @@
 /** @format */
-
-const Error = () => {
+const Error = ({ error }: IFirebaseHookAuthError) => {
   return (
     <div>
-      <div>error</div>
+      <div>
+        <span className='text-xl'>Error happened</span>
+      </div>
+      <div>
+        <span>{error}</span>
+      </div>
     </div>
   );
 };

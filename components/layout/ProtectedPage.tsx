@@ -1,19 +1,26 @@
 /** @format */
 
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+import { FirebaseConfig } from '../../lib/firebase/config';
+
+import Loading from '../../pages/loading';
+import Error from '../../pages/error';
 
 interface IProtectedPage {
   children: React.ReactElement | React.ReactElement[];
 }
 const ProtectedPage = ({ children }: IProtectedPage) => {
   const nextRouter = useRouter();
-  const { data: session, status } = useSession({
-    required: true,
-  });
+  const [user, loading, error] = useAuthState(FirebaseConfig.auth);
 
-  if (!session) {
-    typeof window !== 'undefined' && nextRouter.push('/signOn');
+  if (loading) {
+    return <Loading />;
+  } else if (error) {
+    return <Error error={error} />;
+  } else if (!user) {
+    typeof window !== 'undefined' && nextRouter.push('/signin');
     return <></>;
   } else {
     return <>{children}</>;

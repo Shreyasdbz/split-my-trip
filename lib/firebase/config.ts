@@ -1,6 +1,6 @@
 /** @format */
 
-import { initializeApp, getApps, FirebaseOptions } from 'firebase/app';
+import { initializeApp, FirebaseOptions } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -27,5 +27,10 @@ function getConfigEnvs(): FirebaseOptions {
 }
 
 const firebaseApp = initializeApp(getConfigEnvs());
-export const firebaseAuth = getAuth(firebaseApp);
-export const firebaseFirestore = getFirestore(firebaseApp);
+const firebaseAuth = getAuth(firebaseApp);
+const firebaseFirestore = getFirestore(firebaseApp);
+
+export const FirebaseConfig = {
+  auth: firebaseAuth,
+  firestore: firebaseFirestore,
+};
