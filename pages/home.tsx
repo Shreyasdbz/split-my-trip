@@ -1,13 +1,17 @@
 /** @format */
 
-import { useContext, useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useContext } from "react";
 
-import { TripDataContext } from '../context/TripDataContext';
-import { FirebaseConfig } from '../lib/firebase/config';
-import { FirebaseAuth } from '../lib/firebase/auth';
+import { TripDataContext } from "../context/TripDataContext";
+import { FirebaseAuth } from "../lib/firebase/auth";
 
-import ProtectedPage from '../components/layout/ProtectedPage';
+import ProtectedPage from "../components/layout/ProtectedPage";
+import PageWrapper from "../components/layout/PageWrapper";
+import TripTile from "../components/home/TripTile";
+import Header from "../components/home/Header";
+import MainContent from "../components/layout/MainContent";
+import SubHeading from "../components/core/SubHeading";
+import TripsList from "../components/home/TripsList";
 
 const Home = () => {
   const current = useContext(TripDataContext).currentUser;
@@ -15,35 +19,15 @@ const Home = () => {
 
   return (
     <ProtectedPage>
-      <div>Home Page</div>
-      <div>
-        <span>{current?.email}</span>
-      </div>
-      <div>
-        <h1 className='font-bold'>MY Trips</h1>
-        {trips?.map((trip) => {
-          if (trip.owned) {
-            return (
-              <div key={trip.id}>
-                <div>{trip.title}</div>
-              </div>
-            );
-          }
-        })}
-      </div>
-      <div>
-        <h1 className='font-bold'>Shared Trips</h1>
-        {trips?.map((trip) => {
-          if (!trip.owned) {
-            return (
-              <div key={trip.id}>
-                <div>{trip.title}</div>
-              </div>
-            );
-          }
-        })}
-      </div>
-      <button onClick={() => FirebaseAuth.useSignOut()}>Sign Out</button>
+      <PageWrapper>
+        <Header />
+        <MainContent>
+          <SubHeading text="My trips" />
+          <TripsList tripsType="owned" />
+          <SubHeading text="Trips shared with me" />
+          <TripsList tripsType="shared" />
+        </MainContent>
+      </PageWrapper>
     </ProtectedPage>
   );
 };

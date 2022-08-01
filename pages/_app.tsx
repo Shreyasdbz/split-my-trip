@@ -3,13 +3,16 @@
 import type { AppProps } from 'next/app';
 
 import TripDataContextProvider from '../context/TripDataContext';
+import UiContextProvider from '../context/UiContext';
 
 import '../styles/globals.scss';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <TripDataContextProvider>
-      <Component {...pageProps} />
+      <UiContextProvider>
+        <Component {...pageProps} />
+      </UiContextProvider>
     </TripDataContextProvider>
   );
 }
