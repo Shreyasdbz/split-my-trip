@@ -28,9 +28,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   const [ownedTrips, setOwnedTrips] = useState<ITripData[] | null>(null);
   const [sharedTrips, setSharedTrips] = useState<ITripData[] | null>(null);
 
+  /**
+   *
+   */
   async function _populateTripsData() {
-    if (currentUser) {
-      FirebaseDb.getUserDocData(currentUser).then((userDoc) => {
+    if (user) {
+      FirebaseDb.getUserDocData(user).then((userDoc) => {
         let userData = userDoc.data();
         if (userData) {
           let ownedTripsIds: string[] = userData.ownedTrips;
@@ -38,46 +41,49 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
 
           if (ownedTripsIds.length > 0) {
             let ownedTripsList: ITripData[] = [];
-            for (let o in ownedTripsIds) {
-              FirebaseDb.getTripDoc(o).then((tripDoc) => {
-                let tripData = tripDoc.data();
-                if (tripData) {
-                  let newTrip: ITripData = {
-                    id: tripData.id,
-                    title: tripData.title,
-                    owned: true,
-                    ownerName: tripData.ownerName,
-                    ownerEmail: tripData.ownerEmail,
-                    themeId: tripData.themeId,
-                    personList: tripData.personList,
-                    activityList: tripData.activityList,
-                  };
-                  ownedTripsList.push(newTrip);
-                }
-              });
+            for (let o of ownedTripsIds) {
+              FirebaseDb.getTripDoc(o)
+                .then((tripDoc) => {
+                  let tripData = tripDoc.data();
+                  if (tripData) {
+                    let newTrip: ITripData = {
+                      id: tripData.id,
+                      title: tripData.title,
+                      owned: true,
+                      ownerName: tripData.ownerName,
+                      ownerEmail: tripData.ownerEmail,
+                      themeId: tripData.themeId,
+                      personList: tripData.personList,
+                      activityList: tripData.activityList,
+                    };
+                    ownedTripsList.push(newTrip);
+                  }
+                })
+                .catch((err) => console.log('ownedTripDocGet error: ', err));
             }
-            console.log('in populate owned - ', ownedTrips);
             setOwnedTrips(ownedTripsList);
           }
           if (sharedTripsIds.length > 0) {
             let sharedTripsList: ITripData[] = [];
-            for (let s in sharedTripsIds) {
-              FirebaseDb.getTripDoc(s).then((tripDoc) => {
-                let tripData = tripDoc.data();
-                if (tripData) {
-                  let newTrip: ITripData = {
-                    id: tripData.id,
-                    title: tripData.title,
-                    owned: true,
-                    ownerName: tripData.ownerName,
-                    ownerEmail: tripData.ownerEmail,
-                    themeId: tripData.themeId,
-                    personList: tripData.personList,
-                    activityList: tripData.activityList,
-                  };
-                  sharedTripsList.push(newTrip);
-                }
-              });
+            for (let s of sharedTripsIds) {
+              FirebaseDb.getTripDoc(s)
+                .then((tripDoc) => {
+                  let tripData = tripDoc.data();
+                  if (tripData) {
+                    let newTrip: ITripData = {
+                      id: tripData.id,
+                      title: tripData.title,
+                      owned: true,
+                      ownerName: tripData.ownerName,
+                      ownerEmail: tripData.ownerEmail,
+                      themeId: tripData.themeId,
+                      personList: tripData.personList,
+                      activityList: tripData.activityList,
+                    };
+                    sharedTripsList.push(newTrip);
+                  }
+                })
+                .catch((err) => console.log('sharedTripDocGet error: ', err));
             }
             setSharedTrips(sharedTripsList);
           }
@@ -86,6 +92,10 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     }
   }
 
+  /**
+   *
+   * @param loginUser
+   */
   async function performUserLogin(loginUser: User) {
     FirebaseDb.checkIfUserExists(loginUser).then((exists) => {
       if (!exists) {
@@ -129,18 +139,15 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     });
   }
 
+  /**
+   *
+   */
   useEffect(() => {
     if (user) {
       setCurrentUser(user);
-      _populateTripsData()
-        .then(() => {
-          console.log('currentUser', currentUser);
-          console.log('ownedTrips', ownedTrips);
-          console.log('sharedTrip', sharedTrips);
-        })
-        .catch((err) => {
-          console.error('On load populate error: ', err);
-        });
+      _populateTripsData().catch((err) => {
+        console.error('On load populate error: ', err);
+      });
     }
   }, [user]);
 

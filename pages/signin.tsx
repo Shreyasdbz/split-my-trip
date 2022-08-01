@@ -20,7 +20,7 @@ const SignIn = () => {
     if (user) {
       nextRouter.push('/home');
     }
-  });
+  }, []);
 
   if (loading) {
     return <Loading />;
@@ -35,7 +35,7 @@ const SignIn = () => {
         onClick={() => {
           FirebaseAuth.useGoogleSignIn().then((user) => {
             user && performUserLogin(user);
-            nextRouter.push('/');
+            nextRouter.push('/home');
           });
         }}
       >
