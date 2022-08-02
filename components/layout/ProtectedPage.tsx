@@ -1,12 +1,12 @@
 /** @format */
 
-import { useRouter } from 'next/router';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from '../../lib/firebase/config';
+import { FirebaseConfig } from "../../lib/firebase/config";
 
-import Loading from '../../pages/loading';
-import Error from '../../pages/error';
+import Loading from "../../pages/loading";
+import Error from "../../pages/error";
 
 interface IProtectedPage {
   children: React.ReactElement | React.ReactElement[];
@@ -20,7 +20,7 @@ const ProtectedPage = ({ children }: IProtectedPage) => {
   } else if (error) {
     return <Error error={error} />;
   } else if (!user) {
-    typeof window !== 'undefined' && nextRouter.push('/signin');
+    typeof window !== "undefined" && nextRouter.push("/signin");
     return <></>;
   } else {
     return <>{children}</>;

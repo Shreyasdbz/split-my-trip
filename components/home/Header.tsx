@@ -6,6 +6,7 @@ import Image from "next/image";
 import { UserCircleIcon } from "@heroicons/react/outline";
 
 import { TripDataContext } from "../../context/TripDataContext";
+import { UiContext } from "../../context/UiContext";
 
 import HeaderTitle from "../core/HeaderTitle";
 
@@ -14,10 +15,16 @@ interface IHeader {
 }
 const Header = () => {
   const currentUserImage = useContext(TripDataContext).currentUser?.photoURL;
+  const changeAction = useContext(UiContext).changeUserSettingsModal;
   return (
     <div className="w-screen h-32 bg-white shadow-lg rounded-br-xl rounded-bl-xl flex items-center justify-between px-4 sticky">
       <HeaderTitle text="Split My Trip" />
-      <button className="w-12 h-12 relative rounded-full shadow-md border-2 border-slate-400">
+      <button
+        className="w-12 h-12 relative rounded-full shadow-md border-2 border-slate-400"
+        onClick={() => {
+          changeAction({ action: "OPEN" });
+        }}
+      >
         {currentUserImage ? (
           <Image
             src={currentUserImage}

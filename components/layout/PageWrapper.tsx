@@ -8,9 +8,13 @@ interface IPageWrapper {
 }
 
 const PageWrapper = ({ children }: IPageWrapper) => {
-  const pageBlurred = useContext(UiContext).pageBlurred;
+  const pageBlur = useContext(UiContext).pageBlur;
   return (
-    <div className="flex w-screen h-screen items-center justify-start flex-col relative">
+    <div
+      className={`flex w-screen h-screen items-center justify-start flex-col relative overflow-hidden ${
+        pageBlur ? "blur-md" : "filter-none"
+      }`}
+    >
       {children}
     </div>
   );

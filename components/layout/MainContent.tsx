@@ -5,7 +5,7 @@ interface IMainContent {
 }
 const MainContent = ({ children }: IMainContent) => {
   return (
-    <main className="w-full max-w-6xl h-full flex flex-col justify-start items-center my-12 px-4">
+    <main className="w-full max-w-6xl h-full flex flex-col justify-start items-center px-4">
       {children}
     </main>
   );

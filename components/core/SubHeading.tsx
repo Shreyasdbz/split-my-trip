@@ -5,7 +5,7 @@ interface ISubHeading {
 }
 const SubHeading = ({ text }: ISubHeading) => {
   return (
-    <div className="w-full h-auto text-2xl font-bold">
+    <div className="w-full h-auto text-2xl font-bold mt-2">
       <span>{text}</span>
     </div>
   );

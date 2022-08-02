@@ -3,3 +3,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Merriweather+Sans:wght@400;500;600;700&family=Plaster&display=swap");
+
+.headerFont {
+  //   font-family: "Plaster", cursive;
+  font-family: "Limelight", cursive;
+}
+
+* {
+  font-family: "Nunito", sans-serif;
+}

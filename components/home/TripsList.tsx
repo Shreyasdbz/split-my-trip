@@ -26,7 +26,12 @@ const TripsList = ({ tripsType }: ITripsList) => {
       <div className="w-full">
         {filteredTrips.map((trip) => {
           return (
-            <TripTile key={trip.id} text={trip.title} themeId={trip.themeId} />
+            <TripTile
+              key={trip.id}
+              tripId={trip.id}
+              text={trip.title}
+              themeId={trip.themeId}
+            />
           );
         })}
       </div>
