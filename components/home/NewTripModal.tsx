@@ -14,7 +14,12 @@ const NewTripModal = () => {
     return (
       <Modal>
         <div>Add a new Trip</div>
-        <button onClick={() => handler()}>Close</button>
+        <button
+          className="shadow-md rounded-xl"
+          onClick={() => handler({ payload: { action: "CLOSE" } })}
+        >
+          Close
+        </button>
         <button>Sign Out</button>
       </Modal>
     );

@@ -44,7 +44,7 @@ const FloatingElement = ({ children, position }: IFloatingElement) => {
   }
   return (
     <div
-      className={`fixed bg-white w-auto h-auto flex flex-col justify-center items-center shadow-md px-2 py-2 rounded-xl ${positionClass}`}
+      className={`hoverTransformZ fixed bg-black w-auto h-auto flex flex-col justify-center items-center shadow-lg px-2 py-2 rounded-2xl ${positionClass}`}
     >
       {children}
     </div>

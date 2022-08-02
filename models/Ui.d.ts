@@ -13,3 +13,16 @@ declare type ActiveModalTypes =
 declare interface IBasicModalActions {
   action: "OPEN" | "CLOSE";
 }
+
+type _basic_modal_types = {
+  action: "OPEN" | "CLOSE";
+};
+type _save_new_trip_modal_type = {
+  action: "SAVE";
+  newTripName: string;
+  newTripThemeId: string;
+};
+
+declare interface INewTripModalActions {
+  payload: _basic_modal_types | _save_new_trip_modal_type;
+}

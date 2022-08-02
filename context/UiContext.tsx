@@ -5,7 +5,7 @@ interface IUiContext {
   pageBlur: boolean;
   currentModalActive: ActiveModalTypes;
   handleUserSettings: ({ action }: IBasicModalActions) => void;
-  handleNewTrip: () => void;
+  handleNewTrip: ({ payload }: INewTripModalActions) => void;
   dismissAllModals: () => void;
 }
 export const UiContext = createContext({} as IUiContext);
@@ -32,7 +32,16 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
     }
   }
 
-  function handleNewTrip() {}
+  function handleNewTrip({ payload }: INewTripModalActions) {
+    if (payload.action === "OPEN") {
+      setCurrentModalActive("NEW_TRIP");
+      setPageBlur(true);
+    } else if (payload.action === "CLOSE") {
+      setCurrentModalActive("NONE");
+      setPageBlur(false);
+    } else if (payload.action === "SAVE") {
+    }
+  }
 
   /**
    *

@@ -3,7 +3,7 @@
 /**
  *
  */
-interface IColorTheme {
+declare interface IColorTheme {
   id: string;
   title?: string;
   current?: boolean;
