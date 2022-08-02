@@ -45,6 +45,17 @@ const UserSettingsModal = () => {
           Hi, <strong className="ml-1">{currentUser?.displayName}</strong>!{" "}
         </div>
         <div className="flex flex-col gap-4 items-center justify-center">
+          <a
+            href="https://www.github.com/shreyasdbz/split-my-trip"
+            target={"_blank"}
+          >
+            <PillButton
+              text="Info"
+              type="FILL"
+              size="MEDIUM"
+              onClickAction={() => {}}
+            />
+          </a>
           <PillButton
             text="Sign Out"
             type="DANGER"

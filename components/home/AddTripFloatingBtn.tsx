@@ -5,7 +5,7 @@ import { PlusCircleIcon } from "@heroicons/react/solid";
 
 import { UiContext } from "../../context/UiContext";
 
-import CaptionText from "../core/CaptionText";
+import ButtonCaptionText from "../core/ButtonCaptionText";
 import FloatingElement from "../core/FloatingElement";
 
 const AddTripFloatingBtn = () => {
@@ -18,7 +18,7 @@ const AddTripFloatingBtn = () => {
           newTriphandler({ payload: { action: "OPEN" } });
         }}
       >
-        <CaptionText text="Add Trip" />
+        <ButtonCaptionText text="Add Trip" />
         <PlusCircleIcon className="h-8 w-8 rounded-full" />
       </button>
     </FloatingElement>

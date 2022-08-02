@@ -11,13 +11,13 @@ const PillButton = ({ text, type, size, onClickAction }: IPillButton) => {
     let height = "h-8";
     switch (size) {
       case "SMALL":
-        height = "h-8";
+        height = "h-8 w-20";
         break;
       case "MEDIUM":
-        height = "h-10";
+        height = "h-10 w-32";
         break;
       case "LARGE":
-        height = "h-12";
+        height = "h-12 w-32";
         break;
       default:
         break;
@@ -26,24 +26,21 @@ const PillButton = ({ text, type, size, onClickAction }: IPillButton) => {
   }
 
   function getType(): string {
-    let typeClasses = "";
     switch (type) {
       case "DANGER":
-        typeClasses = "border-red-600 bg-red-600 text-white shadow-red-200";
-        break;
-      case "FILL":
-        typeClasses = "border-gray-200 bg-black text-white shadow-gray-200";
+        return "border-red-600 bg-red-600 text-white shadow-red-200";
       case "OUTLINE":
-        typeClasses = "border-black bg-white text-black shadow-gray-200";
+        return "border-black bg-white text-black shadow-gray-200";
+      case "FILL":
+        return "border-black bg-black text-white shadow-gray-200";
       default:
-        break;
+        return "";
     }
-    return typeClasses;
   }
 
   return (
     <button
-      className={`flex items-center justify-center flex-nowrap w-full rounded-full box-shadow-md font-semibold border-2 shadow-lg
+      className={`flex items-center justify-center flex-nowrap rounded-full box-shadow-md font-semibold border-2 shadow-lg
       ${getHeight()} ${getType()}`}
       onClick={onClickAction}
     >
