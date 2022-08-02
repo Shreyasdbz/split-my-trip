@@ -4,13 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Merriweather+Sans:wght@400;500;600;700&family=Plaster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Nunito:wght@200;300;400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap");
+* {
+  font-family: "Roboto", sans-serif;
+  transition: 0.3s;
+}
+
+.hideScrollBars {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 .headerFont {
   //   font-family: "Plaster", cursive;
   font-family: "Limelight", cursive;
 }
 
-* {
-  font-family: "Nunito", sans-serif;
+.hoverTransformZ {
+  &:hover {
+    transform: translateY(-0.125rem) scale(0.995);
+  }
 }

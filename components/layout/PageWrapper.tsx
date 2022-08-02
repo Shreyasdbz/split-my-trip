@@ -11,7 +11,7 @@ const PageWrapper = ({ children }: IPageWrapper) => {
   const pageBlur = useContext(UiContext).pageBlur;
   return (
     <div
-      className={`flex w-screen h-screen items-center justify-start flex-col relative overflow-hidden ${
+      className={`flex w-screen h-screen items-center justify-start flex-col relative overflow-hidden  ${
         pageBlur ? "blur-md" : "filter-none"
       }`}
     >

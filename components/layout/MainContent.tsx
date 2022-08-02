@@ -5,7 +5,7 @@ interface IMainContent {
 }
 const MainContent = ({ children }: IMainContent) => {
   return (
-    <main className="w-full max-w-6xl h-full flex flex-col justify-start items-center px-4">
+    <main className="hideScrollBars w-full max-w-6xl h-full flex flex-col justify-start items-center px-2 md:px-12 overflow-y-scroll">
       {children}
     </main>
   );

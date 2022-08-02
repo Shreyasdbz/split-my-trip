@@ -3,8 +3,9 @@ import { createContext, useState } from "react";
 
 interface IUiContext {
   pageBlur: boolean;
-  userSettingsModalActive: boolean;
-  changeUserSettingsModal: ({ action }: IBasicModalActions) => void;
+  currentModalActive: ActiveModalTypes;
+  handleUserSettings: ({ action }: IBasicModalActions) => void;
+  handleNewTrip: () => void;
   dismissAllModals: () => void;
 }
 export const UiContext = createContext({} as IUiContext);
@@ -14,35 +15,38 @@ interface IUiContextProvider {
 }
 const UiContextProvider = ({ children }: IUiContextProvider) => {
   const [pageBlur, setPageBlur] = useState<boolean>(false);
-  const [userSettingsModalActive, setUserSettingsModalActive] =
-    useState<boolean>(false);
+  const [currentModalActive, setCurrentModalActive] =
+    useState<ActiveModalTypes>("NONE");
 
   /**
    *
    * @param param0
    */
-  function changeUserSettingsModal({ action }: IBasicModalActions) {
+  function handleUserSettings({ action }: IBasicModalActions) {
     if (action === "OPEN") {
-      setUserSettingsModalActive(true);
+      setCurrentModalActive("USER_SETTINGS");
       setPageBlur(true);
     } else if (action === "CLOSE") {
-      setUserSettingsModalActive(false);
+      setCurrentModalActive("NONE");
       setPageBlur(false);
     }
   }
+
+  function handleNewTrip() {}
 
   /**
    *
    */
   function dismissAllModals() {
-    setUserSettingsModalActive(false);
+    setCurrentModalActive("NONE");
     setPageBlur(false);
   }
 
   const providerValue = {
     pageBlur,
-    userSettingsModalActive,
-    changeUserSettingsModal,
+    currentModalActive,
+    handleUserSettings,
+    handleNewTrip,
     dismissAllModals,
   };
 

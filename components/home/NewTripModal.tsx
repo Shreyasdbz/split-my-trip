@@ -6,15 +6,15 @@ import { UiContext } from "../../context/UiContext";
 
 import Modal from "../core/Modal";
 
-const UserSettingsModal = () => {
+const NewTripModal = () => {
   const currentActiveModal = useContext(UiContext).currentModalActive;
-  const handler = useContext(UiContext).handleUserSettings;
+  const handler = useContext(UiContext).handleNewTrip;
 
-  if (currentActiveModal === "USER_SETTINGS") {
+  if (currentActiveModal === "NEW_TRIP") {
     return (
       <Modal>
-        <div>Hi !</div>
-        <button onClick={() => handler({ action: "CLOSE" })}>Close</button>
+        <div>Add a new Trip</div>
+        <button onClick={() => handler()}>Close</button>
         <button>Sign Out</button>
       </Modal>
     );
@@ -23,4 +23,4 @@ const UserSettingsModal = () => {
   }
 };
 
-export default UserSettingsModal;
+export default NewTripModal;

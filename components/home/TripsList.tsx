@@ -23,7 +23,7 @@ const TripsList = ({ tripsType }: ITripsList) => {
 
   if (filterTrips.length != 0) {
     return (
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-4">
         {filteredTrips.map((trip) => {
           return (
             <TripTile
