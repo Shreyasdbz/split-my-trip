@@ -19,7 +19,7 @@ const GetSplitFloatingBtn = () => {
         }}
       >
         <ButtonCaptionText text="Get Split" />
-        <ChartPieIcon className="h-8 w-8 rounded-full" />
+        <ChartPieIcon className="h-6 w-6 md:h-8 md:w-8 rounded-full mb-1" />
       </button>
     </FloatingElement>
   );

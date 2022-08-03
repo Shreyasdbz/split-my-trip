@@ -2,17 +2,17 @@
 
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
-interface ITextInputField {
-  text: string;
-  onChangeHandler: Dispatch<SetStateAction<string>>;
+interface INumberInputField {
+  text: number;
+  onChangeHandler: Dispatch<SetStateAction<number>>;
   errorText?: string;
 }
 
-const TextInputField = ({
+const NumberInputField = ({
   text,
   onChangeHandler,
   errorText,
-}: ITextInputField) => {
+}: INumberInputField) => {
   const [error, setError] = useState<boolean>(false);
 
   function errorTextHandler(textVal: string) {
@@ -24,18 +24,23 @@ const TextInputField = ({
   }
 
   useEffect(() => {
-    errorTextHandler(text);
+    errorTextHandler(String(text));
   }, []);
 
   return (
     <div className="w-full">
       <input
         className="w-full bg-gray-100 focus:bg-gray-200 rounded-md h-10 px-2 outline-2 outline-gray-200 font-light"
-        type={"text"}
+        type={"number"}
+        placeholder={"$"}
         value={text}
         onChange={(e) => {
           errorTextHandler(e.target.value);
-          onChangeHandler(e.target.value);
+          try {
+            onChangeHandler(parseFloat(e.target.value));
+          } catch (error) {
+            console.error("parse error");
+          }
         }}
       />
       {error && <span className="text-red-400 text-sm ">{errorText}</span>}
@@ -43,4 +48,4 @@ const TextInputField = ({
   );
 };
 
-export default TextInputField;
+export default NumberInputField;

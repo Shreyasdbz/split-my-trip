@@ -15,6 +15,7 @@ import ModalTitle from "../core/ModalTitle";
 import PillButton from "../core/PillButton";
 import TextInputField from "../core/TextInputField";
 import ColorPicker from "../common/ColorPicker";
+import PillButtonsRow from "../common/PillButtonsRow";
 
 const NewTripModal = () => {
   const currentActiveModal = useContext(UiContext).currentModalActive;
@@ -53,7 +54,6 @@ const NewTripModal = () => {
         <ModalTitle text={"Add a new trip"} />
         <InputWrapper inputType="TEXT" captionText="New Trip">
           <TextInputField
-            type={"TEXT"}
             text={tripNameInput}
             onChangeHandler={setTripNameInput}
             errorText={"Name can't be empty"}
@@ -65,20 +65,15 @@ const NewTripModal = () => {
             onColorChange={setTripThemeInput}
           />
         </InputWrapper>
-        <div className="w-full flex items-center justify-evenly gap-2 mt-8">
-          <PillButton
-            text={"Cancel"}
-            type={"OUTLINE"}
-            size={"SMALL"}
-            onClickAction={close}
-          />
-          <PillButton
-            text={"Save"}
-            type={"FILL"}
-            size={"SMALL"}
-            onClickAction={saveTrip}
-          />
-        </div>
+        <PillButtonsRow
+          useIcons={true}
+          iconsSize={"MEDIUM"}
+          arrangement={"ROW"}
+          outlineButtonText={"CANCEL"}
+          outlineButtonAction={close}
+          fillButtonText={"SAVE"}
+          fillButtonAction={saveTrip}
+        />
       </Modal>
     );
   } else {

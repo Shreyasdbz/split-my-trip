@@ -9,6 +9,8 @@ interface IUiContext {
   handleEditTrip: ({ action }: IBasicModalActions) => void;
   handleAddPerson: ({ action }: IBasicModalActions) => void;
   handleEditPerson: ({ action }: IBasicModalActions) => void;
+  handleAddActivity: ({ action }: IBasicModalActions) => void;
+  handleEditActivity: ({ action }: IBasicModalActions) => void;
   dismissAllModals: () => void;
 }
 export const UiContext = createContext({} as IUiContext);
@@ -78,6 +80,28 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
 
   /**
    *
+   * @param param0
+   */
+  function handleAddActivity({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("ADD_ACTIVITY");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
+   * @param param0
+   */
+  function handleEditActivity({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("EDIT_ACTIVITY");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
    */
   function dismissAllModals() {
     setCurrentModalActive("NONE");
@@ -93,6 +117,8 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
     handleAddPerson,
     handleEditPerson,
     dismissAllModals,
+    handleAddActivity,
+    handleEditActivity,
   };
 
   return (

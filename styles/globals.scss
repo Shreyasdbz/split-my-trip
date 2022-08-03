@@ -9,25 +9,32 @@
   font-family: "Roboto", sans-serif;
   transition: 0.3s;
 
-  ::-webkit-scrollbar {
-    width: 0.75rem;
-    height: 0.75rem;
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: rgba($color: #000000, $alpha: 0);
-  }
+  @media (min-width: 600px) {
+    ::-webkit-scrollbar {
+      display: block;
+      width: 0.75rem;
+      height: 0.75rem;
+    }
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgba($color: #000000, $alpha: 0.125);
-    border-radius: 5px;
-  }
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: rgba($color: #000000, $alpha: 0);
+    }
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba($color: #000000, $alpha: 0.25);
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgba($color: #000000, $alpha: 0.125);
+      border-radius: 5px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba($color: #000000, $alpha: 0.25);
+    }
   }
 }
 

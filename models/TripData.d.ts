@@ -3,7 +3,7 @@
 /**
  *
  */
-interface ITripPerson {
+declare interface ITripPerson {
   id: string;
   name: string;
 }
@@ -11,7 +11,7 @@ interface ITripPerson {
 /**
  *
  */
-interface IActivityParticipant {
+declare interface IActivityParticipant {
   participantId: string;
   isParticipating: boolean;
 }
@@ -19,7 +19,7 @@ interface IActivityParticipant {
 /**
  *
  */
-interface ITripActivity {
+declare interface ITripActivity {
   id: string;
   title: string;
   cost: number;
@@ -31,7 +31,7 @@ interface ITripActivity {
  * Interface for modeling the trip data stored in firebase
  * in a single trip document
  */
-interface ITripData {
+declare interface ITripData {
   id: string;
   title: string;
   owned?: boolean;
@@ -45,7 +45,7 @@ interface ITripData {
 /**
  *
  */
-interface IUserDoc {
+declare interface IUserDoc {
   name: string;
   email: string;
   ownedTrips: string[] | null;

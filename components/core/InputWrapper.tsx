@@ -6,8 +6,14 @@ interface IInputWrapper {
   children: React.ReactElement | React.ReactElement[];
   inputType: "TEXT" | "NUMBER" | "COLOR" | "PICKER" | "DROPDOWN";
   captionText: string;
+  compact?: boolean;
 }
-const InputWrapper = ({ children, inputType, captionText }: IInputWrapper) => {
+const InputWrapper = ({
+  children,
+  inputType,
+  captionText,
+  compact,
+}: IInputWrapper) => {
   function getInputTypeClasses() {
     switch (inputType) {
       case "COLOR":
@@ -19,11 +25,15 @@ const InputWrapper = ({ children, inputType, captionText }: IInputWrapper) => {
 
   return (
     <div
-      className={`w-full h-auto flex items-start justify-center flex-col my-2`}
+      className={`w-full h-auto flex items-start justify-center flex-col ${
+        compact ? "my-1" : "my-2"
+      }`}
     >
       <InputCaptionText text={captionText} />
       <div
-        className={`w-full h-auto flex items-start justify-center flex-col my-2  overflow-x-scroll`}
+        className={`w-full h-auto flex items-start justify-center flex-col overflow-x-scroll ${
+          compact ? "" : "my-2"
+        }`}
       >
         {children}
       </div>

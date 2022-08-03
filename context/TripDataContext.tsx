@@ -17,10 +17,12 @@ interface ITripDataContext {
   currentUser: User | null;
   trips: ITripData[];
   currentTrip: ITripData;
+  resetAllCurrent: () => void;
   performUserLogin: (loginUser: User) => void;
   addNewTrip: (name: string, themeId: string) => Promise<void>;
   editTripDetails: (deleteTrip?: boolean) => Promise<boolean>;
-  retrieveTripData: (id: string) => void;
+  retrieveTripData: (id: string, useLocal?: boolean) => void;
+  getPersonById: (personId: string) => string;
 }
 
 export const TripDataContext = createContext({} as ITripDataContext);
@@ -107,6 +109,10 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
         }
       });
     }
+  }
+
+  function resetAllCurrent() {
+    setCurrentTrip(_getLoadingTrip());
   }
 
   /**
@@ -213,7 +219,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     // get user doc
     // edit user doc
     // _populate data
-    // route back
+    // (ifDelete) route back
     return true;
   }
 
@@ -221,12 +227,33 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
    *
    * @param tripId
    */
-  async function retrieveTripData(tripId: string) {
+  async function retrieveTripData(tripId: string, useLocal?: boolean) {
     // try to use local
-    for (let i of trips) {
-      if (i.id === tripId) setCurrentTrip(i);
+    if (useLocal === true) {
+      for (let i of trips) {
+        if (i.id === tripId) setCurrentTrip(i);
+      }
     }
     // otherwise fetch from database
+  }
+
+  /**
+   * @param personId
+   */
+  function getPersonById(personId: string): string {
+    let tempPerson: string = "loading";
+    if (
+      currentTrip &&
+      currentTrip.personList &&
+      currentTrip.personList.length > 0
+    ) {
+      for (let i of currentTrip.personList) {
+        if (i.id === personId) {
+          return i.name;
+        }
+      }
+    }
+    return tempPerson;
   }
 
   /**
@@ -243,10 +270,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     currentUser,
     trips,
     currentTrip,
+    resetAllCurrent,
     performUserLogin,
     addNewTrip,
     editTripDetails,
     retrieveTripData,
+    getPersonById,
   };
   return (
     <TripDataContext.Provider value={providerValue}>

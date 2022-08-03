@@ -344,4 +344,16 @@ function getRandomPersonName(): string {
   return name;
 }
 
-export { getSampleTripData, getRandomTripTitle, getRandomPersonName };
+/**
+ *
+ */
+function getRandomCost(): number {
+  return Math.floor(Math.random() * 999);
+}
+
+export {
+  getSampleTripData,
+  getRandomTripTitle,
+  getRandomPersonName,
+  getRandomCost,
+};

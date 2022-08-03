@@ -1,8 +1,9 @@
 /** @format */
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
 import { TripDataContext } from "../../context/TripDataContext";
+import { UiContext } from "../../context/UiContext";
 
 import ProtectedPage from "../../components/layout/ProtectedPage";
 import MainContent from "../../components/layout/MainContent";
@@ -13,15 +14,25 @@ import PageWrapper from "../../components/layout/PageWrapper";
 import GetSplitFloatingBtn from "../../components/trip/GetSplitFloatingBtn";
 import SectionTitle from "../../components/core/SectionTitle";
 import PersonListView from "../../components/trip/PersonListView";
+import AddPersonModal from "../../components/trip/AddPersonModal";
+import AddActivityModal from "../../components/trip/AddActivityModal";
+import ActivityListView from "../../components/trip/ActivityListView";
 
 const Trip = () => {
-  const router = useRouter();
+  const nextRouter = useRouter();
+  const { tripId } = nextRouter.query;
+
+  const currentUser = useContext(TripDataContext).currentUser;
   const currentTrip = useContext(TripDataContext).currentTrip;
   const retrieveTripData = useContext(TripDataContext).retrieveTripData;
-  const { tripId } = router.query;
+
+  const addPersonUiHandler = useContext(UiContext).handleAddPerson;
+  const editPersonUiHandler = useContext(UiContext).handleEditPerson;
+  const addActivityUiHandler = useContext(UiContext).handleAddActivity;
+  const editActivityUiHandler = useContext(UiContext).handleEditActivity;
 
   useEffect(() => {
-    if (typeof tripId === "string") retrieveTripData(tripId);
+    if (typeof tripId === "string") retrieveTripData(tripId, true);
   });
 
   if (!currentTrip) {
@@ -32,6 +43,8 @@ const Trip = () => {
     <ProtectedPage>
       {/* Modals */}
       <EditTripModal />
+      <AddPersonModal />
+      <AddActivityModal />
 
       <PageWrapper>
         <Header text={currentTrip.title} themeId={currentTrip.themeId} />
@@ -45,7 +58,9 @@ const Trip = () => {
           <SectionTitle
             text={"People"}
             buttonText={"ADD +"}
-            onClickAction={() => {}}
+            onClickAction={() => {
+              addPersonUiHandler({ action: "OPEN" });
+            }}
           />
           <PersonListView />
 
@@ -53,8 +68,11 @@ const Trip = () => {
           <SectionTitle
             text={"Activities"}
             buttonText={"ADD +"}
-            onClickAction={() => {}}
+            onClickAction={() => {
+              addActivityUiHandler({ action: "OPEN" });
+            }}
           />
+          <ActivityListView />
         </MainContent>
       </PageWrapper>
     </ProtectedPage>

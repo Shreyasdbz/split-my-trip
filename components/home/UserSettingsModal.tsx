@@ -1,6 +1,7 @@
 /** @format */
 
 import { useContext } from "react";
+import { useRouter } from "next/router";
 
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
@@ -12,6 +13,7 @@ import PillButton from "../core/PillButton";
 import Image from "next/image";
 
 const UserSettingsModal = () => {
+  const nextRouter = useRouter();
   const currentUser = useContext(TripDataContext).currentUser;
   const currentActiveModal = useContext(UiContext).currentModalActive;
   const userSettingsHandler = useContext(UiContext).handleUserSettings;
@@ -19,6 +21,10 @@ const UserSettingsModal = () => {
 
   function closeUserSettings() {
     userSettingsHandler({ action: "CLOSE" });
+  }
+
+  function navigateToInfo() {
+    nextRouter.push("https://www.google.com");
   }
 
   function signOut() {

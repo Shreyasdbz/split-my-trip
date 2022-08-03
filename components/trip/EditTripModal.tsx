@@ -1,18 +1,16 @@
 /** @format */
 
 import { useContext, useEffect, useState } from "react";
-import { XIcon, TrashIcon, SaveIcon } from "@heroicons/react/solid";
 
 import { TripDataContext } from "../../context/TripDataContext";
 import { UiContext } from "../../context/UiContext";
 
-import InputCaptionText from "../core/InputCaptionText";
 import InputWrapper from "../core/InputWrapper";
 import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
-import PillButton from "../core/PillButton";
 import TextInputField from "../core/TextInputField";
 import ColorPicker from "../common/ColorPicker";
+import PillButtonsRow from "../common/PillButtonsRow";
 
 interface IEditTripModal {}
 const EditTripModal = ({}: IEditTripModal) => {
@@ -56,7 +54,6 @@ const EditTripModal = ({}: IEditTripModal) => {
         <ModalTitle text={"Edit trip details"} />
         <InputWrapper inputType="TEXT" captionText="Trip Name">
           <TextInputField
-            type={"TEXT"}
             text={tripNameInput}
             onChangeHandler={setTripNameInput}
             errorText={"Name can't be empty"}
@@ -68,35 +65,17 @@ const EditTripModal = ({}: IEditTripModal) => {
             onColorChange={setTripThemeInput}
           />
         </InputWrapper>
-        <div className="w-full flex items-center justify-evenly gap-2 mt-8">
-          <PillButton
-            label="Cancel Button"
-            text={"Cancel"}
-            type={"OUTLINE"}
-            size={"SMALL"}
-            onClickAction={close}
-          >
-            <XIcon className="w-5 h-5" />
-          </PillButton>
-          <PillButton
-            label="Delete Button"
-            text={"Delete"}
-            type={"DANGER"}
-            size={"SMALL"}
-            onClickAction={deleteTrip}
-          >
-            <TrashIcon className="w-5 h-5" />
-          </PillButton>
-          <PillButton
-            label="Save Button"
-            text={"Save"}
-            type={"FILL"}
-            size={"SMALL"}
-            onClickAction={saveTrip}
-          >
-            <SaveIcon className="w-5 h-5" />
-          </PillButton>
-        </div>
+        <PillButtonsRow
+          useIcons={true}
+          iconsSize={"MEDIUM"}
+          arrangement={"ROW"}
+          outlineButtonText="Cancel"
+          outlineButtonAction={close}
+          dangerButtonText={"Delete"}
+          dangerButtonAction={deleteTrip}
+          fillButtonText={"save"}
+          fillButtonAction={saveTrip}
+        />
       </Modal>
     );
   } else {

@@ -1,5 +1,9 @@
 /** @format */
 
+import { useContext, useEffect } from "react";
+
+import { TripDataContext } from "../context/TripDataContext";
+
 import ProtectedPage from "../components/layout/ProtectedPage";
 import PageWrapper from "../components/layout/PageWrapper";
 import Header from "../components/home/Header";
@@ -11,6 +15,12 @@ import AddTripFloatingBtn from "../components/home/AddTripFloatingBtn";
 import NewTripModal from "../components/home/NewTripModal";
 
 const Home = () => {
+  const resetAllCurrentFunction = useContext(TripDataContext).resetAllCurrent;
+
+  useEffect(() => {
+    resetAllCurrentFunction();
+  }, []);
+
   return (
     <ProtectedPage>
       {/* Modals */}
