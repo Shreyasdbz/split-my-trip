@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/router";
 
-import { getColorById } from "../../models/Colors";
+import { getColorById } from "../../lib/util/theme";
 
 interface ITripTile {
   tripId: string;
@@ -14,7 +14,7 @@ const TripTile = ({ tripId, text, themeId }: ITripTile) => {
 
   return (
     <button
-      className="w-full h-32 rounded-2xl flex items-end justify-start px-4 py-4 hover:opacity-90 hoverTransformZ"
+      className="text-left w-full h-32 rounded-2xl flex items-end justify-start px-4 py-4 hover:opacity-90 hoverTransformZ"
       style={{
         backgroundColor: `${getColorById(themeId).bgColor}`,
         backgroundImage: `${getColorById(themeId).bgImage}`,

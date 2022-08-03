@@ -9,11 +9,6 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    minWidth: {
-      modalSmall: "18rem",
-      modalMedium: "24rem",
-      modalLarge: "36rem",
-    },
     extend: {},
   },
   plugins: [],

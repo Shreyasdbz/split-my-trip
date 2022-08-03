@@ -1,11 +1,11 @@
 /** @format */
-import { User } from 'firebase/auth';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { User } from "firebase/auth";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
-import { FirebaseConfig } from './config';
+import { FirebaseConfig } from "./config";
 
-const usersCollectionRef = collection(FirebaseConfig.firestore, 'users');
-const tripsCollectionRef = collection(FirebaseConfig.firestore, 'trips');
+const usersCollectionRef = collection(FirebaseConfig.firestore, "users");
+const tripsCollectionRef = collection(FirebaseConfig.firestore, "trips");
 
 /**
  *

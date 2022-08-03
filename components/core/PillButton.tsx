@@ -1,28 +1,40 @@
 /** @format */
 
 interface IPillButton {
+  label?: string;
   text: string;
   type: "DANGER" | "FILL" | "OUTLINE";
-  size: "SMALL" | "MEDIUM" | "LARGE";
+  size: "MINI" | "SMALL" | "MEDIUM" | "LARGE";
   onClickAction: () => void;
+  children?: React.ReactElement | React.ReactElement[];
 }
-const PillButton = ({ text, type, size, onClickAction }: IPillButton) => {
-  function getHeight(): string {
-    let height = "h-8";
+const PillButton = ({
+  label,
+  text,
+  type,
+  size,
+  children,
+  onClickAction,
+}: IPillButton) => {
+  function getSizeClass(): string {
+    let sizeClass = "h-8";
     switch (size) {
+      case "MINI":
+        sizeClass = "h-8 w-14";
+        break;
       case "SMALL":
-        height = "h-8 w-20";
+        sizeClass = "h-8 w-20";
         break;
       case "MEDIUM":
-        height = "h-10 w-32";
+        sizeClass = "h-10 w-32";
         break;
       case "LARGE":
-        height = "h-12 w-32";
+        sizeClass = "h-12 w-32";
         break;
       default:
         break;
     }
-    return height;
+    return sizeClass;
   }
 
   function getType(): string {
@@ -38,15 +50,30 @@ const PillButton = ({ text, type, size, onClickAction }: IPillButton) => {
     }
   }
 
-  return (
-    <button
-      className={`flex items-center justify-center flex-nowrap rounded-full box-shadow-md font-semibold border-2 shadow-lg
-      ${getHeight()} ${getType()}`}
-      onClick={onClickAction}
-    >
-      <span className="px-6 flex-nowrap font-semibold">{text}</span>
-    </button>
-  );
+  const topLevelClasses =
+    "hoverTransformScale flex items-center justify-center flex-nowrap rounded-full box-shadow-md font-semibold border-2 shadow-lg";
+
+  if (children) {
+    return (
+      <button
+        aria-label={label}
+        className={` ${topLevelClasses} ${getSizeClass()} ${getType()}`}
+        onClick={onClickAction}
+      >
+        {children}
+      </button>
+    );
+  } else {
+    return (
+      <button
+        aria-label={label}
+        className={` ${topLevelClasses} ${getSizeClass()} ${getType()}`}
+        onClick={onClickAction}
+      >
+        <span className="px-6 flex-nowrap font-semibold">{text}</span>
+      </button>
+    );
+  }
 };
 
 export default PillButton;

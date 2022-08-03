@@ -27,6 +27,8 @@ const Home = () => {
           <TripsList tripsType="owned" />
           <SubHeading text="Trips Shared With Me" />
           <TripsList tripsType="shared" />
+
+          <div className="w-full h-12 my-24"></div>
         </MainContent>
       </PageWrapper>
     </ProtectedPage>

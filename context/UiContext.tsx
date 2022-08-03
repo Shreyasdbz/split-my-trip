@@ -5,7 +5,10 @@ interface IUiContext {
   pageBlur: boolean;
   currentModalActive: ActiveModalTypes;
   handleUserSettings: ({ action }: IBasicModalActions) => void;
-  handleNewTrip: ({ payload }: INewTripModalActions) => void;
+  handleNewTrip: ({ action }: IBasicModalActions) => void;
+  handleEditTrip: ({ action }: IBasicModalActions) => void;
+  handleAddPerson: ({ action }: IBasicModalActions) => void;
+  handleEditPerson: ({ action }: IBasicModalActions) => void;
   dismissAllModals: () => void;
 }
 export const UiContext = createContext({} as IUiContext);
@@ -26,21 +29,51 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
     if (action === "OPEN") {
       setCurrentModalActive("USER_SETTINGS");
       setPageBlur(true);
-    } else if (action === "CLOSE") {
-      setCurrentModalActive("NONE");
-      setPageBlur(false);
-    }
+    } else if (action === "CLOSE") dismissAllModals();
   }
 
-  function handleNewTrip({ payload }: INewTripModalActions) {
-    if (payload.action === "OPEN") {
+  /**
+   *
+   * @param param0
+   */
+  function handleNewTrip({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
       setCurrentModalActive("NEW_TRIP");
       setPageBlur(true);
-    } else if (payload.action === "CLOSE") {
-      setCurrentModalActive("NONE");
-      setPageBlur(false);
-    } else if (payload.action === "SAVE") {
-    }
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
+   * @param param0
+   */
+  function handleEditTrip({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("EDIT_TRIP");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
+   * @param param0
+   */
+  function handleAddPerson({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("ADD_PERSON");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
+   * @param param0
+   */
+  function handleEditPerson({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("EDIT_PERSON");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
   }
 
   /**
@@ -56,6 +89,9 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
     currentModalActive,
     handleUserSettings,
     handleNewTrip,
+    handleEditTrip,
+    handleAddPerson,
+    handleEditPerson,
     dismissAllModals,
   };
 

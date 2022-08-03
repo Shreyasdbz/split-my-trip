@@ -70,7 +70,7 @@ function getColorById(colorId: string) {
   return targetColor;
 }
 
-function getColorOptions(): IColorTheme[] {
+function getCurrentColorOptions(): IColorTheme[] {
   let colorOptions = [];
   for (let i of ColorPalette) {
     if (i.current) {
@@ -80,4 +80,9 @@ function getColorOptions(): IColorTheme[] {
   return colorOptions;
 }
 
-export { getColorById, getColorOptions };
+function getRandomCurrentColorOption(): IColorTheme {
+  let currentColors = getCurrentColorOptions();
+  return currentColors[Math.floor(Math.random() * currentColors.length)];
+}
+
+export { getColorById, getCurrentColorOptions, getRandomCurrentColorOption };

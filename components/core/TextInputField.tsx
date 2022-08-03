@@ -1,14 +1,22 @@
 /** @format */
 
-import { Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 interface ITextInputField {
   type: "TEXT" | "NUMBER";
   text: string;
   onChangeHandler: Dispatch<SetStateAction<string>>;
+  errorText?: string;
 }
 
-const TextInputField = ({ type, text, onChangeHandler }: ITextInputField) => {
+const TextInputField = ({
+  type,
+  text,
+  onChangeHandler,
+  errorText,
+}: ITextInputField) => {
+  const [error, setError] = useState<boolean>(false);
+
   function getInputType(): string {
     switch (type) {
       case "TEXT":
@@ -20,6 +28,18 @@ const TextInputField = ({ type, text, onChangeHandler }: ITextInputField) => {
     }
   }
 
+  function errorTextHandler(textVal: string) {
+    if (textVal.length === 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }
+
+  useEffect(() => {
+    errorTextHandler(text);
+  }, []);
+
   return (
     <div className="w-full">
       <input
@@ -27,9 +47,11 @@ const TextInputField = ({ type, text, onChangeHandler }: ITextInputField) => {
         type={getInputType()}
         value={text}
         onChange={(e) => {
+          errorTextHandler(e.target.value);
           onChangeHandler(e.target.value);
         }}
       />
+      {error && <span className="text-red-400 text-sm ">{errorText}</span>}
     </div>
   );
 };

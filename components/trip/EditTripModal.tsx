@@ -1,12 +1,10 @@
 /** @format */
 
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { XIcon, TrashIcon, SaveIcon } from "@heroicons/react/solid";
 
 import { TripDataContext } from "../../context/TripDataContext";
 import { UiContext } from "../../context/UiContext";
-
-import { getRandomTripTitle } from "../../lib/util/sampleData";
-import { getRandomCurrentColorOption } from "../../lib/util/theme";
 
 import InputCaptionText from "../core/InputCaptionText";
 import InputWrapper from "../core/InputWrapper";
@@ -16,41 +14,46 @@ import PillButton from "../core/PillButton";
 import TextInputField from "../core/TextInputField";
 import ColorPicker from "../common/ColorPicker";
 
-const NewTripModal = () => {
+interface IEditTripModal {}
+const EditTripModal = ({}: IEditTripModal) => {
   const currentActiveModal = useContext(UiContext).currentModalActive;
-  const newTripUiHandler = useContext(UiContext).handleNewTrip;
-  const newTripDataHandler = useContext(TripDataContext).addNewTrip;
+  const currentActiveTrip = useContext(TripDataContext).currentTrip;
+  const editTripUiHandler = useContext(UiContext).handleEditTrip;
+  const editTripDetailsHandler = useContext(TripDataContext).editTripDetails;
 
   const [tripNameInput, setTripNameInput] = useState<string>(
-    getRandomTripTitle()
+    currentActiveTrip.title
   );
   const [tripThemeInput, setTripThemeInput] = useState<string>(
-    getRandomCurrentColorOption().id
+    currentActiveTrip.themeId
   );
 
   function close() {
-    newTripUiHandler({ action: "CLOSE" });
+    editTripUiHandler({ action: "CLOSE" });
   }
 
   function saveTrip() {
     // error Check
     if (tripNameInput.length > 0) {
-      newTripUiHandler({ action: "CLOSE" });
-      newTripDataHandler(tripNameInput, tripThemeInput).catch((err) =>
-        console.error(err)
-      );
+      editTripUiHandler({ action: "CLOSE" });
+      editTripDetailsHandler().catch((err) => console.error(err));
     }
   }
 
+  function deleteTrip() {
+    editTripUiHandler({ action: "CLOSE" });
+    editTripDetailsHandler().catch((err) => console.error(err));
+  }
+
   useEffect(() => {
-    setTripNameInput(getRandomTripTitle());
-    setTripThemeInput(getRandomCurrentColorOption().id);
+    setTripNameInput(currentActiveTrip.title);
+    setTripThemeInput(currentActiveTrip.themeId);
   }, [currentActiveModal]);
 
-  if (currentActiveModal === "NEW_TRIP") {
+  if (currentActiveModal === "EDIT_TRIP") {
     return (
       <Modal>
-        <ModalTitle text={"Add a new trip"} />
+        <ModalTitle text={"Edit trip details"} />
         <InputWrapper inputType="TEXT">
           <InputCaptionText text="Trip Name" />
           <TextInputField
@@ -69,17 +72,32 @@ const NewTripModal = () => {
         </InputWrapper>
         <div className="w-full flex items-center justify-evenly gap-2 mt-8">
           <PillButton
+            label="Cancel Button"
             text={"Cancel"}
             type={"OUTLINE"}
             size={"SMALL"}
             onClickAction={close}
-          />
+          >
+            <XIcon className="w-5 h-5" />
+          </PillButton>
           <PillButton
+            label="Delete Button"
+            text={"Delete"}
+            type={"DANGER"}
+            size={"SMALL"}
+            onClickAction={deleteTrip}
+          >
+            <TrashIcon className="w-5 h-5" />
+          </PillButton>
+          <PillButton
+            label="Save Button"
             text={"Save"}
             type={"FILL"}
             size={"SMALL"}
             onClickAction={saveTrip}
-          />
+          >
+            <SaveIcon className="w-5 h-5" />
+          </PillButton>
         </div>
       </Modal>
     );
@@ -88,4 +106,4 @@ const NewTripModal = () => {
   }
 };
 
-export default NewTripModal;
+export default EditTripModal;

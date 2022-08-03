@@ -5,8 +5,8 @@ declare type ActiveModalTypes =
   | "USER_SETTINGS"
   | "NEW_TRIP"
   | "EDIT_TRIP"
-  | "ADD_PARTICIPANT"
-  | "EDIT_PARTICIPANT"
+  | "ADD_PERSON"
+  | "EDIT_PERSON"
   | "ADD_ACTIVITY"
   | "EDIT_ACTIVITY";
 

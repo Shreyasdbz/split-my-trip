@@ -17,7 +17,7 @@ const Modal = ({ children }: IModal) => {
       onClick={() => dismissAll()}
     >
       <div
-        className="bg-white px-8 py-14 mt-10 rounded-lg shadow-lg min-w-modalSmall md:min-w-modalMedium lg:min-w-modalLarge"
+        className="bg-white px-8 py-14 mt-10 rounded-lg shadow-lg w-72 md:w-96"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
