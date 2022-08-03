@@ -51,8 +51,7 @@ const NewTripModal = () => {
     return (
       <Modal>
         <ModalTitle text={"Add a new trip"} />
-        <InputWrapper inputType="TEXT">
-          <InputCaptionText text="Trip Name" />
+        <InputWrapper inputType="TEXT" captionText="New Trip">
           <TextInputField
             type={"TEXT"}
             text={tripNameInput}
@@ -60,8 +59,7 @@ const NewTripModal = () => {
             errorText={"Name can't be empty"}
           />
         </InputWrapper>
-        <InputWrapper inputType="COLOR">
-          <InputCaptionText text="Theme" />
+        <InputWrapper inputType="TEXT" captionText="Theme">
           <ColorPicker
             currentColor={tripThemeInput}
             onColorChange={setTripThemeInput}

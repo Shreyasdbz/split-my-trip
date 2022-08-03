@@ -13,11 +13,11 @@ const Modal = ({ children }: IModal) => {
 
   return (
     <div
-      className="w-screen h-screen flex items-start justify-center fixed z-30"
+      className="w-screen h-screen flex items-start justify-center fixed z-30  overflow-y-scroll"
       onClick={() => dismissAll()}
     >
       <div
-        className="bg-white px-8 py-14 mt-10 rounded-lg shadow-lg w-72 md:w-96"
+        className="bg-white px-8 py-14 mt-10 rounded-lg shadow-lg w-72 md:w-96 lg:w-128"
         onClick={(e) => e.stopPropagation()}
       >
         {children}

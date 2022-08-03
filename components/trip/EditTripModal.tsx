@@ -54,8 +54,7 @@ const EditTripModal = ({}: IEditTripModal) => {
     return (
       <Modal>
         <ModalTitle text={"Edit trip details"} />
-        <InputWrapper inputType="TEXT">
-          <InputCaptionText text="Trip Name" />
+        <InputWrapper inputType="TEXT" captionText="Trip Name">
           <TextInputField
             type={"TEXT"}
             text={tripNameInput}
@@ -63,8 +62,7 @@ const EditTripModal = ({}: IEditTripModal) => {
             errorText={"Name can't be empty"}
           />
         </InputWrapper>
-        <InputWrapper inputType="COLOR">
-          <InputCaptionText text="Theme" />
+        <InputWrapper inputType="COLOR" captionText="Theme">
           <ColorPicker
             currentColor={tripThemeInput}
             onColorChange={setTripThemeInput}
