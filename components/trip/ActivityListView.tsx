@@ -15,6 +15,7 @@ const ActivityListView = () => {
   useEffect(() => {}, [currentActiveModal]);
 
   if (
+    currentActiveTrip &&
     currentActiveTrip.activityList &&
     currentActiveTrip.activityList.length > 0
   ) {
@@ -41,7 +42,7 @@ const ActivityListView = () => {
               <div className="w-full my-2" />
               <div className="w-full flex items-center justify-between">
                 <span className="text-lg font-bold">{activity.title}</span>
-                <span className="bg-white text-black rounded-full my-3 px-6 font-normal">
+                <span className="bg-white text-black rounded-full my-3 px-5 font-normal">
                   $ {activity.cost}
                 </span>
               </div>
@@ -52,8 +53,8 @@ const ActivityListView = () => {
               {/* bottom row */}
               <div className="w-full flex flex-col items-center justify-center">
                 {/* payer */}
-                <div className="w-full flex items-center justify-start py-2">
-                  <span className="text-black font-light">Payed by: </span>
+                <div className="w-full flex items-center justify-start pt-2">
+                  <span className="text-black font-normal">Payed by: </span>
                   <span className="pl-2">
                     {getPersonFunction(activity.payerId)}
                   </span>
@@ -84,8 +85,9 @@ const ActivityListView = () => {
     );
   } else {
     return (
-      <div>
-        <div>Add People yo</div>
+      <div className="w-full flex flex-col items-center justify-center my-2 text-gray-500 font-light">
+        <span>To add activities,</span>
+        <span>use the "ADD +" button</span>
       </div>
     );
   }

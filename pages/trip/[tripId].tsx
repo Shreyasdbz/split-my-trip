@@ -1,7 +1,9 @@
 /** @format */
 import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
 
+import { FirebaseConfig } from "../../lib/firebase/config";
 import { TripDataContext } from "../../context/TripDataContext";
 import { UiContext } from "../../context/UiContext";
 
@@ -17,14 +19,17 @@ import PersonListView from "../../components/trip/PersonListView";
 import AddPersonModal from "../../components/trip/AddPersonModal";
 import AddActivityModal from "../../components/trip/AddActivityModal";
 import ActivityListView from "../../components/trip/ActivityListView";
+import Loading from "../loading";
 
 const Trip = () => {
   const nextRouter = useRouter();
   const { tripId } = nextRouter.query;
+  const [user, loading] = useAuthState(FirebaseConfig.auth);
 
-  const currentUser = useContext(TripDataContext).currentUser;
+  const allTrips = useContext(TripDataContext).trips;
   const currentTrip = useContext(TripDataContext).currentTrip;
-  const retrieveTripData = useContext(TripDataContext).retrieveTripData;
+  const changeCurrentTrip = useContext(TripDataContext).changeCurrentTrip;
+  const saveSharedTrip = useContext(TripDataContext).saveSharedTrip;
 
   const addPersonUiHandler = useContext(UiContext).handleAddPerson;
   const editPersonUiHandler = useContext(UiContext).handleEditPerson;
@@ -32,11 +37,22 @@ const Trip = () => {
   const editActivityUiHandler = useContext(UiContext).handleEditActivity;
 
   useEffect(() => {
-    if (typeof tripId === "string") retrieveTripData(tripId, true);
-  });
+    if (typeof tripId === "string") {
+      changeCurrentTrip(tripId, true);
+      if (!currentTrip) {
+        changeCurrentTrip(tripId, false);
+      }
+    }
+  }, [allTrips]);
 
+  if (loading) {
+    return <Loading />;
+  }
+  if (!user) {
+    nextRouter.push("/signin");
+  }
   if (!currentTrip) {
-    return <></>;
+    return <Loading />;
   }
 
   return (
@@ -52,6 +68,38 @@ const Trip = () => {
         <GetSplitFloatingBtn />
 
         <MainContent>
+          {/* Shared By banner */}
+          {currentTrip.owned === false ? (
+            <div className="w-full flex items-center justify-center mt-4">
+              <div className="flex items-center justify-center flex-row font-light bg-gray-200 px-4 py-2 rounded-lg text-gray-600 text-sm">
+                <span>shared with you by:</span>
+                <span className="pl-1 font-normal">
+                  {currentTrip.ownerName}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+
+          {/* Save Shared Trip Button */}
+          {currentTrip.tripSaved === false ? (
+            <div className="w-full flex items-center justify-center mt-2">
+              <button
+                className="bg-gray-600 px-4 py-2 rounded-lg text-white text-sm"
+                onClick={() => {
+                  if (typeof tripId === "string") {
+                    saveSharedTrip(tripId);
+                  }
+                }}
+              >
+                Save to My Trips
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <EditTripBtn />
 
           {/* People Section */}

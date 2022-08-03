@@ -13,7 +13,11 @@ const PersonListView = () => {
 
   useEffect(() => {}, [currentActiveModal]);
 
-  if (currentActiveTrip.personList && currentActiveTrip.personList.length > 0) {
+  if (
+    currentActiveTrip &&
+    currentActiveTrip.personList &&
+    currentActiveTrip.personList.length > 0
+  ) {
     return (
       <div className="w-full flex flex-col items-center justify-center">
         <div className="w-full flex flex-row items-center justify-cetner gap-4 overflow-scroll pl-4">
@@ -44,8 +48,9 @@ const PersonListView = () => {
     );
   } else {
     return (
-      <div>
-        <div>Add People yo</div>
+      <div className="w-full flex flex-col items-center justify-center my-4 text-gray-500 font-light">
+        <span>To add people,</span>
+        <span>use the "ADD +" button</span>
       </div>
     );
   }

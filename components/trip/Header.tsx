@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { ArrowCircleLeftIcon } from "@heroicons/react/solid";
 
 import { TripDataContext } from "../../context/TripDataContext";
-import { UiContext } from "../../context/UiContext";
 import { getColorById } from "../../lib/util/theme";
 
 import HeaderTitle from "../core/HeaderTitle";
@@ -17,12 +16,14 @@ interface IHeader {
 }
 const Header = ({ text, themeId }: IHeader) => {
   const nextRouter = useRouter();
+  const resetAll = useContext(TripDataContext).resetAllCurrent;
 
   return (
     <div className="w-screen h-32 bg-white shadow-lg rounded-br-3xl rounded-bl-3xl flex items-center justify-between px-4 sticky text-right">
       <button
         className="hoverTransformScaleHigh"
         onClick={() => {
+          resetAll();
           nextRouter.back();
         }}
       >

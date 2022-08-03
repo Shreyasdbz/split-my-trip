@@ -11,6 +11,7 @@ import ModalTitle from "../core/ModalTitle";
 import TextInputField from "../core/TextInputField";
 import ColorPicker from "../common/ColorPicker";
 import PillButtonsRow from "../common/PillButtonsRow";
+import NoModifySharedBanner from "./noModifySharedBanner";
 
 interface IEditTripModal {}
 const EditTripModal = ({}: IEditTripModal) => {
@@ -19,12 +20,21 @@ const EditTripModal = ({}: IEditTripModal) => {
   const editTripUiHandler = useContext(UiContext).handleEditTrip;
   const editTripDetailsHandler = useContext(TripDataContext).editTripDetails;
 
-  const [tripNameInput, setTripNameInput] = useState<string>(
-    currentActiveTrip.title
-  );
+  const [tripNameInput, setTripNameInput] = useState<string>(getInitialTitle());
   const [tripThemeInput, setTripThemeInput] = useState<string>(
-    currentActiveTrip.themeId
+    getInitialThemeId()
   );
+
+  function getInitialTitle() {
+    if (currentActiveTrip) {
+      return currentActiveTrip.title;
+    } else return "Loading";
+  }
+  function getInitialThemeId() {
+    if (currentActiveTrip) {
+      return currentActiveTrip.themeId;
+    } else return "init-1";
+  }
 
   function close() {
     editTripUiHandler({ action: "CLOSE" });
@@ -32,20 +42,28 @@ const EditTripModal = ({}: IEditTripModal) => {
 
   function saveTrip() {
     // error Check
-    if (tripNameInput.length > 0) {
-      editTripUiHandler({ action: "CLOSE" });
-      editTripDetailsHandler().catch((err) => console.error(err));
+    if (currentActiveTrip && tripNameInput.length > 0) {
+      if (currentActiveTrip.owned === true) {
+        editTripUiHandler({ action: "CLOSE" });
+        editTripDetailsHandler(tripNameInput, tripThemeInput).catch((err) =>
+          console.error(err)
+        );
+      }
     }
   }
 
   function deleteTrip() {
     editTripUiHandler({ action: "CLOSE" });
-    editTripDetailsHandler().catch((err) => console.error(err));
+    editTripDetailsHandler(tripNameInput, tripThemeInput, true).catch((err) =>
+      console.error(err)
+    );
   }
 
   useEffect(() => {
-    setTripNameInput(currentActiveTrip.title);
-    setTripThemeInput(currentActiveTrip.themeId);
+    if (currentActiveTrip) {
+      setTripNameInput(currentActiveTrip.title);
+      setTripThemeInput(currentActiveTrip.themeId);
+    }
   }, [currentActiveModal]);
 
   if (currentActiveModal === "EDIT_TRIP") {
@@ -65,6 +83,7 @@ const EditTripModal = ({}: IEditTripModal) => {
             onColorChange={setTripThemeInput}
           />
         </InputWrapper>
+        <NoModifySharedBanner />
         <PillButtonsRow
           useIcons={true}
           iconsSize={"MEDIUM"}

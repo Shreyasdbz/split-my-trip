@@ -3,6 +3,7 @@
 import { useState, useContext, useEffect } from "react";
 
 import { UiContext } from "../../context/UiContext";
+import { TripDataContext } from "../../context/TripDataContext";
 
 import { getRandomPersonName } from "../../lib/util/sampleData";
 
@@ -11,8 +12,10 @@ import InputWrapper from "../core/InputWrapper";
 import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
 import TextInputField from "../core/TextInputField";
+import NoModifySharedBanner from "./noModifySharedBanner";
 
 const AddPersonModal = () => {
+  const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const currentActiveModal = useContext(UiContext).currentModalActive;
   const newPersonUiHandler = useContext(UiContext).handleAddPerson;
 
@@ -23,7 +26,12 @@ const AddPersonModal = () => {
   }
 
   function savePerson() {
-    newPersonUiHandler({ action: "CLOSE" });
+    if (currentActiveTrip && currentActiveTrip.owned === true) {
+      // error checking
+      if (nameInput.length > 0) {
+        newPersonUiHandler({ action: "CLOSE" });
+      }
+    }
   }
 
   useEffect(() => {
@@ -41,6 +49,7 @@ const AddPersonModal = () => {
             errorText={"Name can't be empty"}
           />
         </InputWrapper>
+        <NoModifySharedBanner />
         <PillButtonsRow
           useIcons={true}
           iconsSize={"MEDIUM"}

@@ -35,6 +35,7 @@ declare interface ITripData {
   id: string;
   title: string;
   owned?: boolean;
+  tripSaved?: boolean;
   ownerName: string;
   ownerEmail: string;
   themeId: string;

@@ -3,6 +3,7 @@
 import { useState, useContext, useEffect } from "react";
 
 import { UiContext } from "../../context/UiContext";
+import { TripDataContext } from "../../context/TripDataContext";
 
 import { getRandomPersonName, getRandomCost } from "../../lib/util/sampleData";
 
@@ -12,8 +13,10 @@ import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
 import TextInputField from "../core/TextInputField";
 import NumberInputField from "../core/NumberInputField";
+import NoModifySharedBanner from "./noModifySharedBanner";
 
 const AddActivityModal = () => {
+  const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const currentActiveModal = useContext(UiContext).currentModalActive;
   const newActivityUiHandler = useContext(UiContext).handleAddActivity;
 
@@ -25,9 +28,11 @@ const AddActivityModal = () => {
   }
 
   function saveActivity() {
-    //error checking
-    if (costInput > 0) {
-      newActivityUiHandler({ action: "CLOSE" });
+    if (currentActiveTrip && currentActiveTrip.owned === true) {
+      //error checking
+      if (costInput > 0) {
+        newActivityUiHandler({ action: "CLOSE" });
+      }
     }
   }
 
@@ -62,6 +67,7 @@ const AddActivityModal = () => {
             errorText={"Cost can't be empty"}
           />
         </InputWrapper>
+        <NoModifySharedBanner />
         <PillButtonsRow
           useIcons={true}
           iconsSize={"MEDIUM"}
