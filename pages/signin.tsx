@@ -1,12 +1,12 @@
 /** @format */
-import { useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
-import { FirebaseAuth } from '../lib/firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import { FirebaseAuth } from "../lib/firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from '../lib/firebase/config';
+import { FirebaseConfig } from "../lib/firebase/config";
 
-import { TripDataContext } from '../context/TripDataContext';
+import { TripDataContext } from "../context/TripDataContext";
 
 const SignIn = () => {
   const nextRouter = useRouter();
@@ -15,7 +15,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user) {
-      nextRouter.push('/home');
+      nextRouter.push("/home");
     }
   }, [user]);
 
@@ -26,7 +26,6 @@ const SignIn = () => {
         onClick={() => {
           FirebaseAuth.useGoogleSignIn().then((user) => {
             user && performUserLogin(user);
-            nextRouter.push('/home');
           });
         }}
       >

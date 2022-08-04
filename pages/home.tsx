@@ -35,6 +35,7 @@ const Home = () => {
         <MainContent>
           <SubHeading text="My Trips" />
           <TripsList tripsType="owned" />
+
           <SubHeading text="Trips Shared With Me" />
           <TripsList tripsType="shared" />
 

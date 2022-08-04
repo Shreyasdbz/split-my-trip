@@ -20,7 +20,7 @@ const ActivityListView = () => {
     currentActiveTrip.activityList.length > 0
   ) {
     return (
-      <div className="w-full flex flex-col items-center justify-start gap-3 mt-4">
+      <div className="w-full flex flex-col items-center justify-start gap-4 mt-4">
         {currentActiveTrip.activityList.map((activity) => {
           return (
             <button
@@ -36,7 +36,7 @@ const ActivityListView = () => {
                   getColorById(currentActiveTrip.themeId).bgColor
                 }25`,
               }}
-              className="hoverTransformZ w-full rounded-lg text-white font-semibold px-4"
+              className="hoverTransformZ w-full rounded-lg text-white font-semibold px-4 py-2"
             >
               {/* top row */}
               <div className="w-full my-2" />
@@ -48,16 +48,20 @@ const ActivityListView = () => {
               </div>
               {/* divider */}
               <div className="w-full px-1">
-                <div className="w-full h-1 bg-white rounded-full opacity-50" />
+                <div className="w-full h-1 bg-white/30 rounded-full" />
               </div>
               {/* bottom row */}
               <div className="w-full flex flex-col items-center justify-center">
                 {/* payer */}
-                <div className="w-full flex items-center justify-start pt-2">
-                  <span className="text-black font-normal">Payed by: </span>
-                  <span className="pl-2">
-                    {getPersonFunction(activity.payerId)}
-                  </span>
+                <div className="w-full flex items-center justify-center pt-3">
+                  <div className="flex items-center justify-start px-3 py-1 bg-gray-200/30 rounded-full">
+                    <span className="text-gray-800 font-normal">
+                      Payed by:{" "}
+                    </span>
+                    <span className="pl-2 font-normal">
+                      {getPersonFunction(activity.payerId)}
+                    </span>
+                  </div>
                 </div>
                 {/* participants */}
                 <div className="w-full flex flex-col items-start justify-center">

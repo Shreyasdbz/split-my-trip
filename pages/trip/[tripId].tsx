@@ -21,6 +21,7 @@ import AddActivityModal from "../../components/trip/AddActivityModal";
 import ActivityListView from "../../components/trip/ActivityListView";
 import Loading from "../loading";
 import EditPersonModal from "../../components/trip/EditPersonModal";
+import GetSplitModal from "../../components/trip/GetSplitModal";
 
 const Trip = () => {
   const nextRouter = useRouter();
@@ -62,6 +63,7 @@ const Trip = () => {
       <AddPersonModal />
       <EditPersonModal />
       <AddActivityModal />
+      <GetSplitModal />
 
       <PageWrapper>
         <Header text={currentTrip.title} themeId={currentTrip.themeId} />

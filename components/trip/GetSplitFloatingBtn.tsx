@@ -9,13 +9,13 @@ import ButtonCaptionText from "../core/ButtonCaptionText";
 import FloatingElement from "../core/FloatingElement";
 
 const GetSplitFloatingBtn = () => {
-  const newTriphandler = useContext(UiContext).handleNewTrip;
+  const getSplitHandler = useContext(UiContext).handleGetSplit;
   return (
     <FloatingElement position="bottomRight">
       <button
         className="w-full h-full flex items-center justify-center flex-col text-white rounded-full"
         onClick={() => {
-          //   newTriphandler({ action: "OPEN" });
+          getSplitHandler({ action: "OPEN" });
         }}
       >
         <ButtonCaptionText text="Get Split" />

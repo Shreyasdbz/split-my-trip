@@ -38,9 +38,9 @@ const PersonListView = () => {
                     getColorById(currentActiveTrip.themeId).bgColor
                   }25`,
                 }}
-                className="hoverTransformZ bg-gray-300 px-3 py-2 my-4 min-h-12 rounded-md shadow-lg shadow-gray-200 text-white font-semibold"
+                className="hoverTransformZ bg-gray-300 px-3 py-2 my-4 h-12 rounded-md shadow-lg shadow-gray-200 text-white font-normal whitespace-nowrap"
                 onClick={() => {
-                  editPersonDataHandler({ action: "OPEN" }, person);
+                  editPersonDataHandler({ action: "OPEN" }, person.id);
                   editPersonUiHandler({ action: "OPEN" });
                 }}
               >

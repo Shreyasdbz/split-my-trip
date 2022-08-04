@@ -11,15 +11,18 @@
 function getSampleTripData(
   uid1: string,
   uid2: string,
+  uid3: string,
+  ownerId: string,
   ownerName: string,
   ownerEmail: string
 ) {
   const campingTrip: ITripData = {
     id: uid1,
     title: "Camping Trip 🏕",
+    ownerId: ownerId,
     ownerName: ownerName,
     ownerEmail: ownerEmail,
-    themeId: "initi-4",
+    themeId: "init-4",
     personList: [
       {
         id: "person-1",
@@ -59,7 +62,7 @@ function getSampleTripData(
       },
       {
         id: "activity-3",
-        title: "Smores",
+        title: "Smores Stuff",
         cost: 20,
         payerId: "person-2",
         participantList: [
@@ -70,13 +73,13 @@ function getSampleTripData(
       },
     ],
   };
-
   const officeParty: ITripData = {
     id: uid2,
     title: "Office Party 🎉",
+    ownerId: ownerId,
     ownerName: ownerName,
     ownerEmail: ownerEmail,
-    themeId: "initi-4",
+    themeId: "init-8",
     personList: [
       {
         id: "person-1",
@@ -128,7 +131,7 @@ function getSampleTripData(
       },
       {
         id: "activity-3",
-        title: "Space Rental",
+        title: "Arcade Reservation",
         cost: 600,
         payerId: "person-4",
         participantList: [
@@ -154,8 +157,210 @@ function getSampleTripData(
       },
     ],
   };
+  const sundayBBQ: ITripData = {
+    id: uid3,
+    title: "Sunday BBQ 🍽️",
+    ownerId: ownerId,
+    ownerName: ownerName,
+    ownerEmail: ownerEmail,
+    themeId: "init-1",
+    personList: [
+      {
+        id: "person-1",
+        name: "Mr. Garcia",
+      },
+      { id: "person-2", name: "The Smiths" },
+      { id: "person-3", name: "Polly" },
+      { id: "person-4", name: "Jace" },
+      { id: "person-5", name: "Heather" },
+      { id: "person-6", name: "Evan" },
+      { id: "person-7", name: "The Russos" },
+    ],
+    activityList: [
+      {
+        id: "activity-1",
+        title: "Wings",
+        cost: 74,
+        payerId: "person-1",
+        participantList: [
+          {
+            participantId: "person-1",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-2",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-3",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-4",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-5",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-6",
+            isParticipating: false,
+          },
+          {
+            participantId: "person-7",
+            isParticipating: false,
+          },
+        ],
+      },
+      {
+        id: "activity-2",
+        title: "Salad",
+        cost: 74,
+        payerId: "person-4",
+        participantList: [
+          {
+            participantId: "person-1",
+            isParticipating: false,
+          },
+          {
+            participantId: "person-2",
+            isParticipating: false,
+          },
+          {
+            participantId: "person-3",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-4",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-5",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-6",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-7",
+            isParticipating: true,
+          },
+        ],
+      },
+      {
+        id: "activity-3",
+        title: "Drinks",
+        cost: 74,
+        payerId: "person-4",
+        participantList: [
+          {
+            participantId: "person-1",
+            isParticipating: false,
+          },
+          {
+            participantId: "person-2",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-3",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-4",
+            isParticipating: false,
+          },
+          {
+            participantId: "person-5",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-6",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-7",
+            isParticipating: false,
+          },
+        ],
+      },
+      {
+        id: "activity-4",
+        title: "Utensils",
+        cost: 74,
+        payerId: "person-2",
+        participantList: [
+          {
+            participantId: "person-1",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-2",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-3",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-4",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-5",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-6",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-7",
+            isParticipating: true,
+          },
+        ],
+      },
+      {
+        id: "activity-5",
+        title: "Park Rental",
+        cost: 74,
+        payerId: "person-5",
+        participantList: [
+          {
+            participantId: "person-1",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-2",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-3",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-4",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-5",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-6",
+            isParticipating: true,
+          },
+          {
+            participantId: "person-7",
+            isParticipating: true,
+          },
+        ],
+      },
+    ],
+  };
 
-  return [campingTrip, officeParty];
+  return [campingTrip, officeParty, sundayBBQ];
 }
 
 /**

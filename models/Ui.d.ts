@@ -8,7 +8,8 @@ declare type ActiveModalTypes =
   | "ADD_PERSON"
   | "EDIT_PERSON"
   | "ADD_ACTIVITY"
-  | "EDIT_ACTIVITY";
+  | "EDIT_ACTIVITY"
+  | "GET_SPLIT";
 
 declare interface IBasicModalActions {
   action: "OPEN" | "CLOSE";

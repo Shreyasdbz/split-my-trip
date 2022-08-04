@@ -11,6 +11,7 @@ interface IUiContext {
   handleEditPerson: ({ action }: IBasicModalActions) => void;
   handleAddActivity: ({ action }: IBasicModalActions) => void;
   handleEditActivity: ({ action }: IBasicModalActions) => void;
+  handleGetSplit: ({ action }: IBasicModalActions) => void;
   dismissAllModals: () => void;
 }
 export const UiContext = createContext({} as IUiContext);
@@ -102,6 +103,17 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
 
   /**
    *
+   * @param param0
+   */
+  function handleGetSplit({ action }: IBasicModalActions) {
+    if (action === "OPEN") {
+      setCurrentModalActive("GET_SPLIT");
+      setPageBlur(true);
+    } else if (action === "CLOSE") dismissAllModals();
+  }
+
+  /**
+   *
    */
   function dismissAllModals() {
     setCurrentModalActive("NONE");
@@ -119,6 +131,7 @@ const UiContextProvider = ({ children }: IUiContextProvider) => {
     dismissAllModals,
     handleAddActivity,
     handleEditActivity,
+    handleGetSplit,
   };
 
   return (

@@ -8,11 +8,9 @@ import { UiContext } from "../../context/UiContext";
 import { getRandomTripTitle } from "../../lib/util/sampleData";
 import { getRandomCurrentColorOption } from "../../lib/util/theme";
 
-import InputCaptionText from "../core/InputCaptionText";
 import InputWrapper from "../core/InputWrapper";
 import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
-import PillButton from "../core/PillButton";
 import TextInputField from "../core/TextInputField";
 import ColorPicker from "../common/ColorPicker";
 import PillButtonsRow from "../common/PillButtonsRow";

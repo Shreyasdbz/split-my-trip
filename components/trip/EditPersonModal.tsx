@@ -15,7 +15,8 @@ import NoModifySharedBanner from "./noModifySharedBanner";
 const EditPersonModal = () => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const currentActiveModal = useContext(UiContext).currentModalActive;
-  const currentPersonEdit = useContext(TripDataContext).currentPersonEdit;
+  const currentPersonEdit = useContext(TripDataContext).currentPersonEditId;
+  const getPersonById = useContext(TripDataContext).getPersonById;
 
   const editPersonUiHandler = useContext(UiContext).handleEditPerson;
   const editPersonDataHandler = useContext(TripDataContext).editPerson;
@@ -24,7 +25,7 @@ const EditPersonModal = () => {
 
   function getNamePlaceHolder(): string {
     let final = "name";
-    if (currentPersonEdit) final = currentPersonEdit.name;
+    if (currentPersonEdit) final = getPersonById(currentPersonEdit);
     return final;
   }
 
@@ -40,7 +41,7 @@ const EditPersonModal = () => {
     ) {
       // error checking
       if (nameInput.length > 0) {
-        editPersonDataHandler({ action: "CLOSE" }, currentPersonEdit);
+        editPersonDataHandler({ action: "SAVE" }, currentPersonEdit, nameInput);
         editPersonUiHandler({ action: "CLOSE" });
       }
     }

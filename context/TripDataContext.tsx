@@ -17,10 +17,11 @@ interface ITripDataContext {
   currentUser: User | null;
   trips: ITripData[];
   currentTrip: ITripData | null;
-  currentPersonEdit: ITripPerson | null;
-  currentActivityEdit: ITripActivity | null;
+  currentPersonEditId: string | null;
+  currentActivityEditId: string | null;
   resetAllCurrent: () => void;
   performUserLogin: (loginUser: User) => void;
+  refreshCachedTrips: () => void;
   addNewTrip: (name: string, themeId: string) => Promise<void>;
   editTripDetails: (
     newTripName: string,
@@ -33,7 +34,8 @@ interface ITripDataContext {
   addNewPerson: (personName: string) => Promise<void>;
   editPerson: (
     { action }: IEditModalActions,
-    editPersonInput: ITripPerson
+    editPersonInputId: string,
+    newName?: string
   ) => Promise<void>;
 }
 
@@ -48,10 +50,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [trips, setTrips] = useState<ITripData[]>([]);
   const [currentTrip, setCurrentTrip] = useState<ITripData | null>(null);
-  const [currentPersonEdit, setcurrentPersonEdit] =
-    useState<ITripPerson | null>(null);
-  const [currentActivityEdit, setcurrentActivityEdit] =
-    useState<ITripActivity | null>(null);
+  const [currentPersonEditId, setcurrentPersonEditId] = useState<string | null>(
+    null
+  );
+  const [currentActivityEditId, setcurrentActivityEditId] = useState<
+    string | null
+  >(null);
 
   /**
    *
@@ -62,6 +66,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     const loadingTrip: ITripData = createNewEmptyTrip(
       "Trip Loading",
       "init-1",
+      "loading-id",
       "Loading Name",
       "loading@loading.com"
     );
@@ -93,6 +98,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                       title: data.title,
                       owned: true,
                       tripSaved: true,
+                      ownerId: data.ownerId,
                       ownerName: data.ownerName,
                       ownerEmail: data.ownerEmail,
                       themeId: data.themeId,
@@ -114,6 +120,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                       title: data.title,
                       owned: false,
                       tripSaved: true,
+                      ownerId: data.ownerId,
                       ownerName: data.ownerName,
                       ownerEmail: data.ownerEmail,
                       themeId: data.themeId,
@@ -181,7 +188,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
       if (i.id === newTrip.id) {
         (i.title = newTrip.title),
           (i.owned = _checkLocalTripsIfIdOwned(newTrip.id)),
-          (i.tripSaved = _checkIfTripIsSaved(newTrip.id)),
+          (i.tripSaved = true),
           (i.ownerId = newTrip.ownerId),
           (i.ownerName = newTrip.ownerName),
           (i.ownerEmail = newTrip.ownerEmail),
@@ -191,6 +198,51 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
       }
     }
     setTrips(tempTrips);
+  }
+
+  /**
+   * @param action
+   * @param person
+   * @param activityList
+   */
+  type _propagate_person_to_activity_type = "ADD" | "MODIFY" | "REMOVE";
+  function _propagatePersonToActivity(
+    action: _propagate_person_to_activity_type,
+    personId: string,
+    activityList: ITripActivity[]
+  ): ITripActivity[] {
+    let currentActivityList: ITripActivity[] = activityList;
+    if (action === "ADD") {
+      // add as non participating participant to every activity
+      for (let act of currentActivityList) {
+        let newParticipant: IActivityParticipant = {
+          participantId: personId,
+          isParticipating: false,
+        };
+        if (act.participantList) {
+          act.participantList.push(newParticipant);
+        }
+      }
+    } else if (action === "MODIFY") {
+      // do nothing
+    } else if (action === "REMOVE") {
+      let emptyActivityList: ITripActivity[] = [];
+      // go through each activity
+      for (let act of currentActivityList) {
+        // -> if payer: remove activity
+        if (act.payerId !== personId) {
+          let emptyParticipantList: IActivityParticipant[] = [];
+          for (let p of act.participantList) {
+            if (p.participantId !== personId) emptyParticipantList.push(p);
+          }
+          act.participantList = emptyParticipantList;
+          emptyActivityList.push(act);
+        }
+      }
+      // -> remove as participant for activity
+      currentActivityList = emptyActivityList;
+    }
+    return currentActivityList;
   }
 
   /**
@@ -212,16 +264,19 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
           // new users
           let sampleUid1 = uuidv4();
           let sampleUid2 = uuidv4();
+          let sampleUid3 = uuidv4();
           const sampleTrips = getSampleTripData(
             sampleUid1,
             sampleUid2,
-            loginUser.displayName || "",
-            loginUser.email || ""
+            sampleUid3,
+            loginUser.uid,
+            loginUser.displayName || "Someone",
+            loginUser.email || "someone@email.com"
           );
           const newUserDoc: IUserDoc = {
-            name: loginUser.displayName || "",
-            email: loginUser.email || "",
-            ownedTrips: [sampleUid1, sampleUid2],
+            name: loginUser.displayName || "Someone",
+            email: loginUser.email || "someone@email.com",
+            ownedTrips: [sampleUid1, sampleUid2, sampleUid3],
             sharedTrips: [],
           };
 
@@ -239,12 +294,24 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
               FirebaseDb.createTripDoc(
                 "performUserLogin() :: 4",
                 sampleTrips[1]
+              ).catch((err) => console.error(err));
+              FirebaseDb.createTripDoc(
+                "performUserLogin() :: 5",
+                sampleTrips[2]
               )
                 .then(() => {
+                  sampleTrips[0].owned = true;
+                  sampleTrips[1].owned = true;
+                  sampleTrips[2].owned = true;
+                  sampleTrips[0].tripSaved = true;
+                  sampleTrips[1].tripSaved = true;
+                  sampleTrips[2].tripSaved = true;
                   let newTrips: ITripData[] = [];
                   newTrips.push(sampleTrips[0]);
                   newTrips.push(sampleTrips[1]);
+                  newTrips.push(sampleTrips[2]);
                   setTrips(newTrips);
+                  nextRouter.push("/home");
                 })
                 .catch((err) => console.error(err));
             })
@@ -259,6 +326,13 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
 
   /**
    *
+   */
+  function refreshCachedTrips() {
+    _populateTripsData().catch((err) => console.error(err));
+  }
+
+  /**
+   *
    * @param name
    * @param themeId
    */
@@ -266,8 +340,9 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     let newTrip = createNewEmptyTrip(
       name,
       themeId,
-      currentUser?.displayName || "",
-      currentUser?.email || ""
+      currentUser?.uid || "loading new id",
+      currentUser?.displayName || "loading name",
+      currentUser?.email || "loading email"
     );
     // createTripDoc()
     // create new trip document and upload it
@@ -382,6 +457,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
               let newTripDoc: ITripData = {
                 id: data.id,
                 title: newTripName,
+                ownerId: data.ownerId,
                 ownerName: data.ownerName,
                 ownerEmail: data.ownerEmail,
                 themeId: newTripTheme,
@@ -448,6 +524,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
               title: data.title,
               owned: isOwned,
               tripSaved: isSaved,
+              ownerId: data.ownerId,
               ownerName: data.ownerName,
               ownerEmail: data.ownerEmail,
               themeId: data.themeId,
@@ -538,18 +615,28 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
             if (currentTrip.personList) {
               for (let p of currentTrip.personList) newPersonList.push(p);
             }
-            newPersonList.push({
+            let newPerson: ITripPerson = {
               id: uuidv4(),
               name: personName,
-            });
+            };
+            newPersonList.push(newPerson);
+            let newActivityList = currentTrip.activityList;
+            if (currentTrip.activityList) {
+              newActivityList = _propagatePersonToActivity(
+                "ADD",
+                newPerson.id,
+                currentTrip.activityList
+              );
+            }
             FirebaseDb.updateTripDoc("addNewPerson() :: 2", {
               id: currentTrip.id,
               title: currentTrip.title,
+              ownerId: currentTrip.ownerId,
               ownerName: currentTrip.ownerName,
               ownerEmail: currentTrip.ownerEmail,
               themeId: currentTrip.themeId,
               personList: newPersonList,
-              activityList: currentTrip.activityList,
+              activityList: newActivityList,
             })
               .then(() => {
                 // pull from database currentTrip
@@ -591,16 +678,147 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
    */
   async function editPerson(
     { action }: IEditModalActions,
-    editPersonInput: ITripPerson
+    editPersonInputId: string,
+    newName?: string
   ) {
     if (action === "OPEN") {
-      setcurrentPersonEdit(editPersonInput);
+      setcurrentPersonEditId(editPersonInputId);
     } else if (action === "CLOSE") {
-      setcurrentPersonEdit(null);
+      setcurrentPersonEditId(null);
     } else if (action === "SAVE") {
-      setcurrentPersonEdit(null);
+      if (currentTrip && currentPersonEditId && newName) {
+        // get Trip doc
+        FirebaseDb.getTripDoc("editPerson() :: 1", currentTrip.id)
+          .then((tripDoc) => {
+            let tripDocData = tripDoc.data();
+            if (tripDocData) {
+              // update people
+              let pulledTrip: ITripData = {
+                id: tripDocData.id,
+                title: tripDocData.title,
+                ownerId: tripDocData.ownerId,
+                ownerEmail: tripDocData.ownerEmail,
+                ownerName: tripDocData.ownerName,
+                themeId: tripDocData.themeId,
+                personList: tripDocData.personList,
+                activityList: tripDocData.activityList,
+              };
+              // update person
+              // go through and change name by id
+              if (pulledTrip.personList) {
+                for (let i of pulledTrip.personList) {
+                  if (i.id === currentPersonEditId) {
+                    i.name = newName;
+                  }
+                }
+              }
+              // update activities
+              if (pulledTrip.activityList) {
+                pulledTrip.activityList = _propagatePersonToActivity(
+                  "MODIFY",
+                  currentPersonEditId,
+                  pulledTrip.activityList
+                );
+              }
+              // push updated trip doc
+              FirebaseDb.updateTripDoc("editPerson() :: 2", pulledTrip)
+                .then(() => {
+                  // pul updated trip doc
+                  FirebaseDb.getTripDoc("editPerson() :: 3", currentTrip.id)
+                    .then((updatedTripDoc) => {
+                      let updatedTripDocData = updatedTripDoc.data();
+                      if (updatedTripDocData) {
+                        // replaced cached trip
+                        let newTripGet: ITripData = {
+                          id: updatedTripDocData.id,
+                          title: updatedTripDocData.title,
+                          owned: true,
+                          tripSaved: true,
+                          ownerId: updatedTripDocData.ownerId,
+                          ownerName: updatedTripDocData.ownerName,
+                          ownerEmail: updatedTripDocData.ownerEmail,
+                          themeId: updatedTripDocData.themeId,
+                          personList: updatedTripDocData.personList,
+                          activityList: updatedTripDocData.activityList,
+                        };
+                        _replaceCachedTrip(newTripGet);
+                        setCurrentTrip(newTripGet);
+                      }
+                    })
+                    .catch((err) => console.error(err));
+                })
+                .catch((err) => console.error(err));
+            }
+          })
+          .catch((err) => console.error(err));
+        setcurrentPersonEditId(null);
+      }
     } else if (action === "DELETE") {
-      setcurrentPersonEdit(null);
+      if (currentTrip && currentPersonEditId) {
+        // get Trip doc
+        FirebaseDb.getTripDoc("editPerson() :: 1", currentTrip.id)
+          .then((tripDoc) => {
+            let tripDocData = tripDoc.data();
+            if (tripDocData) {
+              // update people
+              let pulledTrip: ITripData = {
+                id: tripDocData.id,
+                title: tripDocData.title,
+                ownerId: tripDocData.ownerId,
+                ownerEmail: tripDocData.ownerEmail,
+                ownerName: tripDocData.ownerName,
+                themeId: tripDocData.themeId,
+                personList: tripDocData.personList,
+                activityList: tripDocData.activityList,
+              };
+              let tempPersonList = [];
+              if (pulledTrip.personList) {
+                for (let i of pulledTrip.personList) {
+                  if (i.id !== currentPersonEditId) tempPersonList.push(i);
+                }
+              }
+              pulledTrip.personList = tempPersonList;
+              // update activities
+              if (pulledTrip.activityList) {
+                pulledTrip.activityList = _propagatePersonToActivity(
+                  "REMOVE",
+                  currentPersonEditId,
+                  pulledTrip.activityList
+                );
+              }
+              // push updated trip doc
+              FirebaseDb.updateTripDoc("editPerson() :: 2", pulledTrip)
+                .then(() => {
+                  // pul updated trip doc
+                  FirebaseDb.getTripDoc("editPerson() :: 3", currentTrip.id)
+                    .then((updatedTripDoc) => {
+                      let updatedTripDocData = updatedTripDoc.data();
+                      if (updatedTripDocData) {
+                        // replaced cached trip
+                        let newTripGet: ITripData = {
+                          id: updatedTripDocData.id,
+                          title: updatedTripDocData.title,
+                          owned: true,
+                          tripSaved: true,
+                          ownerId: updatedTripDocData.ownerId,
+                          ownerName: updatedTripDocData.ownerName,
+                          ownerEmail: updatedTripDocData.ownerEmail,
+                          themeId: updatedTripDocData.themeId,
+                          personList: updatedTripDocData.personList,
+                          activityList: updatedTripDocData.activityList,
+                        };
+                        _replaceCachedTrip(newTripGet);
+                        setCurrentTrip(newTripGet);
+                      }
+                    })
+                    .catch((err) => console.error(err));
+                })
+                .catch((err) => console.error(err));
+            }
+          })
+          .catch((err) => console.error(err));
+        setcurrentPersonEditId(null);
+      }
     }
   }
 
@@ -618,10 +836,11 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     currentUser,
     trips,
     currentTrip,
-    currentPersonEdit,
-    currentActivityEdit,
+    currentPersonEditId,
+    currentActivityEditId,
     resetAllCurrent,
     performUserLogin,
+    refreshCachedTrips,
     addNewTrip,
     editTripDetails,
     changeCurrentTrip,
