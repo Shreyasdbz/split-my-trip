@@ -19,7 +19,7 @@ const Header = ({ text, themeId }: IHeader) => {
   const resetAll = useContext(TripDataContext).resetAllCurrent;
 
   return (
-    <div className="w-screen h-32 bg-white shadow-lg rounded-br-3xl rounded-bl-3xl flex items-center justify-between px-4 sticky text-right">
+    <div className="w-screen h-36 bg-white shadow-lg rounded-br-3xl rounded-bl-3xl flex items-center justify-between px-4 sticky text-right pt-4">
       <button
         className="hoverTransformScaleHigh"
         onClick={() => {

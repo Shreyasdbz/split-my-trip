@@ -5,8 +5,6 @@ import { useState, useContext, useEffect } from "react";
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
 
-import { getRandomPersonName } from "../../lib/util/sampleData";
-
 import PillButtonsRow from "../common/PillButtonsRow";
 import InputWrapper from "../core/InputWrapper";
 import Modal from "../core/Modal";
@@ -14,37 +12,62 @@ import ModalTitle from "../core/ModalTitle";
 import TextInputField from "../core/TextInputField";
 import NoModifySharedBanner from "./noModifySharedBanner";
 
-const AddPersonModal = () => {
+const EditPersonModal = () => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const currentActiveModal = useContext(UiContext).currentModalActive;
+  const currentPersonEdit = useContext(TripDataContext).currentPersonEdit;
 
-  const newPersonUiHandler = useContext(UiContext).handleAddPerson;
-  const newPersonDataHandler = useContext(TripDataContext).addNewPerson;
+  const editPersonUiHandler = useContext(UiContext).handleEditPerson;
+  const editPersonDataHandler = useContext(TripDataContext).editPerson;
 
-  const [nameInput, setNameInput] = useState(getRandomPersonName());
+  const [nameInput, setNameInput] = useState(getNamePlaceHolder);
+
+  function getNamePlaceHolder(): string {
+    let final = "name";
+    if (currentPersonEdit) final = currentPersonEdit.name;
+    return final;
+  }
 
   function close() {
-    newPersonUiHandler({ action: "CLOSE" });
+    editPersonUiHandler({ action: "CLOSE" });
   }
 
   function savePerson() {
-    if (currentActiveTrip && currentActiveTrip.owned === true) {
+    if (
+      currentActiveTrip &&
+      currentPersonEdit &&
+      currentActiveTrip.owned === true
+    ) {
       // error checking
       if (nameInput.length > 0) {
-        newPersonDataHandler(nameInput);
-        newPersonUiHandler({ action: "CLOSE" });
+        editPersonDataHandler({ action: "CLOSE" }, currentPersonEdit);
+        editPersonUiHandler({ action: "CLOSE" });
+      }
+    }
+  }
+
+  function deletePerson() {
+    if (
+      currentActiveTrip &&
+      currentPersonEdit &&
+      currentActiveTrip.owned === true
+    ) {
+      // error checking
+      if (nameInput.length > 0) {
+        editPersonDataHandler({ action: "DELETE" }, currentPersonEdit);
+        editPersonUiHandler({ action: "CLOSE" });
       }
     }
   }
 
   useEffect(() => {
-    setNameInput(getRandomPersonName());
+    setNameInput(getNamePlaceHolder());
   }, [currentActiveModal]);
 
-  if (currentActiveModal === "ADD_PERSON") {
+  if (currentActiveModal === "EDIT_PERSON") {
     return (
       <Modal>
-        <ModalTitle text={"Add new person"} />
+        <ModalTitle text={"Edit person"} />
         <InputWrapper inputType={"TEXT"} captionText={"person name"}>
           <TextInputField
             text={nameInput}
@@ -59,6 +82,8 @@ const AddPersonModal = () => {
           arrangement={"ROW"}
           outlineButtonText="Cancel"
           outlineButtonAction={close}
+          dangerButtonText={"Delete"}
+          dangerButtonAction={deletePerson}
           fillButtonText={"save"}
           fillButtonAction={savePerson}
         />
@@ -69,4 +94,4 @@ const AddPersonModal = () => {
   }
 };
 
-export default AddPersonModal;
+export default EditPersonModal;

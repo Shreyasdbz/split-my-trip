@@ -13,3 +13,7 @@ declare type ActiveModalTypes =
 declare interface IBasicModalActions {
   action: "OPEN" | "CLOSE";
 }
+
+declare interface IEditModalActions {
+  action: "OPEN" | "CLOSE" | "SAVE" | "DELETE";
+}

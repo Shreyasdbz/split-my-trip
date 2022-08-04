@@ -17,8 +17,8 @@ interface ITripDataContext {
   currentUser: User | null;
   trips: ITripData[];
   currentTrip: ITripData | null;
-  currentEditingPerson: ITripPerson | null;
-  currentEditingActivity: ITripActivity | null;
+  currentPersonEdit: ITripPerson | null;
+  currentActivityEdit: ITripActivity | null;
   resetAllCurrent: () => void;
   performUserLogin: (loginUser: User) => void;
   addNewTrip: (name: string, themeId: string) => Promise<void>;
@@ -30,6 +30,11 @@ interface ITripDataContext {
   changeCurrentTrip: (id: string, useLocal: boolean) => void;
   saveSharedTrip: (tripId: string) => Promise<void>;
   getPersonById: (personId: string) => string;
+  addNewPerson: (personName: string) => Promise<void>;
+  editPerson: (
+    { action }: IEditModalActions,
+    editPersonInput: ITripPerson
+  ) => Promise<void>;
 }
 
 export const TripDataContext = createContext({} as ITripDataContext);
@@ -41,12 +46,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   const nextRouter = useRouter();
   const [user] = useAuthState(FirebaseConfig.auth);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [currentEditingPerson, setCurrentEditingPerson] =
-    useState<ITripPerson | null>(null);
-  const [currentEditingActivity, setCurrentEditingActivity] =
-    useState<ITripActivity | null>(null);
   const [trips, setTrips] = useState<ITripData[]>([]);
   const [currentTrip, setCurrentTrip] = useState<ITripData | null>(null);
+  const [currentPersonEdit, setcurrentPersonEdit] =
+    useState<ITripPerson | null>(null);
+  const [currentActivityEdit, setcurrentActivityEdit] =
+    useState<ITripActivity | null>(null);
 
   /**
    *
@@ -164,6 +169,28 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   function _filterDeletedTrip(tripElement: string) {
     if (!currentTrip) return true;
     return tripElement !== currentTrip.id;
+  }
+
+  /**
+   *
+   * @param newTrip
+   */
+  function _replaceCachedTrip(newTrip: ITripData) {
+    let tempTrips = trips;
+    for (let i of tempTrips) {
+      if (i.id === newTrip.id) {
+        (i.title = newTrip.title),
+          (i.owned = _checkLocalTripsIfIdOwned(newTrip.id)),
+          (i.tripSaved = _checkIfTripIsSaved(newTrip.id)),
+          (i.ownerId = newTrip.ownerId),
+          (i.ownerName = newTrip.ownerName),
+          (i.ownerEmail = newTrip.ownerEmail),
+          (i.themeId = newTrip.themeId),
+          (i.personList = newTrip.personList),
+          (i.activityList = newTrip.activityList);
+      }
+    }
+    setTrips(tempTrips);
   }
 
   /**
@@ -361,10 +388,34 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 personList: currentTrip.personList,
                 activityList: currentTrip.activityList,
               };
+              // push new details
               FirebaseDb.updateTripDoc("editTripDetails() :: 5", newTripDoc)
                 .then(() => {
-                  // pull current Trip from database
-                  _populateTripsData();
+                  // pull updated trip doc
+                  FirebaseDb.getTripDoc(
+                    "editTripDetails() :: 6",
+                    currentTrip.id
+                  )
+                    .then((updatedTripDoc) => {
+                      let updatedTripDocData = updatedTripDoc.data();
+                      if (updatedTripDocData) {
+                        let newTripGet: ITripData = {
+                          id: updatedTripDocData.id,
+                          title: updatedTripDocData.title,
+                          owned: true,
+                          tripSaved: true,
+                          ownerId: updatedTripDocData.ownerId,
+                          ownerName: updatedTripDocData.ownerName,
+                          ownerEmail: updatedTripDocData.ownerEmail,
+                          themeId: updatedTripDocData.themeId,
+                          personList: updatedTripDocData.personList,
+                          activityList: updatedTripDocData.activityList,
+                        };
+                        _replaceCachedTrip(newTripGet);
+                        setCurrentTrip(newTripGet);
+                      }
+                    })
+                    .catch((err) => console.error(err));
                 })
                 .catch((err) => console.error(err));
             }
@@ -473,6 +524,88 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
 
   /**
    *
+   * @param personName
+   */
+  async function addNewPerson(personName: string) {
+    if (currentTrip && currentUser) {
+      // get trip doc
+      FirebaseDb.getTripDoc("addNewPerson() :: 1", currentTrip.id)
+        .then((tripDoc) => {
+          let dataGet = tripDoc.data();
+          if (dataGet) {
+            // update trip doc
+            let newPersonList: ITripPerson[] = [];
+            if (currentTrip.personList) {
+              for (let p of currentTrip.personList) newPersonList.push(p);
+            }
+            newPersonList.push({
+              id: uuidv4(),
+              name: personName,
+            });
+            FirebaseDb.updateTripDoc("addNewPerson() :: 2", {
+              id: currentTrip.id,
+              title: currentTrip.title,
+              ownerName: currentTrip.ownerName,
+              ownerEmail: currentTrip.ownerEmail,
+              themeId: currentTrip.themeId,
+              personList: newPersonList,
+              activityList: currentTrip.activityList,
+            })
+              .then(() => {
+                // pull from database currentTrip
+                FirebaseDb.getTripDoc(
+                  "addNewPerson() :: 3",
+                  currentTrip.id
+                ).then((updatedTripDoc) => {
+                  let updatedTripDocData = updatedTripDoc.data();
+                  if (updatedTripDocData) {
+                    // find and update cached trip
+                    let newTripGet: ITripData = {
+                      id: updatedTripDocData.id,
+                      title: updatedTripDocData.title,
+                      owned: true,
+                      tripSaved: true,
+                      ownerId: updatedTripDocData.ownerId,
+                      ownerName: updatedTripDocData.ownerName,
+                      ownerEmail: updatedTripDocData.ownerEmail,
+                      themeId: updatedTripDocData.themeId,
+                      personList: updatedTripDocData.personList,
+                      activityList: updatedTripDocData.activityList,
+                    };
+                    _replaceCachedTrip(newTripGet);
+                    setCurrentTrip(newTripGet);
+                  }
+                });
+              })
+              .catch((err) => console.error(err));
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+  }
+
+  /**
+   *
+   * @param param0
+   * @param editPersonInput
+   */
+  async function editPerson(
+    { action }: IEditModalActions,
+    editPersonInput: ITripPerson
+  ) {
+    if (action === "OPEN") {
+      setcurrentPersonEdit(editPersonInput);
+    } else if (action === "CLOSE") {
+      setcurrentPersonEdit(null);
+    } else if (action === "SAVE") {
+      setcurrentPersonEdit(null);
+    } else if (action === "DELETE") {
+      setcurrentPersonEdit(null);
+    }
+  }
+
+  /**
+   *
    */
   useEffect(() => {
     if (user) {
@@ -485,8 +618,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     currentUser,
     trips,
     currentTrip,
-    currentEditingPerson,
-    currentEditingActivity,
+    currentPersonEdit,
+    currentActivityEdit,
     resetAllCurrent,
     performUserLogin,
     addNewTrip,
@@ -494,6 +627,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     changeCurrentTrip,
     saveSharedTrip,
     getPersonById,
+    addNewPerson,
+    editPerson,
   };
   return (
     <TripDataContext.Provider value={providerValue}>

@@ -9,6 +9,8 @@ import { getColorById } from "../../lib/util/theme";
 
 const PersonListView = () => {
   const currentActiveModal = useContext(UiContext).currentModalActive;
+  const editPersonUiHandler = useContext(UiContext).handleEditPerson;
+  const editPersonDataHandler = useContext(TripDataContext).editPerson;
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
 
   useEffect(() => {}, [currentActiveModal]);
@@ -37,6 +39,10 @@ const PersonListView = () => {
                   }25`,
                 }}
                 className="hoverTransformZ bg-gray-300 px-3 py-2 my-4 min-h-12 rounded-md shadow-lg shadow-gray-200 text-white font-semibold"
+                onClick={() => {
+                  editPersonDataHandler({ action: "OPEN" }, person);
+                  editPersonUiHandler({ action: "OPEN" });
+                }}
               >
                 {person.name}
               </button>
