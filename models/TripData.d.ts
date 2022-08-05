@@ -53,3 +53,7 @@ declare interface IUserDoc {
   ownedTrips: string[] | null;
   sharedTrips: string[] | null;
 }
+
+declare interface ISplitTransaction {
+  //
+}

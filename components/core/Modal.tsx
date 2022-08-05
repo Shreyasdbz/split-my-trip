@@ -13,7 +13,7 @@ const Modal = ({ children }: IModal) => {
 
   return (
     <div
-      className="w-screen h-screen flex items-start justify-center fixed z-30 overflow-y-scroll"
+      className="w-screen h-screen flex flex-col items-center justify-start fixed z-30 overflow-y-scroll"
       onClick={() => dismissAll()}
     >
       <div
@@ -22,6 +22,8 @@ const Modal = ({ children }: IModal) => {
       >
         {children}
       </div>
+      {/* spacer */}
+      <div className="w-full h-2 my-12" />
     </div>
   );
 };
