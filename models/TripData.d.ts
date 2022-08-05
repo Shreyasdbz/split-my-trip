@@ -54,6 +54,24 @@ declare interface IUserDoc {
   sharedTrips: string[] | null;
 }
 
+/**
+ *
+ */
 declare interface ISplitTransaction {
-  //
+  transactionType: "PAY" | "RECEIVE";
+  transactionPersonId: string;
+  transactionPersonName: string;
+  transactionAmount: number;
 }
+
+/**
+ *
+ */
+declare interface ISplitPerson {
+  personId: string;
+  personName: string;
+  endingBalace: number;
+  trasnsactions: ISplitTransaction[];
+}
+
+// TODO: Explain all models

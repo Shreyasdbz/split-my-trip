@@ -16,8 +16,6 @@ const SplitTile = () => {
     return (
       <div
         style={{
-          backgroundColor: `${getColorById(currentTrip.themeId).bgColor}`,
-          backgroundImage: `${getColorById(currentTrip.themeId).bgImage}`,
           boxShadow: `0px 2px 15px 5px ${
             getColorById(currentTrip.themeId).bgColor
           }15`,
@@ -25,7 +23,13 @@ const SplitTile = () => {
         className="rounded-md w-full overflow-hidden"
       >
         {/* Top Row */}
-        <div className="flex flex-row items-center justify-between px-2 py-2">
+        <div
+          style={{
+            backgroundColor: `${getColorById(currentTrip.themeId).bgColor}`,
+            backgroundImage: `${getColorById(currentTrip.themeId).bgImage}`,
+          }}
+          className="flex flex-row items-center justify-between px-2 py-2"
+        >
           <span className="text-white font-semibold">Person 1</span>
           <span className="bg-white px-2 py-1 text-green-600 rounded-xl">
             + $50
