@@ -41,6 +41,7 @@ const TripsList = ({ tripsType }: ITripsList) => {
     return (
       <div className="w-full flex flex-col gap-4">
         {filteredTrips.map((trip) => {
+          // TODO: Add auto-animate
           return (
             <TripTile
               key={trip.id}

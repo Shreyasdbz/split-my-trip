@@ -71,7 +71,7 @@ declare interface ISplitPerson {
   personId: string;
   personName: string;
   endingBalace: number;
-  trasnsactions: ISplitTransaction[];
+  transactions: ISplitTransaction[];
 }
 
 // TODO: Explain all models

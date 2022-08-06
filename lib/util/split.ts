@@ -44,7 +44,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
       personId: p.id,
       personName: p.name,
       endingBalace: 0,
-      trasnsactions: [],
+      transactions: [],
     });
   }
 
@@ -94,7 +94,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
         for (let s of splitsList) {
           if (s.personId === n.id) {
             // paying someone
-            s.trasnsactions.push({
+            s.transactions.push({
               transactionType: "PAY",
               transactionPersonId: p.id,
               transactionPersonName: p.name,
@@ -103,7 +103,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
           }
           if (s.personId === p.id) {
             // receiving from someone
-            s.trasnsactions.push({
+            s.transactions.push({
               transactionType: "RECEIVE",
               transactionPersonId: n.id,
               transactionPersonName: n.name,
@@ -124,7 +124,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
         for (let s of splitsList) {
           if (s.personId === n.id) {
             // paying someone
-            s.trasnsactions.push({
+            s.transactions.push({
               transactionType: "PAY",
               transactionPersonId: p.id,
               transactionPersonName: p.name,
@@ -133,7 +133,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
           }
           if (s.personId === p.id) {
             // receiving from soneone
-            s.trasnsactions.push({
+            s.transactions.push({
               transactionType: "RECEIVE",
               transactionPersonId: n.id,
               transactionPersonName: n.name,
@@ -148,7 +148,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
           for (let s of splitsList) {
             if (s.personId === n.id) {
               // paying someone
-              s.trasnsactions.push({
+              s.transactions.push({
                 transactionType: "PAY",
                 transactionPersonId: p.id,
                 transactionPersonName: p.name,
@@ -157,7 +157,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
             }
             if (s.personId === p.id) {
               // receiving from someone
-              s.trasnsactions.push({
+              s.transactions.push({
                 transactionType: "RECEIVE",
                 transactionPersonId: n.id,
                 transactionPersonName: n.name,
@@ -177,7 +177,7 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
   //
   // Step 4 -- calculate ending balances for everyone
   for (let s of splitsList) {
-    for (let t of s.trasnsactions) {
+    for (let t of s.transactions) {
       if (t.transactionType === "PAY") {
         s.endingBalace -= t.transactionAmount;
       } else if (t.transactionType == "RECEIVE") {
@@ -210,10 +210,17 @@ function calculateTotalTripCost(trip: ITripData): number {
   return finalCost;
 }
 
+function roundAmount(amount: number): number {
+  let final = 0;
+  final = Math.floor(amount * 100) / 100;
+  return final;
+}
+
 /**
  *
  */
 export const SplitsCalculationLib = {
   buildSplitsList,
   calculateTotalTripCost,
+  roundAmount,
 };

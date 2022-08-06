@@ -3,14 +3,60 @@
 import { useContext } from "react";
 import { TripDataContext } from "../../context/TripDataContext";
 import { getColorById } from "../../lib/util/theme";
+import { SplitsCalculationLib } from "../../lib/util/split";
 
 interface ISplitTile {
-  personName: string;
-  endingAmount: number;
-  transactionList: ISplitTransaction[];
+  splitPerson: ISplitPerson;
 }
-const SplitTile = () => {
+const SplitTile = ({ splitPerson }: ISplitTile) => {
   const currentTrip = useContext(TripDataContext).currentTrip;
+
+  const TransactionRow = ({
+    transactionAmount,
+    transactionPersonName,
+    transactionType,
+  }: ISplitTransaction) => {
+    if (!currentTrip) {
+      return <></>;
+    }
+    return (
+      <div>
+        {transactionType === "PAY" ? (
+          <span>
+            Pay{" "}
+            <span className="font-semibold">
+              ${SplitsCalculationLib.roundAmount(transactionAmount)}
+            </span>{" "}
+            to{" "}
+            <span
+              style={{
+                color: `${getColorById(currentTrip.themeId).bgColor}`,
+              }}
+              className="font-semibold"
+            >
+              {transactionPersonName}
+            </span>
+          </span>
+        ) : (
+          <span>
+            Receive{" "}
+            <span className="font-semibold">
+              ${SplitsCalculationLib.roundAmount(transactionAmount)}
+            </span>{" "}
+            from{" "}
+            <span
+              style={{
+                color: `${getColorById(currentTrip.themeId).bgColor}`,
+              }}
+              className="font-semibold"
+            >
+              {transactionPersonName}
+            </span>
+          </span>
+        )}
+      </div>
+    );
+  };
 
   if (currentTrip) {
     return (
@@ -30,41 +76,45 @@ const SplitTile = () => {
           }}
           className="flex flex-row items-center justify-between px-2 py-2"
         >
-          <span className="text-white font-semibold">Person 1</span>
-          <span className="bg-white px-2 py-1 text-green-600 rounded-xl">
-            + $50
+          <span className="text-white font-semibold">
+            {splitPerson.personName}
+          </span>
+          <span className="bg-white px-2 py-1 rounded-xl">
+            {splitPerson.endingBalace >= 0 ? (
+              <span className="text-green-600">
+                + ${SplitsCalculationLib.roundAmount(splitPerson.endingBalace)}
+              </span>
+            ) : (
+              <span className="text-red-600">
+                - $
+                {Math.abs(
+                  SplitsCalculationLib.roundAmount(splitPerson.endingBalace)
+                )}
+              </span>
+            )}
           </span>
         </div>
 
         {/* Transaction list */}
-        <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-2">
-          <div>
-            <span>
-              Receive <span className="font-semibold">$58</span> from{" "}
-              <span
-                style={{
-                  color: `${getColorById(currentTrip.themeId).bgColor}`,
-                }}
-                className="font-semibold"
-              >
-                Person 2
-              </span>
-            </span>
+        {splitPerson.transactions.length > 0 ? (
+          <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-2">
+            {splitPerson.transactions.map((t) => {
+              return (
+                <TransactionRow
+                  key={t.transactionPersonId}
+                  transactionType={t.transactionType}
+                  transactionPersonId={t.transactionPersonId}
+                  transactionPersonName={t.transactionPersonName}
+                  transactionAmount={t.transactionAmount}
+                />
+              );
+            })}
           </div>
-          <div>
-            <span>
-              Receive <span className="font-semibold">$58</span> from{" "}
-              <span
-                style={{
-                  color: `${getColorById(currentTrip.themeId).bgColor}`,
-                }}
-                className="font-semibold"
-              >
-                Person 2
-              </span>
-            </span>
+        ) : (
+          <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-4">
+            <span>{"No transactions to make here :)"}</span>
           </div>
-        </div>
+        )}
       </div>
     );
   } else {

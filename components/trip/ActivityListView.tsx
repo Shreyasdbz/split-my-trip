@@ -54,7 +54,7 @@ const ActivityListView = () => {
               <div className="w-full flex flex-col items-center justify-center">
                 {/* payer */}
                 <div className="w-full flex items-center justify-center pt-3">
-                  <div className="flex items-center justify-start px-3 py-1 bg-gray-200/30 rounded-full">
+                  <div className="flex items-center justify-start px-3 py-1 bg-white/50 rounded-full">
                     <span className="text-gray-800 font-normal">
                       Payed by:{" "}
                     </span>
