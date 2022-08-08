@@ -37,6 +37,12 @@ interface ITripDataContext {
     editPersonInputId: string,
     newName?: string
   ) => Promise<void>;
+  addActivity: ({
+    title,
+    cost,
+    payerId,
+    participantList,
+  }: Omit<ITripActivity, "id">) => Promise<void>;
 }
 
 export const TripDataContext = createContext({} as ITripDataContext);
@@ -822,6 +828,71 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     }
   }
 
+  async function addActivity({
+    title,
+    cost,
+    payerId,
+    participantList,
+  }: Omit<ITripActivity, "id">) {
+    if (!currentTrip || !currentUser) return;
+
+    // Step 1: Get Trip Doc
+    FirebaseDb.getTripDoc("addActivity() :: 1", currentTrip.id)
+      .then((tripDoc) => {
+        let data = tripDoc.data();
+        if (!data) return;
+        // Step 2: modify data
+        let newActivityList = [];
+        if (currentTrip.activityList) {
+          for (let a of currentTrip.activityList) newActivityList.push(a);
+        }
+        let newActivity: ITripActivity = {
+          id: uuidv4(),
+          title: title,
+          cost: cost,
+          payerId: payerId,
+          participantList: participantList,
+        };
+        newActivityList.push(newActivity);
+        // Step 3 : upload data
+        FirebaseDb.updateTripDoc("addActivity() :: 2", {
+          id: currentTrip.id,
+          title: currentTrip.title,
+          ownerId: currentTrip.ownerId,
+          ownerName: currentTrip.ownerName,
+          ownerEmail: currentTrip.ownerEmail,
+          themeId: currentTrip.themeId,
+          personList: currentTrip.personList,
+          activityList: newActivityList,
+        })
+          .then(() => {
+            // Step 4: pull from database
+            FirebaseDb.getTripDoc("addActivity() :: 3", currentTrip.id)
+              .then((updatedTripDoc) => {
+                let dataUpdated = updatedTripDoc.data();
+                if (!dataUpdated) return;
+                let newTripGet: ITripData = {
+                  id: dataUpdated.id,
+                  title: dataUpdated.title,
+                  owned: true,
+                  tripSaved: true,
+                  ownerId: dataUpdated.ownerId,
+                  ownerName: dataUpdated.ownerName,
+                  ownerEmail: dataUpdated.ownerEmail,
+                  themeId: dataUpdated.themeId,
+                  personList: dataUpdated.personList,
+                  activityList: dataUpdated.activityList,
+                };
+                _replaceCachedTrip(newTripGet);
+                setCurrentTrip(newTripGet);
+              })
+              .catch((err) => console.error(err));
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => console.error(err));
+  }
+
   /**
    *
    */
@@ -848,6 +919,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     getPersonById,
     addNewPerson,
     editPerson,
+    addActivity,
   };
   return (
     <TripDataContext.Provider value={providerValue}>

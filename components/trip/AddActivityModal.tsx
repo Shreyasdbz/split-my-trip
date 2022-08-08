@@ -21,6 +21,7 @@ const AddActivityModal = () => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const currentActiveModal = useContext(UiContext).currentModalActive;
   const newActivityUiHandler = useContext(UiContext).handleAddActivity;
+  const newActivityDataHandler = useContext(TripDataContext).addActivity;
 
   const [titleInput, setTitleInput] = useState(getRandomPersonName());
   const [costInput, setCostInput] = useState<number>(getRandomCost());
@@ -41,7 +42,29 @@ const AddActivityModal = () => {
   function saveActivity() {
     if (currentActiveTrip && currentActiveTrip.owned === true) {
       //error checking
-      if (costInput > 0) {
+      if (
+        costInput > 0 &&
+        costInput &&
+        titleInput &&
+        payerIdInput &&
+        participantItemList
+      ) {
+        // Convert participantItemList to participantList
+        let tempParticipantList: IActivityParticipant[] = [];
+        for (let i of participantItemList) {
+          tempParticipantList.push({
+            participantId: i.id,
+            isParticipating: i.currentState,
+          });
+        }
+        let activityObj: Omit<ITripActivity, "id"> = {
+          title: titleInput,
+          cost: costInput,
+          payerId: payerIdInput,
+          participantList: tempParticipantList,
+        };
+        newActivityDataHandler(activityObj);
+
         newActivityUiHandler({ action: "CLOSE" });
       }
     }
