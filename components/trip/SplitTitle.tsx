@@ -81,7 +81,13 @@ const SplitTile = ({ splitPerson }: ISplitTile) => {
           </span>
           <span className="bg-white px-2 py-1 rounded-xl">
             {splitPerson.endingBalace >= 0 ? (
-              <span className="text-green-600">
+              <span
+                className={`${
+                  splitPerson.endingBalace === 0
+                    ? "text-black"
+                    : "text-green-600"
+                }`}
+              >
                 + ${SplitsCalculationLib.roundAmount(splitPerson.endingBalace)}
               </span>
             ) : (
@@ -118,12 +124,7 @@ const SplitTile = ({ splitPerson }: ISplitTile) => {
       </div>
     );
   } else {
-    return (
-      <div>
-        {/* TODO: */}
-        <div>no trip no split</div>
-      </div>
-    );
+    return <></>;
   }
 };
 

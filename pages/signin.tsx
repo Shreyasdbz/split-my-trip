@@ -25,7 +25,7 @@ const SignIn = () => {
     });
   }
   function appleSignOn() {
-    FirebaseAuth.useGoogleSignIn().then((user) => {
+    FirebaseAuth.useAppleSignIn().then((user) => {
       user && performUserLogin(user);
     });
   }

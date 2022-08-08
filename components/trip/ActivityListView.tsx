@@ -1,6 +1,7 @@
 /** @format */
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
@@ -13,8 +14,11 @@ const ActivityListView = () => {
   const getPersonFunction = useContext(TripDataContext).getPersonById;
   const editActivityUiHandler = useContext(UiContext).handleEditActivity;
   const editActivityDataHandler = useContext(TripDataContext).editActivity;
+  const parentContainer = useRef(null);
 
-  useEffect(() => {}, [currentActiveModal]);
+  useEffect(() => {
+    parentContainer.current && autoAnimate(parentContainer.current);
+  }, [parentContainer]);
 
   if (
     currentActiveTrip &&
@@ -22,7 +26,10 @@ const ActivityListView = () => {
     currentActiveTrip.activityList.length > 0
   ) {
     return (
-      <div className="w-full flex flex-col items-center justify-start gap-4 mt-4">
+      <div
+        className="w-full flex flex-col items-center justify-start gap-4 mt-4"
+        ref={parentContainer}
+      >
         {currentActiveTrip.activityList.map((activity) => {
           return (
             <button
@@ -38,7 +45,7 @@ const ActivityListView = () => {
                   getColorById(currentActiveTrip.themeId).bgColor
                 }25`,
               }}
-              className="hoverTransformZ w-full rounded-lg text-white font-semibold px-4 py-2"
+              className="hoverTransformZ w-full rounded-lg text-white font-semibold px-4 py-2 outline-none"
               onClick={() => {
                 editActivityDataHandler({ action: "OPEN" }, activity.id);
                 editActivityUiHandler({ action: "OPEN" });

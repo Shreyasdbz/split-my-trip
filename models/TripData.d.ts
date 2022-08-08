@@ -73,5 +73,3 @@ declare interface ISplitPerson {
   endingBalace: number;
   transactions: ISplitTransaction[];
 }
-
-// TODO: Explain all models

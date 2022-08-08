@@ -419,7 +419,6 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
             if (data) {
               if (currentTrip.owned === true) {
                 let ownedTrips: string[] = data.ownedTrips;
-                // TODO: delete Trip Doc
                 // update userDoc
                 let newOwnedTrips = ownedTrips.filter(_filterDeletedTrip);
                 let newUserDocData: IUserDoc = {
@@ -440,7 +439,6 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                   .catch((err) => console.error(err));
               } else {
                 let sharedTrips: string[] = data.sharedTrips;
-                // TODO: delete Trip Doc
                 // update userDoc
                 let newSharedTrips = sharedTrips.filter(_filterDeletedTrip);
                 let newUserDocData: IUserDoc = {

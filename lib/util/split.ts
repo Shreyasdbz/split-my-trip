@@ -1,7 +1,5 @@
 /** @format */
 
-// TODO: Describe each library
-
 interface IPeronBalance {
   id: string;
   name: string;

@@ -14,7 +14,6 @@ const ToggleSwitch = ({ currentState, onToggleHandler }: IToggleSwitch) => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
 
   if (!currentActiveTrip) {
-    // TODO: this
     return <></>;
   }
 
@@ -94,7 +93,6 @@ const ToggleList = ({ items, onItemToggle }: IToggleList) => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
 
   if (!currentActiveTrip) {
-    // TODO: this
     return <></>;
   }
 

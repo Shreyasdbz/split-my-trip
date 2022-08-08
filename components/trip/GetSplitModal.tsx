@@ -29,14 +29,7 @@ const GetSplitModal = () => {
 
   if (currentActiveModal === "GET_SPLIT" && currentTrip) {
     if (!splitsList) {
-      return (
-        <div>
-          <div>
-            No splits
-            {/* TODO: build this */}
-          </div>
-        </div>
-      );
+      return <></>;
     }
     return (
       <Modal>

@@ -1,6 +1,6 @@
 /** @format */
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UiContext } from "../../context/UiContext";
 
 interface IModal {
@@ -9,7 +9,21 @@ interface IModal {
 const Modal = ({ children }: IModal) => {
   const dismissAll = useContext(UiContext).dismissAllModals;
 
-  //TODO: Add escape key dismiss
+  const KEY_NAME_ESC = "Escape";
+  const KEY_EVENT_TYPE = "keyup";
+
+  function handleKey({ key }: any) {
+    if (key === KEY_NAME_ESC) {
+      dismissAll();
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener(KEY_EVENT_TYPE, handleKey);
+    return () => {
+      window.removeEventListener(KEY_EVENT_TYPE, handleKey);
+    };
+  });
 
   return (
     <div

@@ -1,5 +1,6 @@
 /** @format */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 import { TripDataContext } from "../../context/TripDataContext";
 
@@ -14,6 +15,7 @@ const TripsList = ({ tripsType }: ITripsList) => {
   const [filteredTrips, setFilteredTrips] = useState<ITripData[]>(
     getFilteredTrips()
   );
+  const parentContainer = useRef(null);
 
   function getFilteredTrips(): ITripData[] {
     let tempTrips: ITripData[] = [];
@@ -33,15 +35,18 @@ const TripsList = ({ tripsType }: ITripsList) => {
   }
 
   useEffect(() => {
+    parentContainer.current && autoAnimate(parentContainer.current);
+  }, [parentContainer]);
+
+  useEffect(() => {
     let newList = getFilteredTrips();
     setFilteredTrips(newList);
   }, [currentUser, tripsList]);
 
   if (filteredTrips.length != 0) {
     return (
-      <div className="w-full flex flex-col gap-4">
+      <div className="w-full flex flex-col gap-4" ref={parentContainer}>
         {filteredTrips.map((trip) => {
-          // TODO: Add auto-animate
           return (
             <TripTile
               key={trip.id}

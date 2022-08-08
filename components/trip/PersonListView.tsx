@@ -1,6 +1,7 @@
 /** @format */
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
@@ -12,8 +13,11 @@ const PersonListView = () => {
   const editPersonUiHandler = useContext(UiContext).handleEditPerson;
   const editPersonDataHandler = useContext(TripDataContext).editPerson;
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
+  const parentContainer = useRef(null);
 
-  useEffect(() => {}, [currentActiveModal]);
+  useEffect(() => {
+    parentContainer.current && autoAnimate(parentContainer.current);
+  }, [parentContainer]);
 
   if (
     currentActiveTrip &&
@@ -22,7 +26,10 @@ const PersonListView = () => {
   ) {
     return (
       <div className="w-full flex flex-col items-center justify-center">
-        <div className="w-full flex flex-row items-center justify-cetner gap-4 overflow-scroll pl-4">
+        <div
+          className="w-full flex flex-row items-center justify-cetner gap-4 overflow-scroll pl-4"
+          ref={parentContainer}
+        >
           {currentActiveTrip.personList.map((person) => {
             return (
               <button
