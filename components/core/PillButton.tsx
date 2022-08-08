@@ -4,7 +4,7 @@ interface IPillButton {
   label?: string;
   text: string;
   type: "DANGER" | "FILL" | "OUTLINE";
-  size: "MINI" | "SMALL" | "MEDIUM" | "LARGE";
+  size: "MINI" | "SMALL" | "MEDIUM" | "LARGE" | "LARGE-WIDE";
   onClickAction: () => void;
   children?: React.ReactElement | React.ReactElement[];
 }
@@ -29,7 +29,10 @@ const PillButton = ({
         sizeClass = "h-10 w-32";
         break;
       case "LARGE":
-        sizeClass = "h-12 w-32";
+        sizeClass = "h-12 w-36";
+        break;
+      case "LARGE-WIDE":
+        sizeClass = "h-12 w-56";
         break;
       default:
         break;

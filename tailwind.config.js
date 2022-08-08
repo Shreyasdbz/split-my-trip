@@ -13,6 +13,11 @@ module.exports = {
       spacing: {
         128: "32rem",
       },
+      rotate: {
+        10: "10deg",
+        15: "15deg",
+        20: "20deg",
+      },
     },
   },
   plugins: [],
