@@ -53,12 +53,19 @@ function buildSplitsList(trip: ITripData): ISplitPerson[] {
   for (let b of personBalanceList) {
     for (let a of trip.activityList) {
       // check if person is payer
-      if (b.id === a.payerId) b.receiveAmount += a.cost;
+      if (b.id === a.payerId) {
+        b.receiveAmount += a.cost;
+      }
       // check if person participated
+      let participantListIds: string[] = [];
       for (let p of a.participantList) {
-        if (p.participantId === b.id && p.isParticipating === true)
-          // add the payer's portion to the split
-          b.payAmount += a.cost / a.participantList.length;
+        if (p.isParticipating) {
+          participantListIds.push(p.participantId);
+        }
+      }
+      // add the payer's portion to the split
+      if (participantListIds.includes(b.id)) {
+        b.payAmount += a.cost / participantListIds.length;
       }
     }
   }

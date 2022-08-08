@@ -5,7 +5,7 @@ import { useState, useContext, useEffect } from "react";
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
 
-import { getRandomPersonName, getRandomCost } from "../../lib/util/sampleData";
+import { getRandomActivity, getRandomCost } from "../../lib/util/sampleData";
 
 import PillButtonsRow from "../common/PillButtonsRow";
 import InputWrapper from "../core/InputWrapper";
@@ -23,7 +23,7 @@ const AddActivityModal = () => {
   const newActivityUiHandler = useContext(UiContext).handleAddActivity;
   const newActivityDataHandler = useContext(TripDataContext).addActivity;
 
-  const [titleInput, setTitleInput] = useState(getRandomPersonName());
+  const [titleInput, setTitleInput] = useState(getRandomActivity());
   const [costInput, setCostInput] = useState<number>(getRandomCost());
   const [payerIdInput, setPayerIdInput] = useState<string>(
     selectRandomPayerId()
@@ -137,7 +137,7 @@ const AddActivityModal = () => {
   }
 
   useEffect(() => {
-    setTitleInput(getRandomPersonName());
+    setTitleInput(getRandomActivity());
     setCostInput(getRandomCost());
     setPayerIdInput(selectRandomPayerId());
     setPersonItemList(convertPersonToItemList());

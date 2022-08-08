@@ -551,6 +551,66 @@ function getRandomPersonName(): string {
 
 /**
  *
+ * @returns
+ */
+function getRandomActivity(): string {
+  let final = "";
+  const sampleActivities = [
+    "Gas",
+    "Bowling",
+    "Drinks",
+    "Dinner",
+    "Lunch",
+    "Brunch",
+    "Hotel",
+    "AirBnb",
+    "Skiing",
+    "Boat Rentals",
+    "Kayak Rentals",
+    "Food",
+    "Cake",
+    "Tents",
+    "Decorations",
+    "Golf",
+    "Tour Guides",
+    "Bus Ticket",
+    "Flights",
+    "Tickets",
+    "Boat",
+    "Breakfast",
+    "Materials",
+    "Apparel",
+    "Pizza",
+    "Appetizers",
+    "Burgers",
+    "Soup",
+    "Ramen",
+    "Pasta",
+    "Salad",
+    "Bubble Tea",
+    "Coffee",
+    "Movie",
+    "Operah",
+    "Entrace Fee",
+    "Bike Rental",
+    "Smoothies",
+    "Massage",
+    "Utilities",
+    "Grill",
+    "S'mores",
+    "Puzzles",
+    "Tip",
+    "Snacks",
+    "Wine",
+    "Beer",
+    "Sandwiches",
+  ];
+  final = sampleActivities[Math.floor(Math.random() * sampleActivities.length)];
+  return final;
+}
+
+/**
+ *
  */
 function getRandomCost(): number {
   return Math.floor(Math.random() * 999);
@@ -560,5 +620,6 @@ export {
   getSampleTripData,
   getRandomTripTitle,
   getRandomPersonName,
+  getRandomActivity,
   getRandomCost,
 };

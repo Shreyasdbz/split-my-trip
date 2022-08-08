@@ -7,7 +7,7 @@ import { FirebaseConfig } from "./config";
 const usersCollectionRef = collection(FirebaseConfig.firestore, "users");
 const tripsCollectionRef = collection(FirebaseConfig.firestore, "trips");
 
-const CONSOLE_LOG_CALLS: boolean = true;
+const CONSOLE_LOG_CALLS: boolean = false;
 
 /**
  *
