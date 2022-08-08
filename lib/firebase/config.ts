@@ -1,8 +1,9 @@
 /** @format */
 
-import { initializeApp, FirebaseOptions } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, FirebaseOptions, getApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import * as analytics from "firebase/analytics";
 
 // Get env variables
 function getConfigEnvs(): FirebaseOptions {
@@ -26,11 +27,14 @@ function getConfigEnvs(): FirebaseOptions {
   };
 }
 
-const firebaseApp = initializeApp(getConfigEnvs());
+const firebaseApp =
+  getApps().length > 0 ? getApp() : initializeApp(getConfigEnvs());
 const firebaseAuth = getAuth(firebaseApp);
 const firebaseFirestore = getFirestore(firebaseApp);
 
 export const FirebaseConfig = {
+  app: firebaseApp,
   auth: firebaseAuth,
   firestore: firebaseFirestore,
+  analytics: analytics,
 };

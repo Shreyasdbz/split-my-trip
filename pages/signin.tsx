@@ -8,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { FirebaseConfig } from "../lib/firebase/config";
 
 import { TripDataContext } from "../context/TripDataContext";
+import { AnalyticsContext } from "../context/AnalyticsContext";
 
 import PillButton from "../components/core/PillButton";
 
@@ -18,6 +19,7 @@ const SignIn = () => {
   const nextRouter = useRouter();
   const [user, loading, error] = useAuthState(FirebaseConfig.auth);
   const performUserLogin = useContext(TripDataContext).performUserLogin;
+  const logPageVisit = useContext(AnalyticsContext).logPageVisit;
 
   function googleSignOn() {
     FirebaseAuth.useGoogleSignIn().then((user) => {
@@ -35,6 +37,10 @@ const SignIn = () => {
       nextRouter.push("/home");
     }
   }, [user]);
+
+  useEffect(() => {
+    logPageVisit("Sign In");
+  }, []);
 
   return (
     <div className="page sign-on-page">
