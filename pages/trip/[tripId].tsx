@@ -8,19 +8,20 @@ import { TripDataContext } from "../../context/TripDataContext";
 import { UiContext } from "../../context/UiContext";
 
 import ProtectedPage from "../../components/layout/ProtectedPage";
+import PageWrapper from "../../components/layout/PageWrapper";
 import MainContent from "../../components/layout/MainContent";
+import Loading from "../loading";
 import Header from "../../components/trip/Header";
 import EditTripBtn from "../../components/trip/EditTripBtn";
 import EditTripModal from "../../components/trip/EditTripModal";
-import PageWrapper from "../../components/layout/PageWrapper";
 import GetSplitFloatingBtn from "../../components/trip/GetSplitFloatingBtn";
 import SectionTitle from "../../components/core/SectionTitle";
 import PersonListView from "../../components/trip/PersonListView";
-import AddPersonModal from "../../components/trip/AddPersonModal";
-import AddActivityModal from "../../components/trip/AddActivityModal";
 import ActivityListView from "../../components/trip/ActivityListView";
-import Loading from "../loading";
+import AddPersonModal from "../../components/trip/AddPersonModal";
 import EditPersonModal from "../../components/trip/EditPersonModal";
+import AddActivityModal from "../../components/trip/AddActivityModal";
+import EditActivityModal from "../../components/trip/EditActivityModal";
 import GetSplitModal from "../../components/trip/GetSplitModal";
 
 const Trip = () => {
@@ -63,6 +64,7 @@ const Trip = () => {
       <AddPersonModal />
       <EditPersonModal />
       <AddActivityModal />
+      <EditActivityModal />
       <GetSplitModal />
 
       <PageWrapper>

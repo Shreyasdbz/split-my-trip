@@ -53,11 +53,8 @@ const EditPersonModal = () => {
       currentPersonEdit &&
       currentActiveTrip.owned === true
     ) {
-      // error checking
-      if (nameInput.length > 0) {
-        editPersonDataHandler({ action: "DELETE" }, currentPersonEdit);
-        editPersonUiHandler({ action: "CLOSE" });
-      }
+      editPersonDataHandler({ action: "DELETE" }, currentPersonEdit);
+      editPersonUiHandler({ action: "CLOSE" });
     }
   }
 

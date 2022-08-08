@@ -11,6 +11,8 @@ const ActivityListView = () => {
   const currentActiveModal = useContext(UiContext).currentModalActive;
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
   const getPersonFunction = useContext(TripDataContext).getPersonById;
+  const editActivityUiHandler = useContext(UiContext).handleEditActivity;
+  const editActivityDataHandler = useContext(TripDataContext).editActivity;
 
   useEffect(() => {}, [currentActiveModal]);
 
@@ -37,6 +39,10 @@ const ActivityListView = () => {
                 }25`,
               }}
               className="hoverTransformZ w-full rounded-lg text-white font-semibold px-4 py-2"
+              onClick={() => {
+                editActivityDataHandler({ action: "OPEN" }, activity.id);
+                editActivityUiHandler({ action: "OPEN" });
+              }}
             >
               {/* top row */}
               <div className="w-full my-2" />
