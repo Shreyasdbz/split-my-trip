@@ -15,6 +15,7 @@ import TextInputField from "../core/TextInputField";
 import NumberInputField from "../core/NumberInputField";
 import NoModifySharedBanner from "./noModifySharedBanner";
 import DropDownPicker from "../core/DropDownPicker";
+import ToggleList from "./ToggleList";
 
 const AddActivityModal = () => {
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
@@ -23,12 +24,15 @@ const AddActivityModal = () => {
 
   const [titleInput, setTitleInput] = useState(getRandomPersonName());
   const [costInput, setCostInput] = useState<number>(getRandomCost());
-  const [personItemList, setPersonItemList] = useState<IDropDownItem[]>(
-    convertPersonToItemList()
-  );
   const [payerIdInput, setPayerIdInput] = useState<string>(
     selectRandomPayerId()
   );
+  const [personItemList, setPersonItemList] = useState<IDropDownItem[]>(
+    convertPersonToItemList()
+  );
+  const [participantItemList, setParticipantItemList] = useState<
+    IToggleListItem[]
+  >(convertToParticipantItemList());
 
   function close() {
     newActivityUiHandler({ action: "CLOSE" });
@@ -77,11 +81,44 @@ const AddActivityModal = () => {
     setPersonItemList(convertPersonToItemList());
   }
 
+  interface IToggleListItem {
+    id: string;
+    description: string;
+    currentState: boolean;
+    isDisabled?: boolean;
+  }
+  function convertToParticipantItemList(): IToggleListItem[] {
+    const itemList: IToggleListItem[] = [];
+    if (!currentActiveTrip || !currentActiveTrip.personList) return itemList;
+    for (let p of currentActiveTrip.personList) {
+      itemList.push({
+        id: p.id,
+        description: p.name,
+        currentState: true,
+      });
+    }
+    return itemList;
+  }
+
+  function handleParticipantToggle(id: string) {
+    if (participantItemList.length > 0) {
+      let tempList: IToggleListItem[] = [];
+      for (let i of participantItemList) {
+        if (i.id === id) {
+          i.currentState = !i.currentState;
+        }
+        tempList.push(i);
+      }
+      setParticipantItemList(tempList);
+    }
+  }
+
   useEffect(() => {
     setTitleInput(getRandomPersonName());
     setCostInput(getRandomCost());
     setPayerIdInput(selectRandomPayerId());
     setPersonItemList(convertPersonToItemList());
+    setParticipantItemList(convertToParticipantItemList());
   }, [currentActiveModal]);
 
   if (currentActiveModal === "ADD_ACTIVITY") {
@@ -119,6 +156,16 @@ const AddActivityModal = () => {
             itemList={personItemList}
             currentSelectedId={payerIdInput}
             onPick={handlePayerSelect}
+          />
+        </InputWrapper>
+        <InputWrapper
+          inputType={"DROPDOWN"}
+          captionText={"participants"}
+          compact={false}
+        >
+          <ToggleList
+            items={participantItemList}
+            onItemToggle={handleParticipantToggle}
           />
         </InputWrapper>
         <NoModifySharedBanner />

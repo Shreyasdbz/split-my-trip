@@ -54,7 +54,7 @@ const DropDownPicker = ({
             return (
               <button
                 key={i.id}
-                className={`hoverTransformScale pl-2 ${
+                className={`hoverTransformScale pl-2 text-left ${
                   currentSelectedId === i.id ? "font-semibold" : "font-light"
                 }`}
                 onClick={() => {
