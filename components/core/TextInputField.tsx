@@ -25,7 +25,7 @@ const TextInputField = ({
 
   useEffect(() => {
     errorTextHandler(text);
-  }, []);
+  }, [text]);
 
   return (
     <div className="w-full">

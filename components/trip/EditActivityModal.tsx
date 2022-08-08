@@ -200,7 +200,7 @@ const EditActivityModal = () => {
     setPayerIdInput(getPayerId());
     setPersonItemList(getPersonItemList());
     setParticipantItemList(getParticipantItemList());
-  }, [currentActivityEditId]);
+  }, [currentActivityEditId, currentActiveModal]);
 
   if (currentActiveModal === "EDIT_ACTIVITY") {
     return (

@@ -47,7 +47,7 @@ const GetSplitModal = () => {
         </ModalTitle>
         {/* Cost */}
         <div className="w-full flex flex-col items-center justify-center text-gray-600">
-          <span>Total cost of the trip:</span>
+          <span>Total cost:</span>
           <span className="font-semibold">
             ${SplitsCalculationLib.roundAmount(totalCost)}
           </span>

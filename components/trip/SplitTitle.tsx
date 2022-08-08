@@ -97,7 +97,7 @@ const SplitTile = ({ splitPerson }: ISplitTile) => {
 
         {/* Transaction list */}
         {splitPerson.transactions.length > 0 ? (
-          <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-2">
+          <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-2 gap-1">
             {splitPerson.transactions.map((t) => {
               return (
                 <TransactionRow
@@ -112,7 +112,7 @@ const SplitTile = ({ splitPerson }: ISplitTile) => {
           </div>
         ) : (
           <div className="flex flex-col bg-white w-full items-start justify-center px-2 py-4">
-            <span>{"No transactions to make here :)"}</span>
+            <span>{"No transactions to make :)"}</span>
           </div>
         )}
       </div>
