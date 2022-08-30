@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     resetAllCurrentFunction();
-  }, []);
+  }, [resetAllCurrentFunction]);
 
   return (
     <ProtectedPage>

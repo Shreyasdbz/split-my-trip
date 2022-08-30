@@ -6,8 +6,8 @@ import { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from "../lib/firebase/config";
-import { FirebaseDb } from "../lib/firebase/db";
+import { firebaseConfigLib } from "../lib/firebase/config";
+import { firbaseDbLib } from "../lib/firebase/db";
 import { StorageQueue } from "../lib/StorageQueue";
 
 import { getSampleTripData } from "../lib/util/sampleData";
@@ -61,7 +61,7 @@ interface ITripDataContextProvider {
 }
 const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   const nextRouter = useRouter();
-  const [user] = useAuthState(FirebaseConfig.auth);
+  const [user] = useAuthState(firebaseConfigLib.auth);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [trips, setTrips] = useState<ITripData[]>([]);
   const [currentTrip, setCurrentTrip] = useState<ITripData | null>(null);
@@ -94,8 +94,9 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   async function _populateTripsData() {
     const tripsStorageQueue = new StorageQueue();
     if (user) {
-      FirebaseDb.getUserDocData("_populateTripsData() :: 1", user).then(
-        async (userDoc) => {
+      firbaseDbLib
+        .getUserDocData("_populateTripsData() :: 1", user)
+        .then(async (userDoc) => {
           // get owned and shared trip IDs from user doc
           let userData = userDoc.data();
           if (userData) {
@@ -104,7 +105,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
 
             // get trip info for each owned and shared trip ids
             for (let i of ownedTripIds) {
-              await FirebaseDb.getTripDoc("_populateTripsData() :: 2", i)
+              await firbaseDbLib
+                .getTripDoc("_populateTripsData() :: 2", i)
                 .then((tripDoc) => {
                   let data = tripDoc.data();
                   if (data) {
@@ -126,7 +128,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 .catch((err) => console.error(err));
             }
             for (let i of sharedTripIds) {
-              await FirebaseDb.getTripDoc("_populateTripsData() :: 3", i)
+              await firbaseDbLib
+                .getTripDoc("_populateTripsData() :: 3", i)
                 .then((tripDoc) => {
                   let data = tripDoc.data();
                   if (data) {
@@ -149,8 +152,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
             }
             setTrips(tripsStorageQueue.getAllItems().reverse());
           }
-        }
-      );
+        });
     }
   }
 
@@ -273,8 +275,9 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
    */
   async function performUserLogin(loginUser: User) {
     setCurrentUser(loginUser);
-    FirebaseDb.checkIfUserExists("performUserLogin() :: 1", loginUser).then(
-      (exists) => {
+    firbaseDbLib
+      .checkIfUserExists("performUserLogin() :: 1", loginUser)
+      .then((exists) => {
         if (!exists) {
           // new users
           let sampleUid1 = uuidv4();
@@ -295,25 +298,18 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
             sharedTrips: [],
           };
 
-          FirebaseDb.createUserDocData(
-            "performUserLogin() :: 2",
-            loginUser,
-            newUserDoc
-          )
+          firbaseDbLib
+            .createUserDocData("performUserLogin() :: 2", loginUser, newUserDoc)
             .then(() => {
               setCurrentUser(loginUser);
-              FirebaseDb.createTripDoc(
-                "performUserLogin() :: 3",
-                sampleTrips[0]
-              ).catch((err) => console.error(err));
-              FirebaseDb.createTripDoc(
-                "performUserLogin() :: 4",
-                sampleTrips[1]
-              ).catch((err) => console.error(err));
-              FirebaseDb.createTripDoc(
-                "performUserLogin() :: 5",
-                sampleTrips[2]
-              )
+              firbaseDbLib
+                .createTripDoc("performUserLogin() :: 3", sampleTrips[0])
+                .catch((err) => console.error(err));
+              firbaseDbLib
+                .createTripDoc("performUserLogin() :: 4", sampleTrips[1])
+                .catch((err) => console.error(err));
+              firbaseDbLib
+                .createTripDoc("performUserLogin() :: 5", sampleTrips[2])
                 .then(() => {
                   sampleTrips[0].owned = true;
                   sampleTrips[1].owned = true;
@@ -335,8 +331,7 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
           // existing currentUser
           _populateTripsData().catch((err) => console.error(err));
         }
-      }
-    );
+      });
   }
 
   /**
@@ -361,13 +356,14 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     );
     // createTripDoc()
     // create new trip document and upload it
-    await FirebaseDb.createTripDoc("addNewTrip() :: 1", newTrip).catch((err) =>
-      console.error(err)
-    );
+    await firbaseDbLib
+      .createTripDoc("addNewTrip() :: 1", newTrip)
+      .catch((err) => console.error(err));
     // getUserDoc()
     // get the user documen to modify owned Trips
     currentUser &&
-      (await FirebaseDb.getUserDocData("addNewTrip() :: 2", currentUser)
+      (await firbaseDbLib
+        .getUserDocData("addNewTrip() :: 2", currentUser)
         .then(async (userDoc) => {
           let data = userDoc.data();
           if (data) {
@@ -381,11 +377,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
 
             // updateUserDoc()
             // upload the modified document back
-            await FirebaseDb.updateUserDocData(
-              "addNewTrip() :: 3",
-              currentUser,
-              userGet
-            )
+            await firbaseDbLib
+              .updateUserDocData("addNewTrip() :: 3", currentUser, userGet)
               .then(async () => {
                 // populateTripData()
                 // once document is created, fetch the trips
@@ -413,7 +406,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   ) {
     if (currentUser && currentTrip) {
       if (deleteTrip === true) {
-        FirebaseDb.getUserDocData("editTripDetails() :: 1", currentUser)
+        firbaseDbLib
+          .getUserDocData("editTripDetails() :: 1", currentUser)
           .then((userDoc) => {
             let data = userDoc.data();
             if (data) {
@@ -427,11 +421,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                   ownedTrips: newOwnedTrips,
                   sharedTrips: data.sharedTrips,
                 };
-                FirebaseDb.updateUserDocData(
-                  "editTripDetails() :: 2",
-                  currentUser,
-                  newUserDocData
-                )
+                firbaseDbLib
+                  .updateUserDocData(
+                    "editTripDetails() :: 2",
+                    currentUser,
+                    newUserDocData
+                  )
                   .then(() => {
                     _populateTripsData();
                     nextRouter.back();
@@ -447,11 +442,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                   ownedTrips: data.ownedTrips,
                   sharedTrips: newSharedTrips,
                 };
-                FirebaseDb.updateUserDocData(
-                  "editTripDetails() :: 3",
-                  currentUser,
-                  newUserDocData
-                )
+                firbaseDbLib
+                  .updateUserDocData(
+                    "editTripDetails() :: 3",
+                    currentUser,
+                    newUserDocData
+                  )
                   .then(() => {
                     _populateTripsData();
                     nextRouter.back();
@@ -463,7 +459,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
           .catch((err) => console.error(err));
       } else {
         // modify databse trip
-        FirebaseDb.getTripDoc("editTripDetails() :: 4", currentTrip.id)
+        firbaseDbLib
+          .getTripDoc("editTripDetails() :: 4", currentTrip.id)
           .then((tripDoc) => {
             let data = tripDoc.data();
             if (data) {
@@ -478,13 +475,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 activityList: currentTrip.activityList,
               };
               // push new details
-              FirebaseDb.updateTripDoc("editTripDetails() :: 5", newTripDoc)
+              firbaseDbLib
+                .updateTripDoc("editTripDetails() :: 5", newTripDoc)
                 .then(() => {
                   // pull updated trip doc
-                  FirebaseDb.getTripDoc(
-                    "editTripDetails() :: 6",
-                    currentTrip.id
-                  )
+                  firbaseDbLib
+                    .getTripDoc("editTripDetails() :: 6", currentTrip.id)
                     .then((updatedTripDoc) => {
                       let updatedTripDocData = updatedTripDoc.data();
                       if (updatedTripDocData) {
@@ -526,7 +522,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
       }
     } else if (useLocal === false) {
       // otherwise fetch from database
-      FirebaseDb.getTripDoc("changeCurrentTrip() :: 1", tripId)
+      firbaseDbLib
+        .getTripDoc("changeCurrentTrip() :: 1", tripId)
         .then((tripDoc) => {
           let data = tripDoc.data();
           if (data) {
@@ -558,7 +555,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   async function saveSharedTrip(tripId: string) {
     if (currentUser) {
       // get UserDoc
-      FirebaseDb.getUserDocData("saveSharedTrip() :: 1", currentUser)
+      firbaseDbLib
+        .getUserDocData("saveSharedTrip() :: 1", currentUser)
         .then((userDoc) => {
           let data = userDoc.data();
           if (data) {
@@ -571,11 +569,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
               sharedTrips: currentSharedTrips,
             };
             // update UserDoc
-            FirebaseDb.updateUserDocData(
-              "saveSharedTrip() :: 2",
-              currentUser,
-              newUserDoc
-            )
+            firbaseDbLib
+              .updateUserDocData(
+                "saveSharedTrip() :: 2",
+                currentUser,
+                newUserDoc
+              )
               .then(() => {
                 // changeCurrentTrip
                 if (currentTrip) {
@@ -619,7 +618,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
   async function addNewPerson(personName: string) {
     if (currentTrip && currentUser) {
       // get trip doc
-      FirebaseDb.getTripDoc("addNewPerson() :: 1", currentTrip.id)
+      firbaseDbLib
+        .getTripDoc("addNewPerson() :: 1", currentTrip.id)
         .then((tripDoc) => {
           let dataGet = tripDoc.data();
           if (dataGet) {
@@ -641,41 +641,41 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 currentTrip.activityList
               );
             }
-            FirebaseDb.updateTripDoc("addNewPerson() :: 2", {
-              id: currentTrip.id,
-              title: currentTrip.title,
-              ownerId: currentTrip.ownerId,
-              ownerName: currentTrip.ownerName,
-              ownerEmail: currentTrip.ownerEmail,
-              themeId: currentTrip.themeId,
-              personList: newPersonList,
-              activityList: newActivityList,
-            })
+            firbaseDbLib
+              .updateTripDoc("addNewPerson() :: 2", {
+                id: currentTrip.id,
+                title: currentTrip.title,
+                ownerId: currentTrip.ownerId,
+                ownerName: currentTrip.ownerName,
+                ownerEmail: currentTrip.ownerEmail,
+                themeId: currentTrip.themeId,
+                personList: newPersonList,
+                activityList: newActivityList,
+              })
               .then(() => {
                 // pull from database currentTrip
-                FirebaseDb.getTripDoc(
-                  "addNewPerson() :: 3",
-                  currentTrip.id
-                ).then((updatedTripDoc) => {
-                  let updatedTripDocData = updatedTripDoc.data();
-                  if (updatedTripDocData) {
-                    // find and update cached trip
-                    let newTripGet: ITripData = {
-                      id: updatedTripDocData.id,
-                      title: updatedTripDocData.title,
-                      owned: true,
-                      tripSaved: true,
-                      ownerId: updatedTripDocData.ownerId,
-                      ownerName: updatedTripDocData.ownerName,
-                      ownerEmail: updatedTripDocData.ownerEmail,
-                      themeId: updatedTripDocData.themeId,
-                      personList: updatedTripDocData.personList,
-                      activityList: updatedTripDocData.activityList,
-                    };
-                    _replaceCachedTrip(newTripGet);
-                    setCurrentTrip(newTripGet);
-                  }
-                });
+                firbaseDbLib
+                  .getTripDoc("addNewPerson() :: 3", currentTrip.id)
+                  .then((updatedTripDoc) => {
+                    let updatedTripDocData = updatedTripDoc.data();
+                    if (updatedTripDocData) {
+                      // find and update cached trip
+                      let newTripGet: ITripData = {
+                        id: updatedTripDocData.id,
+                        title: updatedTripDocData.title,
+                        owned: true,
+                        tripSaved: true,
+                        ownerId: updatedTripDocData.ownerId,
+                        ownerName: updatedTripDocData.ownerName,
+                        ownerEmail: updatedTripDocData.ownerEmail,
+                        themeId: updatedTripDocData.themeId,
+                        personList: updatedTripDocData.personList,
+                        activityList: updatedTripDocData.activityList,
+                      };
+                      _replaceCachedTrip(newTripGet);
+                      setCurrentTrip(newTripGet);
+                    }
+                  });
               })
               .catch((err) => console.error(err));
           }
@@ -701,7 +701,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     } else if (action === "SAVE") {
       if (currentTrip && currentPersonEditId && newName) {
         // get Trip doc
-        FirebaseDb.getTripDoc("editPerson() :: 1", currentTrip.id)
+        firbaseDbLib
+          .getTripDoc("editPerson() :: 1", currentTrip.id)
           .then((tripDoc) => {
             let tripDocData = tripDoc.data();
             if (tripDocData) {
@@ -734,10 +735,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 );
               }
               // push updated trip doc
-              FirebaseDb.updateTripDoc("editPerson() :: 2", pulledTrip)
+              firbaseDbLib
+                .updateTripDoc("editPerson() :: 2", pulledTrip)
                 .then(() => {
                   // pul updated trip doc
-                  FirebaseDb.getTripDoc("editPerson() :: 3", currentTrip.id)
+                  firbaseDbLib
+                    .getTripDoc("editPerson() :: 3", currentTrip.id)
                     .then((updatedTripDoc) => {
                       let updatedTripDocData = updatedTripDoc.data();
                       if (updatedTripDocData) {
@@ -769,7 +772,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     } else if (action === "DELETE") {
       if (currentTrip && currentPersonEditId) {
         // get Trip doc
-        FirebaseDb.getTripDoc("editPerson() :: 1", currentTrip.id)
+        firbaseDbLib
+          .getTripDoc("editPerson() :: 1", currentTrip.id)
           .then((tripDoc) => {
             let tripDocData = tripDoc.data();
             if (tripDocData) {
@@ -800,10 +804,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
                 );
               }
               // push updated trip doc
-              FirebaseDb.updateTripDoc("editPerson() :: 2", pulledTrip)
+              firbaseDbLib
+                .updateTripDoc("editPerson() :: 2", pulledTrip)
                 .then(() => {
                   // pul updated trip doc
-                  FirebaseDb.getTripDoc("editPerson() :: 3", currentTrip.id)
+                  firbaseDbLib
+                    .getTripDoc("editPerson() :: 3", currentTrip.id)
                     .then((updatedTripDoc) => {
                       let updatedTripDocData = updatedTripDoc.data();
                       if (updatedTripDocData) {
@@ -849,7 +855,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     if (!currentTrip || !currentUser) return;
 
     // Step 1: Get Trip Doc
-    FirebaseDb.getTripDoc("addActivity() :: 1", currentTrip.id)
+    firbaseDbLib
+      .getTripDoc("addActivity() :: 1", currentTrip.id)
       .then((tripDoc) => {
         let data = tripDoc.data();
         if (!data) return;
@@ -867,19 +874,21 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
         };
         newActivityList.push(newActivity);
         // Step 3 : upload data
-        FirebaseDb.updateTripDoc("addActivity() :: 2", {
-          id: currentTrip.id,
-          title: currentTrip.title,
-          ownerId: currentTrip.ownerId,
-          ownerName: currentTrip.ownerName,
-          ownerEmail: currentTrip.ownerEmail,
-          themeId: currentTrip.themeId,
-          personList: currentTrip.personList,
-          activityList: newActivityList,
-        })
+        firbaseDbLib
+          .updateTripDoc("addActivity() :: 2", {
+            id: currentTrip.id,
+            title: currentTrip.title,
+            ownerId: currentTrip.ownerId,
+            ownerName: currentTrip.ownerName,
+            ownerEmail: currentTrip.ownerEmail,
+            themeId: currentTrip.themeId,
+            personList: currentTrip.personList,
+            activityList: newActivityList,
+          })
           .then(() => {
             // Step 4: pull from database
-            FirebaseDb.getTripDoc("addActivity() :: 3", currentTrip.id)
+            firbaseDbLib
+              .getTripDoc("addActivity() :: 3", currentTrip.id)
               .then((updatedTripDoc) => {
                 let dataUpdated = updatedTripDoc.data();
                 if (!dataUpdated) return;
@@ -934,7 +943,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
       )
         return;
       // get trip doc
-      FirebaseDb.getTripDoc("editActivity() :: 1", currentTrip.id)
+      firbaseDbLib
+        .getTripDoc("editActivity() :: 1", currentTrip.id)
         .then((tripDoc) => {
           let data = tripDoc.data();
           if (!data) return;
@@ -960,10 +970,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
             }
           }
           // push to database
-          FirebaseDb.updateTripDoc("editActivity() :: 2", pulledTrip)
+          firbaseDbLib
+            .updateTripDoc("editActivity() :: 2", pulledTrip)
             .then(() => {
               // pull updated trip doc
-              FirebaseDb.getTripDoc("editActivity() :: 3", currentTrip.id)
+              firbaseDbLib
+                .getTripDoc("editActivity() :: 3", currentTrip.id)
                 .then((updatedTripDoc) => {
                   let dataUpdated = updatedTripDoc.data();
                   if (!dataUpdated) return;
@@ -992,7 +1004,8 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
     } else if (action === "DELETE") {
       if (!currentTrip || !currentActivityEditId) return;
       // get TripDoc
-      FirebaseDb.getTripDoc("editActivity() :: 4", currentTrip.id)
+      firbaseDbLib
+        .getTripDoc("editActivity() :: 4", currentTrip.id)
         .then((tripDoc) => {
           let data = tripDoc.data();
           if (!data) return;
@@ -1015,10 +1028,12 @@ const TripDataContextProvider = ({ children }: ITripDataContextProvider) => {
           }
           pulledTrip.activityList = tempActivityList;
           // push updated trip doc
-          FirebaseDb.updateTripDoc("editActivity() :: 5", pulledTrip)
+          firbaseDbLib
+            .updateTripDoc("editActivity() :: 5", pulledTrip)
             .then(() => {
               // pull updated trip doc
-              FirebaseDb.getTripDoc("editActivity :: 6", currentTrip.id)
+              firbaseDbLib
+                .getTripDoc("editActivity :: 6", currentTrip.id)
                 .then((updatedTripDoc) => {
                   let dataUpdated = updatedTripDoc.data();
                   if (!dataUpdated) return;

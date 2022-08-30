@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
-import { FirebaseAuth } from "../../lib/firebase/auth";
+import { firebaseAuthLib } from "../../lib/firebase/auth";
 
 import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
@@ -29,7 +29,7 @@ const UserSettingsModal = () => {
 
   function signOut() {
     dimissAll();
-    FirebaseAuth.useSignOut();
+    firebaseAuthLib.useSignOut();
   }
 
   if (currentActiveModal === "USER_SETTINGS") {

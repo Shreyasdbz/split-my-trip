@@ -2,10 +2,10 @@
 import { useEffect, useContext } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { FirebaseAuth } from "../lib/firebase/auth";
+import { firebaseAuthLib } from "../lib/firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from "../lib/firebase/config";
+import { firebaseConfigLib } from "../lib/firebase/config";
 
 import { TripDataContext } from "../context/TripDataContext";
 import { AnalyticsContext } from "../context/AnalyticsContext";
@@ -17,17 +17,17 @@ import appleLogo from "../public/assets/apple-logo.png";
 
 const SignIn = () => {
   const nextRouter = useRouter();
-  const [user, loading, error] = useAuthState(FirebaseConfig.auth);
+  const [user, loading, error] = useAuthState(firebaseConfigLib.auth);
   const performUserLogin = useContext(TripDataContext).performUserLogin;
   const logPageVisit = useContext(AnalyticsContext).logPageVisit;
 
   function googleSignOn() {
-    FirebaseAuth.useGoogleSignIn().then((user) => {
+    firebaseAuthLib.useGoogleSignIn().then((user) => {
       user && performUserLogin(user);
     });
   }
   function appleSignOn() {
-    FirebaseAuth.useAppleSignIn().then((user) => {
+    firebaseAuthLib.useAppleSignIn().then((user) => {
       user && performUserLogin(user);
     });
   }
@@ -36,11 +36,11 @@ const SignIn = () => {
     if (user) {
       nextRouter.push("/home");
     }
-  }, [user]);
+  }, [user, nextRouter]);
 
   useEffect(() => {
     logPageVisit("Sign In");
-  }, []);
+  }, [logPageVisit]);
 
   return (
     <div className="page sign-on-page">
@@ -81,7 +81,7 @@ const SignIn = () => {
           >
             <div className="flex flex-row items-center justify-between gap-6">
               <div className="w-8 h-8 relative">
-                <Image src={googleLogo} layout={"fill"} />
+                <Image alt="google logo" src={googleLogo} layout={"fill"} />
               </div>
               <span className="font-lg font-semibold">Sign in with Google</span>
             </div>
@@ -94,7 +94,7 @@ const SignIn = () => {
           >
             <div className="flex flex-row items-center justify-between gap-6">
               <div className="w-8 h-8 relative">
-                <Image src={appleLogo} layout={"fill"} />
+                <Image alt="apple logo" src={appleLogo} layout={"fill"} />
               </div>
               <span className="font-lg font-semibold">Sign in with Apple</span>
             </div>

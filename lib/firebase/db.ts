@@ -2,10 +2,10 @@
 import { User } from "firebase/auth";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
-import { FirebaseConfig } from "./config";
+import { firebaseConfigLib } from "./config";
 
-const usersCollectionRef = collection(FirebaseConfig.firestore, "users");
-const tripsCollectionRef = collection(FirebaseConfig.firestore, "trips");
+const usersCollectionRef = collection(firebaseConfigLib.firestore, "users");
+const tripsCollectionRef = collection(firebaseConfigLib.firestore, "trips");
 
 const CONSOLE_LOG_CALLS: boolean = false;
 
@@ -121,7 +121,7 @@ async function updateTripDoc(
   }
 }
 
-export const FirebaseDb = {
+export const firbaseDbLib = {
   checkIfUserExists,
   getUserDocData,
   createUserDocData,

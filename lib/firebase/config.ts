@@ -32,7 +32,7 @@ const firebaseApp =
 const firebaseAuth = getAuth(firebaseApp);
 const firebaseFirestore = getFirestore(firebaseApp);
 
-export const FirebaseConfig = {
+export const firebaseConfigLib = {
   app: firebaseApp,
   auth: firebaseAuth,
   firestore: firebaseFirestore,

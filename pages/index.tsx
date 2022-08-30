@@ -1,23 +1,23 @@
 /** @format */
 
-import { useEffect } from 'react';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useEffect } from "react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from '../lib/firebase/config';
+import { firebaseConfigLib } from "../lib/firebase/config";
 
 const Landing: NextPage = () => {
   const nextRouter = useRouter();
-  const [user, loading, error] = useAuthState(FirebaseConfig.auth);
+  const [user, loading, error] = useAuthState(firebaseConfigLib.auth);
 
   useEffect(() => {
     if (!user) {
-      nextRouter.push('/signin');
+      nextRouter.push("/signin");
     } else {
-      nextRouter.push('/home');
+      nextRouter.push("/home");
     }
-  }, [user]);
+  }, [user, nextRouter]);
 
   return <></>;
 };

@@ -4,7 +4,7 @@ import { useState, createContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { Analytics } from "firebase/analytics";
 
-import { FirebaseConfig } from "../lib/firebase/config";
+import { firebaseConfigLib } from "../lib/firebase/config";
 
 interface IAnalyticsContext {
   analyticsApp: Analytics | null;
@@ -20,15 +20,15 @@ const AnalyticsContextProvider = ({ children }: IAnalyticsContextProvider) => {
   const [analyticsApp, setAnalyticsApp] = useState<Analytics | null>(null);
 
   function initialize() {
-    const app = FirebaseConfig.analytics.initializeAnalytics(
-      FirebaseConfig.app
+    const app = firebaseConfigLib.analytics.initializeAnalytics(
+      firebaseConfigLib.app
     );
     setAnalyticsApp(app);
   }
 
   function logPageVisit(pageName: string) {
     if (analyticsApp) {
-      FirebaseConfig.analytics.logEvent(analyticsApp, "page_view", {
+      firebaseConfigLib.analytics.logEvent(analyticsApp, "page_view", {
         pageName: pageName,
       });
     }
@@ -36,7 +36,7 @@ const AnalyticsContextProvider = ({ children }: IAnalyticsContextProvider) => {
 
   function logTripCreated(tripName: string) {
     if (analyticsApp) {
-      FirebaseConfig.analytics.logEvent(analyticsApp, "trip_created", {
+      firebaseConfigLib.analytics.logEvent(analyticsApp, "trip_created", {
         tripName: tripName,
       });
     }
@@ -44,7 +44,7 @@ const AnalyticsContextProvider = ({ children }: IAnalyticsContextProvider) => {
 
   function logPersonAdded(personName: string) {
     if (analyticsApp) {
-      FirebaseConfig.analytics.logEvent(analyticsApp, "person_added", {
+      firebaseConfigLib.analytics.logEvent(analyticsApp, "person_added", {
         personName: personName,
       });
     }
