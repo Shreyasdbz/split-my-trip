@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import { UiContext } from "../../context/UiContext";
 import { TripDataContext } from "../../context/TripDataContext";
-import { firebaseAuthLib } from "../../lib/firebase/auth";
+import { firebaseLib } from "../../lib/firebase";
 
 import Modal from "../core/Modal";
 import ModalTitle from "../core/ModalTitle";
@@ -29,7 +29,7 @@ const UserSettingsModal = () => {
 
   function signOut() {
     dimissAll();
-    firebaseAuthLib.useSignOut();
+    firebaseLib.auth.useSignOut();
   }
 
   if (currentActiveModal === "USER_SETTINGS") {
@@ -54,6 +54,7 @@ const UserSettingsModal = () => {
           <a
             href="https://www.github.com/shreyasdbz/split-my-trip"
             target={"_blank"}
+            rel="noreferrer"
           >
             <PillButton
               text="Info"

@@ -9,7 +9,6 @@ import { TripDataContext } from "../../context/TripDataContext";
 import { getColorById } from "../../lib/util/theme";
 
 const PersonListView = () => {
-  const currentActiveModal = useContext(UiContext).currentModalActive;
   const editPersonUiHandler = useContext(UiContext).handleEditPerson;
   const editPersonDataHandler = useContext(TripDataContext).editPerson;
   const currentActiveTrip = useContext(TripDataContext).currentTrip;
@@ -63,7 +62,7 @@ const PersonListView = () => {
     return (
       <div className="w-full flex flex-col items-center justify-center my-4 text-gray-500 font-light">
         <span>To add people,</span>
-        <span>use the "ADD +" button</span>
+        <span>use the `&quot;`ADD +`&quot;` button</span>
       </div>
     );
   }

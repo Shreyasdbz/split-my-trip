@@ -1,9 +1,8 @@
 /** @format */
 
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 
 import { TripDataContext } from "../../context/TripDataContext";
-import { UiContext } from "../../context/UiContext";
 
 import { getColorById } from "../../lib/util/theme";
 

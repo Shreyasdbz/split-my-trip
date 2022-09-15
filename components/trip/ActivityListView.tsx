@@ -104,7 +104,7 @@ const ActivityListView = () => {
     return (
       <div className="w-full flex flex-col items-center justify-center my-2 text-gray-500 font-light">
         <span>To add activities,</span>
-        <span>use the "ADD +" button</span>
+        <span>use the `&quot;`ADD +`&quot;` button</span>
       </div>
     );
   }

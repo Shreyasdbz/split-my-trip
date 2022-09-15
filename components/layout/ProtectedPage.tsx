@@ -3,7 +3,7 @@
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from "../../lib/firebase/config";
+import { firebaseLib } from "../../lib/firebase";
 
 import Loading from "../../pages/loading";
 import Error from "../../pages/error";
@@ -13,7 +13,7 @@ interface IProtectedPage {
 }
 const ProtectedPage = ({ children }: IProtectedPage) => {
   const nextRouter = useRouter();
-  const [user, loading, error] = useAuthState(FirebaseConfig.auth);
+  const [user, loading, error] = useAuthState(firebaseLib.config.firebaseAuth);
 
   if (loading) {
     return <Loading />;

@@ -11,7 +11,7 @@ const NoModifySharedBanner = () => {
     <div className="w-full flex items-center justify-center my-3">
       {currentActiveTrip && currentActiveTrip.owned === false ? (
         <span className="bg-gray-200 font-semibold text-gray-600 px-4 py-1 rounded-lg text-sm md:text-md">
-          can't modify shared trips
+          can`&apos;`t modify shared trips
         </span>
       ) : (
         <></>

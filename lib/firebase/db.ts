@@ -1,11 +1,10 @@
 /** @format */
 import { User } from "firebase/auth";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { firebaseFirestore } from "./config";
 
-import { firebaseConfigLib } from "./config";
-
-const usersCollectionRef = collection(firebaseConfigLib.firestore, "users");
-const tripsCollectionRef = collection(firebaseConfigLib.firestore, "trips");
+const usersCollectionRef = collection(firebaseFirestore, "users");
+const tripsCollectionRef = collection(firebaseFirestore, "trips");
 
 const CONSOLE_LOG_CALLS: boolean = false;
 
@@ -14,7 +13,7 @@ const CONSOLE_LOG_CALLS: boolean = false;
  * @param user
  * @returns
  */
-async function checkIfUserExists(callIdentifier: string, user: User) {
+export async function checkIfUserExists(callIdentifier: string, user: User) {
   if (CONSOLE_LOG_CALLS === true)
     console.log(`checkIfUserExists() called with: ${callIdentifier}`);
   const userDocRef = doc(usersCollectionRef, user.uid);
@@ -33,7 +32,7 @@ async function checkIfUserExists(callIdentifier: string, user: User) {
  * @param userDocData
  * @returns
  */
-async function createUserDocData(
+export async function createUserDocData(
   callIdentifier: string,
   user: User,
   userDocData: IUserDoc
@@ -49,7 +48,7 @@ async function createUserDocData(
  * @param user
  * @returns
  */
-async function getUserDocData(callIdentifier: string, user: User) {
+export async function getUserDocData(callIdentifier: string, user: User) {
   if (CONSOLE_LOG_CALLS === true)
     console.log(`getUserDocData() called with: ${callIdentifier}`);
   const userDocRef = doc(usersCollectionRef, user.uid);
@@ -62,7 +61,7 @@ async function getUserDocData(callIdentifier: string, user: User) {
  * @param userDocData
  * @returns
  */
-async function updateUserDocData(
+export async function updateUserDocData(
   callIdentifier: string,
   user: User,
   userDocData: IUserDoc,
@@ -83,7 +82,10 @@ async function updateUserDocData(
  * @param tripDocData
  * @returns
  */
-async function createTripDoc(callIdentifier: string, tripDocData: ITripData) {
+export async function createTripDoc(
+  callIdentifier: string,
+  tripDocData: ITripData
+) {
   if (CONSOLE_LOG_CALLS === true)
     console.log(`createTripDoc() called with: ${callIdentifier}`);
   const tripDocRef = doc(tripsCollectionRef, tripDocData.id);
@@ -95,7 +97,7 @@ async function createTripDoc(callIdentifier: string, tripDocData: ITripData) {
  * @param tripDocId
  * @returns
  */
-async function getTripDoc(callIdentifier: string, tripDocId: string) {
+export async function getTripDoc(callIdentifier: string, tripDocId: string) {
   if (CONSOLE_LOG_CALLS === true)
     console.log(`getTripDoc() called with: ${callIdentifier}`);
   const tripDocRef = doc(tripsCollectionRef, tripDocId);
@@ -107,7 +109,7 @@ async function getTripDoc(callIdentifier: string, tripDocId: string) {
  * @param tripDocData
  * @returns
  */
-async function updateTripDoc(
+export async function updateTripDoc(
   callIdentifier: string,
   tripDocData: ITripData,
   deleteDoc?: boolean
@@ -120,13 +122,3 @@ async function updateTripDoc(
   } else {
   }
 }
-
-export const firbaseDbLib = {
-  checkIfUserExists,
-  getUserDocData,
-  createUserDocData,
-  updateUserDocData,
-  getTripDoc,
-  createTripDoc,
-  updateTripDoc,
-};

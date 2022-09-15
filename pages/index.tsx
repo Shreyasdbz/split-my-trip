@@ -5,11 +5,11 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { firebaseConfigLib } from "../lib/firebase/config";
+import { firebaseLib } from "../lib/firebase";
 
 const Landing: NextPage = () => {
   const nextRouter = useRouter();
-  const [user, loading, error] = useAuthState(firebaseConfigLib.auth);
+  const [user, loading, error] = useAuthState(firebaseLib.config.firebaseAuth);
 
   useEffect(() => {
     if (!user) {

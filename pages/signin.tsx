@@ -2,10 +2,8 @@
 import { useEffect, useContext } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { firebaseAuthLib } from "../lib/firebase/auth";
+import { firebaseLib } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-import { firebaseConfigLib } from "../lib/firebase/config";
 
 import { TripDataContext } from "../context/TripDataContext";
 import { AnalyticsContext } from "../context/AnalyticsContext";
@@ -17,17 +15,17 @@ import appleLogo from "../public/assets/apple-logo.png";
 
 const SignIn = () => {
   const nextRouter = useRouter();
-  const [user, loading, error] = useAuthState(firebaseConfigLib.auth);
+  const [user, loading, error] = useAuthState(firebaseLib.config.firebaseAuth);
   const performUserLogin = useContext(TripDataContext).performUserLogin;
   const logPageVisit = useContext(AnalyticsContext).logPageVisit;
 
   function googleSignOn() {
-    firebaseAuthLib.useGoogleSignIn().then((user) => {
+    firebaseLib.auth.useGoogleSignIn().then((user) => {
       user && performUserLogin(user);
     });
   }
   function appleSignOn() {
-    firebaseAuthLib.useAppleSignIn().then((user) => {
+    firebaseLib.auth.useAppleSignIn().then((user) => {
       user && performUserLogin(user);
     });
   }

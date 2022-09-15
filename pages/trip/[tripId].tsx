@@ -3,7 +3,7 @@ import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { FirebaseConfig } from "../../lib/firebase/config";
+import { firebaseLib } from "../../lib/firebase";
 import { TripDataContext } from "../../context/TripDataContext";
 import { UiContext } from "../../context/UiContext";
 
@@ -27,7 +27,7 @@ import GetSplitModal from "../../components/trip/GetSplitModal";
 const Trip = () => {
   const nextRouter = useRouter();
   const { tripId } = nextRouter.query;
-  const [user, loading] = useAuthState(FirebaseConfig.auth);
+  const [user, loading] = useAuthState(firebaseLib.config.firebaseAuth);
 
   const allTrips = useContext(TripDataContext).trips;
   const currentTrip = useContext(TripDataContext).currentTrip;

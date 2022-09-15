@@ -3,7 +3,6 @@
 import { initializeApp, FirebaseOptions, getApp, getApps } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import * as analytics from "firebase/analytics";
 
 // Get env variables
 function getConfigEnvs(): FirebaseOptions {
@@ -27,14 +26,7 @@ function getConfigEnvs(): FirebaseOptions {
   };
 }
 
-const firebaseApp =
+export const firebaseApp =
   getApps().length > 0 ? getApp() : initializeApp(getConfigEnvs());
-const firebaseAuth = getAuth(firebaseApp);
-const firebaseFirestore = getFirestore(firebaseApp);
-
-export const firebaseConfigLib = {
-  app: firebaseApp,
-  auth: firebaseAuth,
-  firestore: firebaseFirestore,
-  analytics: analytics,
-};
+export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseFirestore = getFirestore(firebaseApp);

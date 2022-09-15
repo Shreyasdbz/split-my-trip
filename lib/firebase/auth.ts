@@ -7,16 +7,16 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { firebaseConfigLib } from "./config";
+import { firebaseAuth } from "./config";
 
 /**
  *
  * @returns
  */
-async function useGoogleSignIn() {
+export async function useGoogleSignIn() {
   try {
     let provider = new GoogleAuthProvider();
-    const res = await signInWithPopup(firebaseConfigLib.auth, provider);
+    const res = await signInWithPopup(firebaseAuth, provider);
     return res.user;
   } catch (err) {
     console.error(err);
@@ -27,10 +27,10 @@ async function useGoogleSignIn() {
  *
  * @returns
  */
-async function useAppleSignIn() {
+export async function useAppleSignIn() {
   try {
     let provider = new OAuthProvider("apple.com");
-    const res = await signInWithPopup(firebaseConfigLib.auth, provider);
+    const res = await signInWithPopup(firebaseAuth, provider);
     return res.user;
   } catch (err) {
     console.error(err);
@@ -41,16 +41,10 @@ async function useAppleSignIn() {
  *
  * @returns
  */
-async function useSignOut() {
+export async function useSignOut() {
   try {
-    await signOut(firebaseConfigLib.auth);
+    await signOut(firebaseAuth);
   } catch (error) {
     console.error(error);
   }
 }
-
-export const firebaseAuthLib = {
-  useGoogleSignIn,
-  useAppleSignIn,
-  useSignOut,
-};
